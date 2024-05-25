@@ -1474,3 +1474,16 @@ input {
 .insert-product-input input {
   height: 5rem;
 }
+.error-message {
+    position: fixed;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

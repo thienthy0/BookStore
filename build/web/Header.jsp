@@ -27,7 +27,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-1">
                         <div class="header-logo">
-                            <a href="ProductURL"><img src="./images/Logo.jpg" alt=""></a>
+                            <a href="HomePage.jsp"><img src="./images/Logo.jpg" alt=""></a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -102,7 +102,7 @@
                                     <div class="user-box_access">
                                         <div class="user-box-header">
                                             <!-- access -->
-                                          {
+                                          
                                             <!-- not access -->
                                             <div class="user-not-access">
                                                 <span class="not-access-title">Wellcome</span>
