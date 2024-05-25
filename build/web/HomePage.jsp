@@ -29,7 +29,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         </div>
                         <div class="slider-info">
                             <h2 class="slider-title">Exclusive collection for everyone</h2>
-                            <p class="slider-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam tenetur molestiae magnam.</p>
+                            <p class="slider-desc">Lorem ipsum dolor sit amet coaaansectetur adipisicing elit. Aperiam tenetur molestiae magnam.</p>
                             <a href="#" class="slider-button">
                                 Order now
                                 <i class="fa-solid fa-arrow-right"></i>
