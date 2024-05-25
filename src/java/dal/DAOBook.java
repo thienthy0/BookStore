@@ -40,7 +40,7 @@ public class DAOBook extends DBConnect {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(8),
+                        rs.getInt(8),
                         rs.getString(9),
                         rs.getInt(10)));
             }
@@ -51,14 +51,16 @@ public class DAOBook extends DBConnect {
 
     }
 
-    public List<Book> seachProductByPrice() {
+    public List<Book> getProductbyCID(String category_id) {
         List<Book> list = new ArrayList<>();
-        String query = " select * from Book\n"
-                + "  ORDER BY price ASC";
+        String query = "select * from Book\n"
+                + "where category_id=?";
         try {
             conn = new DBConnect().connection;
             ps = conn.prepareStatement(query);
+            ps.setString(1, category_id);
             rs = ps.executeQuery();
+            
             while (rs.next()) {
                 list.add(new Book(rs.getString(1),
                         rs.getInt(2),
@@ -67,7 +69,7 @@ public class DAOBook extends DBConnect {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getString(8),
+                        rs.getInt(8),
                         rs.getString(9),
                         rs.getInt(10)));
             }
@@ -78,11 +80,13 @@ public class DAOBook extends DBConnect {
 
     }
 
-//    public static void main(String[] args) {
-//        DAOBook dao=new DAOBook();
-//        List<Book> list=dao.getAllProduct();
-//        for (Book o : list) {
-//            System.out.println(o);
-//        }
-//    }
+    
+
+    public static void main(String[] args) {
+        DAOBook dao=new DAOBook();
+        List<Book> list=dao.getProductbyCID("1");
+        for (Book o : list) {
+            System.out.println(o);
+        }
+    }
 }

@@ -94,25 +94,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                     <h3 class="text-uppercase fs-5 fw-bold">Thể loại: </h3>
                                     <i class="fa-solid fa-magnifying-glass search-icon-filter pointer"></i>
                                 </div>
-                                <c:forEach items="${requestScope.listC}"
-                                           var="c" >
-                                    <c:set var="isChecked" value="false" /> <!-- Mặc định chưa chọn -->
-
-                                    <div class="d-flex align-items-center mt-3">
-                                        <input class="me-3 pointer category-item" type="checkbox" 
-                                               id="${c.category_id}"
-                                               class="custom-radio" name="category"
-                                               ${isChecked ? "checked" : ""}
-
-                                               value="${c.category_name}" />
-                                        <label class="fs-5 fw-bold pointer text-capitalize"
-                                               for="${c.category_id}">${c.category_name}</label>
-                                    </div>
-                                </c:forEach>
+                                <form action="category" method="GET">
+                                    <c:forEach items="${requestScope.listC}" var="c">
+                                        <div class="d-flex align-items-center mt-3">
+                                            <input class="me-3 pointer category-item" type="checkbox"
+                                                   id="${c.category_id}"
+                                                   name="category_id"
+                                                   value="${c.category_id}" 
+                                                   onchange="this.form.submit()" />
+                                            <label class="fs-5 fw-bold pointer text-capitalize"
+                                                   for="${c.category_id}">${c.category_name}</label>
+                                        </div>
+                                    </c:forEach>
+                                </form>
 
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="col-md-9 col-lg-10 right-product h-100">
                         <div class="sort-search">
