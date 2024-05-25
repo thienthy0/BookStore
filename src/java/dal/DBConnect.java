@@ -19,9 +19,9 @@ public class DBConnect {
     {
         try {
             // Edit URL , username, password to authenticate with your MS SQL Server
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=BookstoreDB;encrypBookStoret=true;trustServerCertificate=true";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=Bookstore;encrypBookStoret=true;trustServerCertificate=true";
             String username = "sa";
-            String password = "1502";
+            String password = "sa";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException | SQLException ex) {

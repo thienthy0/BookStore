@@ -10,7 +10,7 @@ package entity;
  */
 public class Book {
     private String name;
-    private String id;
+    private int id;
     private int quantity;
     private int price;
     private String author;
@@ -23,7 +23,7 @@ public class Book {
     public Book() {
     }
 
-    public Book(String name, String id, int quantity, int price, String author, String image, String language, String category, String publisher, int num_of_page) {
+    public Book(String name, int id, int quantity, int price, String author, String image, String language, String category, String publisher, int num_of_page) {
         this.name = name;
         this.id = id;
         this.quantity = quantity;
@@ -35,6 +35,9 @@ public class Book {
         this.publisher = publisher;
         this.num_of_page = num_of_page;
     }
+    public Book(String category) {
+        this.category=category;
+    }
 
     public String getName() {
         return name;
@@ -44,11 +47,11 @@ public class Book {
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -120,5 +123,9 @@ public class Book {
     public String toString() {
         return "Book{" + "name=" + name + ", id=" + id + ", quantity=" + quantity + ", price=" + price + ", author=" + author + ", image=" + image + ", language=" + language + ", category=" + category + ", publisher=" + publisher + ", num_of_page=" + num_of_page + '}';
     }
+    
+
+
+   
     
 }
