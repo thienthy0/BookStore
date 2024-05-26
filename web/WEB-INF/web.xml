@@ -21,7 +21,7 @@
             30
         </session-timeout>
     </session-config>
-     <servlet>
+    <servlet>
         <servlet-name>EmployeeServlet</servlet-name>
         <servlet-class>controller.EmployeeServlet</servlet-class>
     </servlet>
@@ -31,15 +31,15 @@
     </servlet>
     <servlet>
         <servlet-name>DeleteServletDemo</servlet-name>
-        <servlet-class>controller.DeleteServlet</servlet-class>
+        <servlet-class>controller.DeleteEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEmployee</servlet-name>
-        <servlet-class>controller.AddEmployee</servlet-class>
+        <servlet-class>controller.AddEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>updateServlet</servlet-name>
-        <servlet-class>controller.updateServlet</servlet-class>
+        <servlet-class>controller.updateEmployeeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>EmployeeServlet</servlet-name>
