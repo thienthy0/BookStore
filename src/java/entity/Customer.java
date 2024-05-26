@@ -9,18 +9,29 @@ package entity;
  * @author laptop368
  */
 public class Customer {
-     private String c_id;
+     private int c_id;
     private String c_name;   
     private String c_email;
     private int c_phone;
     private String adress;
     private boolean gender;   
     private String dob;
-
+    private int cotp;
     public Customer() {
     }
 
-    public Customer(String c_id, String c_name, String c_email, int c_phone, String adress, boolean gender, String dob) {
+    public Customer(int c_id, String c_name, String c_email, int c_phone, String adress, boolean gender, String dob, int cotp) {
+        this.c_id = c_id;
+        this.c_name = c_name;
+        this.c_email = c_email;
+        this.c_phone = c_phone;
+        this.adress = adress;
+        this.gender = gender;
+        this.dob = dob;
+        this.cotp = cotp;
+    }
+
+    public Customer(int c_id, String c_name, String c_email, int c_phone, String adress, boolean gender, String dob) {
         this.c_id = c_id;
         this.c_name = c_name;
         this.c_email = c_email;
@@ -30,13 +41,24 @@ public class Customer {
         this.dob = dob;
     }
 
-    public String getC_id() {
+    public int getC_id() {
         return c_id;
     }
 
-    public void setC_id(String c_id) {
+    public void setC_id(int c_id) {
         this.c_id = c_id;
     }
+
+    public int getCotp() {
+        return cotp;
+    }
+
+    public void setCotp(int cotp) {
+        this.cotp = cotp;
+    }
+
+   
+  
 
     public String getC_name() {
         return c_name;
@@ -88,7 +110,11 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" + "c_id=" + c_id + ", c_name=" + c_name + ", c_email=" + c_email + ", c_phone=" + c_phone + ", adress=" + adress + ", gender=" + gender + ", dob=" + dob + '}';
+        return "Customer{" + "c_id=" + c_id + ", c_name=" + c_name + ", c_email=" + c_email + ", c_phone=" + c_phone + ", adress=" + adress + ", gender=" + gender + ", dob=" + dob + ", cotp=" + cotp + '}';
     }
+
+   
+
+    
     
 }

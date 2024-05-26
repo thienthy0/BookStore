@@ -48,6 +48,10 @@ a {
     font-size: 4rem;
 }
 
+.form-gap {
+    padding-top: 70px;
+}
+
 :root {
     --header-height: 8rem;
     --header-search-heght: 4rem;
