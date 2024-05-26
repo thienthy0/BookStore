@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entity;
 
 /**
@@ -11,12 +7,12 @@ package entity;
 public class Account {
     private int account_id;
     private String first_name, last_name, phone, email, password, account_image, address;
-    private Boolean is_admin, active;
+    private Boolean is_admin, is_employee, active;
 
     public Account() {
     }
 
-    public Account(int account_id, String first_name, String last_name, String phone, String email, String password, String account_image, String address, Boolean is_admin, Boolean active) {
+    public Account(int account_id, String first_name, String last_name, String phone, String email, String password, String account_image, String address, Boolean is_admin, Boolean is_employee, Boolean active) {
         this.account_id = account_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -26,6 +22,7 @@ public class Account {
         this.account_image = account_image;
         this.address = address;
         this.is_admin = is_admin;
+        this.is_employee = is_employee;
         this.active = active;
     }
     
@@ -109,6 +106,14 @@ public class Account {
     public void setIs_admin(Boolean is_admin) {
         this.is_admin = is_admin;
     }
+    
+    public Boolean getIs_employee() {
+        return is_employee;
+    }
+
+    public void setIs_employee(Boolean is_employee) {
+        this.is_employee = is_employee;
+    }
 
     public Boolean getActive() {
         return active;
@@ -120,8 +125,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "account_id=" + account_id + ", first_name=" + first_name + ", last_name=" + last_name + ", phone=" + phone + ", email=" + email + ", password=" + password + ", account_image=" + account_image + ", address=" + address + ", is_admin=" + is_admin + ", active=" + active + '}';
+        return "Account{" + "account_id=" + account_id + ", first_name=" + first_name + ", last_name=" + last_name + ", phone=" + phone + ", email=" + email + ", password=" + password + ", account_image=" + account_image + ", address=" + address + ", is_admin=" + is_admin + ", is_employee=" + is_employee + ", active=" + active + '}';
     }
-
-   
 }

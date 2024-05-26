@@ -97,7 +97,7 @@ public class SigupServlet extends HttpServlet {
         }
 
         if (!isValidPassword(password)) {
-            String mess = "Password must be at least 8 character and combination of letters, numbers, and special characters.";
+            String mess = "Password must be at least 8 character and combination of letters and numbers.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
@@ -122,7 +122,7 @@ public class SigupServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if (haveAdd) {
             session.setAttribute("account", acc);
-            response.sendRedirect("Login.jsp");
+            response.sendRedirect("HomePage.jsp");
         } else {
             String mess = "have error";
             request.setAttribute("message", mess);
@@ -143,7 +143,6 @@ public class SigupServlet extends HttpServlet {
 
     private boolean isValidEmail(String email) {
         // Kiểm tra định dạng email
-        // Có thể sử dụng biểu thức chính quy hoặc thư viện kiểm tra định dạng email
         return email.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
     }
 
@@ -163,7 +162,7 @@ public class SigupServlet extends HttpServlet {
 
     public static void main(String[] args) {
         DAOAccount d = new DAOAccount();
-        Account acc = new Account(21, "tran", "cuong", "09999999", "cuong2003@gmail.com", "CUONGTRAN2003@");
+        Account acc = new Account(21, "Nguyen", "vu", "0912393759", "vu@gmail.com", "123");
         boolean haveAdd = d.addAccount(acc);
         System.out.println(haveAdd);
     }
