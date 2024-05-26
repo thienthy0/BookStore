@@ -138,7 +138,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                                 </button>
                                                 <button class="button-product me-3">
                                                     <i class="fa-solid fa-arrows-up-down-left-right"></i>
-                                                    &ensp; Qick viewn
+                                                    &ensp; Qick view
                                                 </button>
                                             </div>
 
