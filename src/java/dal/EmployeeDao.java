@@ -1,15 +1,5 @@
 package dal;
 
-import entity.Book;
-import entity.Category;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import entity.Employee;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -88,18 +78,17 @@ public class EmployeeDao {
     }
 
     public void createEmployee(Employee e) {
-        String sql = "INSERT INTO Employee (e_id, e_name, position, e_email, e_phone, e_address, gender, DOB) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Employee (e_name, position, e_email, e_phone, e_address, gender, DOB) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-             conn = new DBConnect().connection;
+            conn = new DBConnect().connection;
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, e.getE_id());
-            ps.setString(2, e.getE_name());
-            ps.setInt(3, e.getPosition());
-            ps.setString(4, e.getE_email());
-            ps.setString(5, e.getE_phone());
-            ps.setString(6, e.getE_address());
-            ps.setBoolean(7, e.isGender());
-            ps.setString(8, e.getDOB());
+            ps.setString(1, e.getE_name());
+            ps.setInt(2, e.getPosition());
+            ps.setString(3, e.getE_email());
+            ps.setString(4, e.getE_phone());
+            ps.setString(5, e.getE_address());
+            ps.setBoolean(6, e.isGender());
+            ps.setString(7, e.getDOB());
             ps.executeUpdate();
         } catch (Exception ex) {
             Logger.getLogger(EmployeeDao.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,7 +100,7 @@ public class EmployeeDao {
     public Employee getEmployeeById(int id) {
         String sql = "SELECT e_id, e_name, position, e_email, e_phone, e_address, gender, DOB FROM Employee WHERE e_id = ?";
         try {
-           conn = new DBConnect().connection;
+            conn = new DBConnect().connection;
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -144,9 +133,10 @@ public class EmployeeDao {
             Logger.getLogger(EmployeeDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public static void main(String[] args) {
         EmployeeDao dao = new EmployeeDao();
-        List<Employee> list=dao.getAllEmployee();
+        List<Employee> list = dao.getAllEmployee();
         for (Employee employee : list) {
             System.out.println(employee);
         }

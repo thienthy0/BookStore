@@ -32,8 +32,9 @@
                     <div class="modal-header">
                         <h4 class="modal-title">Update Employee</h4>
                         <button type="button" class="close" onclick="$('#myModal').modal('hide'); window.history.back();" aria-hidden="true">&times;</button>
-
                     </div>
+                    <!-- Hiển thị thông báo lỗi nếu có -->
+                    <p style="color: red; text-align: center;">${error}</p>
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="e_id">ID</label>
@@ -45,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             <label for="position">Position</label>
-                            <input type="number" value="${ed.position}" name="position" class="form-control" required>
+                            <input type="number" value="${ed.position}" name="position" class="form-control" required readonly>
                         </div>
                         <div class="form-group">
                             <label for="e_email">Email</label>
@@ -66,7 +67,6 @@
                                 <option value="false" ${!ed.gender ? 'selected' : ''}>Female</option>
                             </select>
                         </div>
-                        
                         <div class="form-group">
                             <label for="DOB">Date of Birth</label>
                             <input type="date" value="${ed.DOB}" name="DOB" class="form-control" required>
@@ -74,7 +74,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" onclick="window.history.back();">Cancel</button>
-
                         <button type="submit" class="btn btn-success">Update</button>
                     </div>
                 </form>
