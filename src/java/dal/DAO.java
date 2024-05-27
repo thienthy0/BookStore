@@ -68,8 +68,8 @@ public class DAO {
 
     //Send OTP Employee
     public void sendOTPEmail(String toEmail, String otp) {
-        final String fromEmail = "g2baking@gmail.com";
-        final String password = "oujk khnc aimq ebgn";
+        final String fromEmail = "strorebook@gmail.com";
+        final String password = "email123@";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -125,8 +125,8 @@ public class DAO {
     
     //Send password
     public void sendPassword(String toEmail, String pass) {
-        final String fromEmail = "g2baking@gmail.com";
-        final String password = "oujk khnc aimq ebgn";
+        final String fromEmail = "strorebook@gmail.com";
+        final String password = "email123";
 
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
@@ -156,7 +156,7 @@ public class DAO {
     }
     
     public static void main(String[] args) {
-        //String password = generatePassword();
-        //System.out.println("Mật khẩu mới: " + password);
+        DAO dao=new DAO();
+        System.out.println(dao.generateOTP());
     }
 }

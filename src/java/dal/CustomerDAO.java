@@ -40,7 +40,7 @@ public class CustomerDAO extends DBConnect {
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getBoolean(6),
-                        rs.getString(7),
+                        rs.getDate(7),
                         rs.getInt(8));
             }
         } catch (Exception ex) {
@@ -182,7 +182,8 @@ public class CustomerDAO extends DBConnect {
     }
 
     // Get Customer by email
-    public Customer getCustomerByEmail(String email) {
+    public List<Customer> getCustomerByEmail(String email) {
+        List<Customer>list=new ArrayList<>();
         String query = "SELECT * FROM Customer WHERE Email = ?";
         try {
             conn = new DBConnect().connection;
@@ -190,14 +191,14 @@ public class CustomerDAO extends DBConnect {
             ps.setString(1, email);
             rs = ps.executeQuery();
             if (rs.next()) {
-                return new Customer(rs.getInt(1),
+                 list.add(new Customer(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
                         rs.getString(5),
                         rs.getBoolean(6),
-                        rs.getString(7),
-                        rs.getInt(8));
+                        rs.getDate(7),
+                        rs.getInt(8)));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -214,7 +215,8 @@ public class CustomerDAO extends DBConnect {
                 ex.printStackTrace();
             }
         }
-        return null;
+        return list;
+        
     }
 
     //Check cOTP is valid
@@ -266,12 +268,11 @@ public class CustomerDAO extends DBConnect {
     }
    public static void main(String[] args) {
         CustomerDAO dao = new CustomerDAO();
-        Customer customer = dao.getCustomerByEmail("thientrieu20002@gmail.com");
-        if (customer != null) {
-            System.out.println(customer);
-        } else {
-            System.out.println("Customer not found.");
-        }
+         List<Customer> list=dao.getCustomerByEmail("thientrieu20002@gmail.com");
+        for (Customer o : list) {
+            System.out.println(o);
+       }
+        
     }
 
 }

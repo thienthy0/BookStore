@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author laptop368
@@ -15,12 +17,12 @@ public class Customer {
     private int c_phone;
     private String adress;
     private boolean gender;   
-    private String dob;
+    private Date dob;
     private int cotp;
     public Customer() {
     }
 
-    public Customer(int c_id, String c_name, String c_email, int c_phone, String adress, boolean gender, String dob, int cotp) {
+    public Customer(int c_id, String c_name, String c_email, int c_phone, String adress, boolean gender, Date dob, int cotp) {
         this.c_id = c_id;
         this.c_name = c_name;
         this.c_email = c_email;
@@ -31,7 +33,7 @@ public class Customer {
         this.cotp = cotp;
     }
 
-    public Customer(int c_id, String c_name, String c_email, int c_phone, String adress, boolean gender, String dob) {
+    public Customer(int c_id, String c_name, String c_email, int c_phone, String adress, boolean gender, Date dob) {
         this.c_id = c_id;
         this.c_name = c_name;
         this.c_email = c_email;
@@ -100,14 +102,15 @@ public class Customer {
         this.gender = gender;
     }
 
-    public String getDob() {
+    public Date getDob() {
         return dob;
     }
 
-    public void setDob(String dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
+  
     @Override
     public String toString() {
         return "Customer{" + "c_id=" + c_id + ", c_name=" + c_name + ", c_email=" + c_email + ", c_phone=" + c_phone + ", adress=" + adress + ", gender=" + gender + ", dob=" + dob + ", cotp=" + cotp + '}';

@@ -40,7 +40,7 @@
                     </div>
                     <div class="text-center mt-3 fs-5">
                         <div class="form-group">
-                            <a href="CForgotPass.jsp" style="color: blue" >Forgot Password?</a>
+                            <a href="forgotPassword.jsp" style="color: blue" >Forgot Password?</a>
                         </div>
                         Do you want to create an account? <a href="signup" class="text-black-weak text-info">Sign up</a>
                     </div>
