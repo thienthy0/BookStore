@@ -120,6 +120,8 @@ public class Book {
     public String toString() {
         return "Book{" + "name=" + name + ", id=" + id + ", quantity=" + quantity + ", price=" + price + ", author=" + author + ", image=" + image + ", language=" + language + ", category=" + category + ", publisher=" + publisher + ", num_of_page=" + num_of_page + '}';
     }
+
+    
     
 
 

@@ -4,23 +4,20 @@ import entity.Account;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
+import java.util.ArrayList; 
 
-/**
- *
- * @author HP
- */
 public class DAOAccount extends DBConnect {
+
     // Display all accounts
-    public Vector<Account> getAllAccount() {
+    public ArrayList<Account> getAllAccount() {
         String sql = "SELECT * FROM Account";
-        Vector<Account> list = new Vector<>();
+        ArrayList<Account> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Account acc = new Account(
-                        rs.getInt("account_id"), 
+                        rs.getInt("account_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -39,7 +36,7 @@ public class DAOAccount extends DBConnect {
         }
         return list;
     }
-    
+
     // Get account by ID
     public Account getAccountById(int id) {
         String sql = "SELECT * FROM Account WHERE account_id = ?";
@@ -50,7 +47,7 @@ public class DAOAccount extends DBConnect {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 acc = new Account(
-                        rs.getInt("account_id"), 
+                        rs.getInt("account_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -69,7 +66,7 @@ public class DAOAccount extends DBConnect {
         }
         return acc;
     }
-    
+
     // Get account by email
     public Account getAccountByEmail(String email) {
         String sql = "SELECT * FROM Account WHERE email = ?";
@@ -80,7 +77,7 @@ public class DAOAccount extends DBConnect {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 acc = new Account(
-                        rs.getInt("account_id"), 
+                        rs.getInt("account_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -99,11 +96,11 @@ public class DAOAccount extends DBConnect {
         }
         return acc;
     }
-    
+
     // Validate customer credentials
     public Account validateCustomer(String email, String password) {
         String sql = "SELECT * FROM Account WHERE email = ? AND password = ?";
-        Account acc =  null;
+        Account acc = null;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, email);
@@ -111,7 +108,7 @@ public class DAOAccount extends DBConnect {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 acc = new Account(
-                        rs.getInt("account_id"), 
+                        rs.getInt("account_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -145,7 +142,7 @@ public class DAOAccount extends DBConnect {
         }
         return n > 0;
     }
-    
+
     // Update account image
     public void updateAccountImg(String newImg, int accountId) {
         String sql = "UPDATE Account SET account_image = ? WHERE account_id = ?";
@@ -158,10 +155,10 @@ public class DAOAccount extends DBConnect {
             System.out.println(e);
         }
     }
-    
+
     // Update account information
-    public boolean updateAccount(int account_id, String email, String first_name, 
-        String last_name, String phone, String account_image, String address) {
+    public boolean updateAccount(int account_id, String email, String first_name,
+            String last_name, String phone, String account_image, String address) {
         String sql = "UPDATE Account SET email = ?, first_name = ?, last_name = ?,"
                 + " phone = ?, account_image = ?, address = ? WHERE account_id = ?";
         int n = 0;
@@ -180,7 +177,7 @@ public class DAOAccount extends DBConnect {
         }
         return n > 0;
     }
-    
+
     // Add new account
     public boolean addAccount(Account acc) {
         String sql = "INSERT INTO Account (account_id, email, first_name, last_name,"

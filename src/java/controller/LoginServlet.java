@@ -31,9 +31,8 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", account);
             
-            // Kiểm tra quyền của người dùng và chuyển hướng tới trang tương ứng
             if (account.getIs_admin()) {
-                response.sendRedirect("BookURL");
+                response.sendRedirect("ManageProduct");
             } else if (account.getIs_employee()) {
                 response.sendRedirect("employee");
             } else if (account.getActive()) {
