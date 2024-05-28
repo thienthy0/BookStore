@@ -196,12 +196,31 @@ public class DAOEmployee {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        DAOEmployee dao = new DAOEmployee();
-        List<Employee> list = dao.getAllEmployee();
-        for (Employee employee : list) {
-            System.out.println(employee);
+public List<Employee> searchEmployeesByName(String searchText) {
+    List<Employee> list = new ArrayList<>();
+    String sql = "SELECT e_id, e_name, position, e_email, e_phone, e_address, gender, DOB FROM Employee WHERE e_name LIKE ?";
+    try {
+        conn = new DBConnect().connection;
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, "%" + searchText + "%");
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            int e_id = rs.getInt(1);
+            String e_name = rs.getString(2);
+            int position = rs.getInt(3);
+            String e_email = rs.getString(4);
+            String e_phone = rs.getString(5);
+            String e_address = rs.getString(6);
+            boolean gender = rs.getBoolean(7);
+            String DOB = rs.getString(8);
+            list.add(new Employee(e_id, e_name, position, e_email, e_phone, e_address, gender, DOB));
         }
+    } catch (SQLException ex) {
+        Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        closeResources();
     }
+    return list;
+}
+
 }

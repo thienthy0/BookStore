@@ -24,6 +24,23 @@
             border-radius: 10px;
             text-align: center;
         }
+        .search-bar {
+            display: flex;
+            max-width: 300px;
+        }
+        .search-bar .form-control {
+            border-radius: 20px 0 0 20px;
+            border-right: none;
+        }
+        .search-bar .btn {
+            border-radius: 0 20px 20px 0;
+            background-color: palevioletred;
+            color: white;
+            border: none;
+        }
+        .search-bar .btn:hover {
+            background-color: #d46a89;
+        }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,6 +81,13 @@
                         </a>
                     </div>
                 </div>
+                <!-- Search Form -->
+                <form action="employee" method="get" class="p-3">
+                    <div class="search-bar">
+                        <input type="text" class="form-control" name="searchText" placeholder="Search by name" value="${param.searchText}">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
                 <!-- Message -->
                 <c:if test="${message != null}">
                     <p style="color: #5cb85c">${message}</p>
@@ -100,7 +124,7 @@
                                                 <a href="edit?e_id=${e.e_id}" class="edit" data-toggle="modal">
                                                     <i class="fas fa-pen p-2 text-warning"></i>
                                                 </a>
-                                                <a href="#" onclick="showMess(${e.e_id})" class="delete" data-toggle="modalde">
+                                                <a href="#" onclick="showMess(${e.e_id})" class="delete" data-toggle="modal">
                                                     <i class="fas fa-trash p-2 text-danger"></i>
                                                 </a>
                                             </td>

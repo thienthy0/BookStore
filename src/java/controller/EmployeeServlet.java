@@ -2,13 +2,13 @@ package controller;
 
 import dal.DAOEmployee;
 import entity.Employee;
-import java.io.IOException;
-import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "EmployeeServlet", urlPatterns = {"/employee"})
 public class EmployeeServlet extends HttpServlet {
@@ -21,20 +21,32 @@ public class EmployeeServlet extends HttpServlet {
 
         DAOEmployee daoEmployee = new DAOEmployee();
 
-        // Tính tổng số nhân viên và tổng số trang
-        int numberOfEmployees = daoEmployee.countEmployees();
-        int totalPage = calculateTotalPages(NUMBER_EMPLOYEE_IN_PAGE, numberOfEmployees);
+        // Đọc giá trị tìm kiếm từ yêu cầu
+        String searchText = request.getParameter("searchText");
 
-        // Lấy chỉ số trang hiện tại từ yêu cầu
-        int pageIndex = parsePageIndex(request.getParameter("pageIndex"));
+        // Nếu có giá trị tìm kiếm, truy vấn danh sách nhân viên theo tên
+        List<Employee> list;
+        if (searchText != null && !searchText.isEmpty()) {
+            list = daoEmployee.searchEmployeesByName(searchText);
+        } else {
+            // Nếu không có giá trị tìm kiếm, lấy danh sách nhân viên theo trang
+            // Tính tổng số nhân viên và tổng số trang
+            int numberOfEmployees = daoEmployee.countEmployees();
+            int totalPage = calculateTotalPages(NUMBER_EMPLOYEE_IN_PAGE, numberOfEmployees);
 
-        // Lấy danh sách nhân viên cho trang hiện tại
-        List<Employee> list = daoEmployee.getEmployeesByPage(pageIndex, NUMBER_EMPLOYEE_IN_PAGE);
+            // Lấy chỉ số trang hiện tại từ yêu cầu
+            int pageIndex = parsePageIndex(request.getParameter("pageIndex"));
 
-        // Thiết lập các thuộc tính cho yêu cầu
+            // Lấy danh sách nhân viên cho trang hiện tại
+            list = daoEmployee.getEmployeesByPage(pageIndex, NUMBER_EMPLOYEE_IN_PAGE);
+
+            // Thiết lập các thuộc tính cho yêu cầu
+            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("pageIndex", pageIndex);
+        }
+
+        // Thiết lập danh sách nhân viên cho yêu cầu
         request.setAttribute("listEmployee", list);
-        request.setAttribute("totalPage", totalPage);
-        request.setAttribute("pageIndex", pageIndex);
 
         // Chuyển tiếp yêu cầu đến trang JSP để hiển thị danh sách nhân viên
         request.getRequestDispatcher("employeeList.jsp").forward(request, response);
