@@ -20,24 +20,45 @@ import java.util.logging.Logger;
  * @author laptop368
  */
 public class DAOCategory {
-    Connection conn=null;
-    PreparedStatement ps=null;
-    ResultSet rs=null;
-    public List<Category> getCategory(){
-         List<Category> list=new ArrayList<>();
-         String query="select * from Category";
-         try {
-            conn=new DBConnect().connection;
-            ps=conn.prepareStatement(query);
-            rs=ps.executeQuery();
-            while(rs.next()){
+
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    public List<Category> getCategory() {
+        List<Category> list = new ArrayList<>();
+        String query = "select * from Category";
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
                 list.add(new Category(rs.getInt(1),
                         rs.getString(2)));
-                        
+
             }
         } catch (Exception e) {
         }
-         
-         return list;
-     }
+
+        return list;
+    }
+
+    public List<Category> getCategoryByID(int categoryId) {
+        List<Category> list = new ArrayList<>();
+        String query = "  select * from Category\n"
+                + "  where category_id=?";
+        try {
+            conn = new DBConnect().connection;
+            ps.setInt(1, categoryId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Category(rs.getInt(1),
+                        rs.getString(2)));
+
+            }
+        } catch (Exception e) {
+        }
+
+        return list;
+    }
 }

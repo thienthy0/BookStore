@@ -24,13 +24,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     </head>
     <body>
         <%@include file="./Header.jsp" %>    
-        <section id="banner">
+        <section id="banner" >
             <div class="swiper mySwiper swiper-initialized swiper-horizontal swiper-backface-hidden">
-                <div class="swiper-wrapper" id="swiper-wrapper-9f6c7920a6102d84" aria-live="off" style="transition-duration: 0ms; transform: translate3d(-1728px, 0px, 0px); transition-delay: 0ms;">
+                <div class="swiper-wrapper" id="swiper-wrapper-9f6c7920a6102d84" aria-live="off" style="transition-duration: 0ms; transform: translate3d(-1728px, 0px, 0px); transition-delay: 0ms; max-height: 850px;">
 
 
 
-                    <div class="swiper-slide swiper-slide-next" role="group" aria-label="1 / 3" data-swiper-slide-index="0" style="width: 834px; margin-right: 30px;">
+                    <div class="swiper-slide swiper-slide-next" role="group" aria-label="1 / 3" data-swiper-slide-index="0" style="width: 734px; margin-right: 30px;">
                         <div class="slider-img">
                             <img src="./images/B1.jpg" alt="">
                         </div>
@@ -83,46 +83,40 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <div class="fashion-container h-100 mt-5">
                 <div class="row box-fashion d-flex">
                     <div class="col-md-3 col-lg-2 left-nav bg-white h-100">
-                        <div class="list-filter">
-                            <div class="filter-header">
-                                <h4>Filters</h4>
-                                <span id="clearAll">Clear all</span>
-                            </div>
-                            <!--<form action="ProductURL" method="get">-->
-                            <div class="boder p-4">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <h3 class="text-uppercase fs-5 fw-bold">Thể loại: </h3>
-                                    <i class="fa-solid fa-magnifying-glass search-icon-filter pointer"></i>
-                                </div>
-                                <form action="category" method="GET">
-                                    <c:forEach items="${requestScope.listC}" var="c">
-                                        <div class="d-flex align-items-center mt-3">
-                                            <input class="me-3 pointer category-item" type="checkbox"
-                                                   id="${c.category_id}"
-                                                   name="category_id"
-                                                   value="${c.category_id}" 
-                                                   onchange="this.form.submit()" />
-                                            <label class="fs-5 fw-bold pointer text-capitalize"
-                                                   for="${c.category_id}">${c.category_name}</label>
-                                        </div>
-                                    </c:forEach>
-                                </form>
 
+
+                        <!--<form action="ProductURL" method="get">-->
+                        <div class="boder p-4">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <h3 class="text-uppercase fs-5 fw-bold">Thể loại: </h3>
+                                <i class="fa-solid fa-magnifying-glass search-icon-filter pointer"></i>
                             </div>
+                            <form action="category" method="GET">
+                                <c:forEach items="${requestScope.listC}" var="c">
+                                    <div class="d-flex align-items-center mt-3">
+                                        <input class="me-3 pointer category-item" type="radio"
+                                               id="${c.category_id}"
+                                               name="category_id"
+                                               value="${c.category_id}" 
+                                               onchange="this.form.submit()"
+                                               <c:if test="${param.category_id != null}">
+                                                   <c:forEach items="${param.category_id}" var="selectedId">
+                                                       <c:if test="${selectedId == c.category_id}">
+                                                           checked
+                                                       </c:if>
+                                                   </c:forEach>
+                                               </c:if> />
+                                        <label class="fs-5 fw-bold pointer text-capitalize"
+                                               for="${c.category_id}">${c.category_name}</label>
+                                    </div>
+                                </c:forEach>
+                            </form>
                         </div>
+
 
                     </div>
                     <div class="col-md-9 col-lg-10 right-product h-100">
-                        <div class="sort-search">
-                            <div class="sort-box">
-                                <c:set value="${requestScope.order}" var="order"/>
-                                <select class="form-select" onchange="filterProduct('order')" id="orderOption">
-                                    <option value="asc" class="py-5" ${order.equals("asc")?"selected":""}>Price: Low To Hight</option>
-                                    <option value="desc" class="py-5" ${order.equals("desc")?"selected":""}>Price: Hight To Low</option>
-                                </select>
-                                <span class="select-title">Sort by: </span>
-                            </div>
-                        </div>
+
                         <div class="row g-5" id="list-book">
                             <c:forEach items="${requestScope.listBook}" 
                                        var="o">

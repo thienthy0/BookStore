@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/laptop368/Desktop/thientd/web/newPassword.jsp</file>
-            <file>file:/C:/Users/laptop368/Desktop/thientd/src/java/dal/DAO.java</file>
-            <file>file:/C:/Users/laptop368/Desktop/thientd/src/java/dal/DAOAccount.java</file>
-            <file>file:/C:/Users/laptop368/Desktop/thientd/src/java/controller/CChangePassOTPControl.java</file>
-            <file>file:/C:/Users/laptop368/Desktop/thientd/src/java/controller/ValidateOtpController.java</file>
-            <file>file:/C:/Users/laptop368/Desktop/thientd/src/java/controller/NewPasswordController.java</file>
+            <file>file:/C:/Users/laptop368/Desktop/thientd/src/java/controller/ListBook.java</file>
+            <file>file:/C:/Users/laptop368/Desktop/thientd/src/java/controller/BookServlet.java</file>
+            <file>file:/C:/Users/laptop368/Desktop/thientd/src/java/controller/CategoryServlet.java</file>
+            <file>file:/C:/Users/laptop368/Desktop/thientd/web/HomePage.jsp</file>
         </group>
     </open-files>
 </project-private>

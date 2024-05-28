@@ -27,7 +27,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-1">
                         <div class="header-logo">
-                            <a href="HomePage.jsp"><img src="./images/Logo.jpg" alt=""></a>
+                            <a href="BookURL"><img src="./images/Logo.jpg" alt=""></a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -85,7 +85,7 @@
                             </div>
                             <div class="search-input" >
                                 <input type="text" id="header-search"
-                                       placeholder="Search for products, brands and more" 
+                                       placeholder="Search " 
                                        aria-label="Example text with button addon"
                                        />
                             </div>

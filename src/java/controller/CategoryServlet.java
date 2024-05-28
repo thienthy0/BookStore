@@ -6,7 +6,9 @@
 package controller;
 
 import dal.DAOBook;
+import dal.DAOCategory;
 import entity.Book;
+import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -36,6 +38,10 @@ public class CategoryServlet extends HttpServlet {
         String cateID=request.getParameter("category_id");
         DAOBook dao=new DAOBook();
         List<Book> list =dao.getProductbyCID(cateID);
+        DAOCategory ca=new DAOCategory();   
+       List<Category> listC=ca.getCategory();
+       request.setAttribute("listC",listC);
+       request.setAttribute("tag",cateID);
         request.setAttribute("listBook",list);
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
         

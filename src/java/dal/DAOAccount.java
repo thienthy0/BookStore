@@ -26,9 +26,7 @@ public class DAOAccount extends DBConnect {
     java.sql.Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
-
-    //hien thi ban hang
-    public Vector<Account> getAllAccount() {
+ public Vector<Account> getAllAccount() {
         String sql = "SELECT * FROM Account WHERE 1=1";
         Vector<Account> list = new Vector<>();
         try {
@@ -36,7 +34,7 @@ public class DAOAccount extends DBConnect {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Account cus = new Account(
-                        rs.getInt("account_id"),
+                        rs.getInt("account_id"), 
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -83,37 +81,9 @@ public class DAOAccount extends DBConnect {
         return cus;
     }
 
-    public Account getAccountByEmail(String email) {
-        String sql = "SELECT * FROM Account WHERE email = ?";
-        Account cus = null;
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, email);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                cus = new Account(
-                        rs.getInt("account_id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getString("phone"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getString("account_image"),
-                        rs.getString("address"),
-                        rs.getBoolean("is_admin"),
-                        rs.getBoolean("active")
-                );
-                return cus;
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return cus;
-    }
-
     public Account validateCustomer(String email, String password) {
         String sql = "SELECT * FROM Account where email = ? and password = ?";
-        Account acc = null;
+        Account acc =  null;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, email);
@@ -121,7 +91,7 @@ public class DAOAccount extends DBConnect {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 acc = new Account(
-                        rs.getInt("account_id"),
+                        rs.getInt("account_id"), 
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -155,7 +125,7 @@ public class DAOAccount extends DBConnect {
         }
         return n > 0;
     }
-
+    
     public void updateAccountImg(String newImg, int accountId) {
         String sql = "UPDATE [dbo].[Account]\n"
                 + " SET [account_image] = ?\n"
@@ -170,9 +140,9 @@ public class DAOAccount extends DBConnect {
             System.out.println(e);
         }
     }
-
-    public boolean updateAccount(int account_id, String email, String first_name,
-            String last_name, String phone, String account_image, String address) {
+    
+    public boolean updateAccount(int account_id, String email, String first_name, 
+        String last_name, String phone, String account_image, String address) {
         String sql = "UPDATE [dbo].[Account]\n"
                 + "   SET [email] = ?\n"
                 + "      ,[first_name] = ?\n"
@@ -197,7 +167,7 @@ public class DAOAccount extends DBConnect {
         }
         return n > 0;
     }
-
+    
     public boolean addAccount(Account acc) {
         String sql = "INSERT INTO [dbo].[Account]\n"
                 + "           ([account_id]\n"
@@ -225,103 +195,33 @@ public class DAOAccount extends DBConnect {
         }
         return n > 0;
     }
-
-    public void updatePassword(String email, String newpass) {
-        PreparedStatement ps = null;
-        String sql = "UPDATE [dbo].[Account]\n"
-                + "   SET [Password] = ?\n"
-                + " WHERE Email = ?";
+    
+    public Account getAccountByEmail(String email) {
+        String sql = "SELECT * FROM Account WHERE email = ?";
+        Account cus = null;
         try {
-            try {
-                ps = new DBConnect().connection.prepareStatement(sql);
-            } catch (Exception ex) {
-                Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                cus = new Account(
+                        rs.getInt("account_id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getString("phone"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        rs.getString("account_image"),
+                        rs.getString("address"),
+                        rs.getBoolean("is_admin"),
+                        rs.getBoolean("active")
+                );
+                return cus;
             }
-            ps.setString(1, newpass);
-            ps.setString(2, email);
-            ps.executeUpdate();
         } catch (SQLException e) {
-            Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, e);
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(CustomerDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+            System.out.println(e);
         }
-    }
-
-    public void updatcOTPinDatabase(String email, String otp) {
-        String query = "UPDATE Account SET cOTP = ? WHERE Email = ?";
-        try {
-            conn = new DBConnect().connection;
-            ps = conn.prepareStatement(query);
-            ps.setString(1, otp);
-            ps.setString(2, email);
-            ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // Đảm bảo đóng các tài nguyên
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    public boolean isCOTPValid(String cOTP) {
-        String query = "SELECT COUNT(*) FROM Account WHERE [cOTP] = ?";
-        try {
-            conn = new DBConnect().connection;
-            ps = conn.prepareStatement(query);
-            ps.setString(1, cOTP);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count > 0; // Trả về true nếu cOTP hợp lệ
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            // Close resources in a finally block to ensure they are always closed
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
-        return false;
-    }
-
-    public boolean changeCPassOTP(String cOTP, String newPassword) {
-        String query = "update Account\n"
-                + "set [Password] = ?\n"
-                + "where [cOTP] = ?";
-        try {
-            conn = new DBConnect().connection;
-            ps = conn.prepareStatement(query);
-            ps.setString(1, newPassword);
-            ps.setString(2, cOTP);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
+        return cus;
     }
 
     public void changePassword(String password, int id) throws SQLException {

@@ -79,6 +79,21 @@ public class DAOBook extends DBConnect {
         return list;
 
     }
+    public int getTotalBook(){
+        String query="select count(*) from Book";
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return rs.getInt(1);
+            }
+            
+        } catch (Exception e) {
+        }
+        
+        return 0;
+    }
 
     
 
