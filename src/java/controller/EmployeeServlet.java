@@ -1,86 +1,82 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import dal.DAOEmployee;
 import entity.Employee;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
-/**
- *
- * @author admin
- */
 @WebServlet(name = "EmployeeServlet", urlPatterns = {"/employee"})
 public class EmployeeServlet extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private static final int NUMBER_EMPLOYEE_IN_PAGE = 5; // Số nhân viên trên mỗi trang
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       DAOEmployee employee = new DAOEmployee();
-        List<Employee> list = employee.getAllEmployee();
+
+        DAOEmployee daoEmployee = new DAOEmployee();
+
+        // Tính tổng số nhân viên và tổng số trang
+        int numberOfEmployees = daoEmployee.countEmployees();
+        int totalPage = calculateTotalPages(NUMBER_EMPLOYEE_IN_PAGE, numberOfEmployees);
+
+        // Lấy chỉ số trang hiện tại từ yêu cầu
+        int pageIndex = parsePageIndex(request.getParameter("pageIndex"));
+
+        // Lấy danh sách nhân viên cho trang hiện tại
+        List<Employee> list = daoEmployee.getEmployeesByPage(pageIndex, NUMBER_EMPLOYEE_IN_PAGE);
+
+        // Thiết lập các thuộc tính cho yêu cầu
         request.setAttribute("listEmployee", list);
+        request.setAttribute("totalPage", totalPage);
+        request.setAttribute("pageIndex", pageIndex);
+
+        // Chuyển tiếp yêu cầu đến trang JSP để hiển thị danh sách nhân viên
         request.getRequestDispatcher("employeeList.jsp").forward(request, response);
-   
-        
     }
 
-    
+    // Hàm tính tổng số trang
+    private int calculateTotalPages(int numberEmployeeInPage, int totalEmployees) {
+        int totalPages = totalEmployees / numberEmployeeInPage;
+        if (totalEmployees % numberEmployeeInPage != 0) {
+            totalPages += 1;
+        }
+        return totalPages;
+    }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    // Hàm phân tích chỉ số trang từ yêu cầu
+    private int parsePageIndex(String pageIndexStr) {
+        int pageIndex = 1; // Mặc định là trang đầu tiên
+        try {
+            pageIndex = Integer.parseInt(pageIndexStr);
+            if (pageIndex <= 0) {
+                pageIndex = 1; // Nếu chỉ số trang không hợp lệ, thiết lập lại là trang đầu tiên
+            }
+        } catch (NumberFormatException e) {
+            // Nếu không phân tích được chỉ số trang, giữ nguyên giá trị mặc định là trang đầu tiên
+        }
+        return pageIndex;
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Employee Servlet with pagination";
+    }
 }

@@ -42,6 +42,51 @@ public class DAOEmployee {
         return listEmployee;
     }
 
+    public int countEmployees() {
+        String sql = "SELECT COUNT(*) FROM Employee";
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources();
+        }
+        return 0;
+    }
+
+    public List<Employee> getEmployeesByPage(int pageIndex, int pageSize) {
+        List<Employee> list = new ArrayList<>();
+        String sql = "SELECT e_id, e_name, position, e_email, e_phone, e_address, gender, DOB FROM Employee ORDER BY e_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, (pageIndex - 1) * pageSize);
+            ps.setInt(2, pageSize);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int e_id = rs.getInt(1);
+                String e_name = rs.getString(2);
+                int position = rs.getInt(3);
+                String e_email = rs.getString(4);
+                String e_phone = rs.getString(5);
+                String e_address = rs.getString(6);
+                boolean gender = rs.getBoolean(7);
+                String DOB = rs.getString(8);
+                list.add(new Employee(e_id, e_name, position, e_email, e_phone, e_address, gender, DOB));
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources();
+        }
+        return list;
+    }
+
     public void deleteEmployee(int e_id) {
         String sql = "DELETE FROM Employee WHERE e_id = ?";
         try {
@@ -104,7 +149,6 @@ public class DAOEmployee {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-
             if (rs.next()) {
                 int e_id = rs.getInt("e_id");
                 String e_name = rs.getString("e_name");
@@ -133,25 +177,25 @@ public class DAOEmployee {
             Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
- public boolean getEmployeeByEmail(String e_email) {
-    String sql = "SELECT COUNT(*) FROM ECT COUNT(*) Employee WHERE e_email = ?";
-    try {
-        conn = new DBConnect().connection;
-        ps = conn.prepareStatement(sql);
-        ps.setString(1, e_email);
-        rs = ps.executeQuery();
 
-        if (rs.next()) {
-            int count = rs.getInt(1);
-            return count > 0;
+    public boolean getEmployeeByEmail(String e_email) {
+        String sql = "SELECT COUNT(*) FROM Employee WHERE e_email = ?";
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, e_email);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources();
         }
-    } catch (SQLException ex) {
-        Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
-    } finally {
-        closeResources();
+        return false;
     }
-    return false;
-}
 
     public static void main(String[] args) {
         DAOEmployee dao = new DAOEmployee();
@@ -160,5 +204,4 @@ public class DAOEmployee {
             System.out.println(employee);
         }
     }
-    
 }
