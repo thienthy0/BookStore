@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.EmployeeDao;
+import dal.DAOEmployee;
 import entity.Employee;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,7 +34,7 @@ public class EmployeeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       EmployeeDao employee = new EmployeeDao();
+       DAOEmployee employee = new DAOEmployee();
         List<Employee> list = employee.getAllEmployee();
         request.setAttribute("listEmployee", list);
         request.getRequestDispatcher("employeeList.jsp").forward(request, response);

@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.EmployeeDao;
+import dal.DAOEmployee;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -59,7 +59,7 @@ public class DeleteEmployeeServlet extends HttpServlet {
         int e_id = Integer.parseInt(request.getParameter("e_id"));
 
         // Thực hiện xóa nhân viên
-        EmployeeDao employeeDao = new EmployeeDao();
+        DAOEmployee employeeDao = new DAOEmployee();
         employeeDao.deleteEmployee(e_id);
       //  List<Employee> employeeList = employeeDao.getAllEmployee();
      //   request.setAttribute("employeeList", employeeList);

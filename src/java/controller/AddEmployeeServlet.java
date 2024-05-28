@@ -1,6 +1,6 @@
 package controller;
 
-import dal.EmployeeDao;
+import dal.DAOEmployee;
 import entity.Employee;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -80,7 +80,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 
     Employee newEmployee = new Employee(0, e_name, position, e_email, e_phone, e_address, gender, DOB);
 
-    EmployeeDao employeeDao = new EmployeeDao();
+    DAOEmployee employeeDao = new DAOEmployee();
     employeeDao.createEmployee(newEmployee);
     response.sendRedirect("employee");
 }

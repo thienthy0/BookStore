@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("account", acc);
             if(acc.getIs_admin()==true) {
-             response.sendRedirect("HomePage.jsp");
+             response.sendRedirect("employee");
             } else {
              response.sendRedirect("HomePage.jsp");
             }

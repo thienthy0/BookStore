@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class EmployeeDao {
+public class DAOEmployee {
 
     Connection conn = null;
     PreparedStatement ps = null;
@@ -35,7 +35,7 @@ public class EmployeeDao {
                 listEmployee.add(new Employee(e_id, e_name, position, e_email, e_phone, e_address, gender, DOB));
             }
         } catch (Exception ex) {
-            Logger.getLogger(EmployeeDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeResources();
         }
@@ -50,7 +50,7 @@ public class EmployeeDao {
             ps.setInt(1, e_id);
             ps.execute();
         } catch (Exception ex) {
-            Logger.getLogger(EmployeeDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeResources();
         }
@@ -71,7 +71,7 @@ public class EmployeeDao {
             ps.setInt(8, e_id);
             ps.executeUpdate();
         } catch (Exception ex) {
-            Logger.getLogger(EmployeeDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeResources();
         }
@@ -91,7 +91,7 @@ public class EmployeeDao {
             ps.setString(7, e.getDOB());
             ps.executeUpdate();
         } catch (Exception ex) {
-            Logger.getLogger(EmployeeDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeResources();
         }
@@ -117,7 +117,7 @@ public class EmployeeDao {
                 return new Employee(e_id, e_name, position, e_email, e_phone, e_address, gender, DOB);
             }
         } catch (Exception ex) {
-            Logger.getLogger(EmployeeDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             closeResources();
         }
@@ -130,15 +130,35 @@ public class EmployeeDao {
             if (ps != null) ps.close();
             if (conn != null) conn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+ public boolean getEmployeeByEmail(String e_email) {
+    String sql = "SELECT COUNT(*) FROM ECT COUNT(*) Employee WHERE e_email = ?";
+    try {
+        conn = new DBConnect().connection;
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, e_email);
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            return count > 0;
+        }
+    } catch (SQLException ex) {
+        Logger.getLogger(DAOEmployee.class.getName()).log(Level.SEVERE, null, ex);
+    } finally {
+        closeResources();
+    }
+    return false;
+}
 
     public static void main(String[] args) {
-        EmployeeDao dao = new EmployeeDao();
+        DAOEmployee dao = new DAOEmployee();
         List<Employee> list = dao.getAllEmployee();
         for (Employee employee : list) {
             System.out.println(employee);
         }
     }
+    
 }
