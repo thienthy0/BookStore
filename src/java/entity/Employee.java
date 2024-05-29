@@ -1,44 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entity;
 
-/**
- *
- * @author laptop368
- */
 public class Employee {
-    private String e_id;
+    private int e_id;
     private String e_name;
     private int position;
     private String e_email;
-    private int e_phone;
-    private String adress;
+    private String e_phone;
+    private String e_address;
     private boolean gender;
-    private String b_id;
-    private String dob;
+   
+    private String DOB;
 
     public Employee() {
     }
 
-    public Employee(String e_id, String e_name, int position, String e_email, int e_phone, String adress, boolean gender, String b_id, String dob) {
+    public Employee(int e_id, String e_name, int position, String e_email, String e_phone, String e_address, boolean gender, String DOB) {
         this.e_id = e_id;
         this.e_name = e_name;
         this.position = position;
         this.e_email = e_email;
         this.e_phone = e_phone;
-        this.adress = adress;
+        this.e_address = e_address;
         this.gender = gender;
-        this.b_id = b_id;
-        this.dob = dob;
+        
+        this.DOB = DOB;
     }
 
-    public String getE_id() {
+    public int getE_id() {
         return e_id;
     }
 
-    public void setE_id(String e_id) {
+    public void setE_id(int e_id) {
         this.e_id = e_id;
     }
 
@@ -66,20 +58,20 @@ public class Employee {
         this.e_email = e_email;
     }
 
-    public int getE_phone() {
+    public String getE_phone() {
         return e_phone;
     }
 
-    public void setE_phone(int e_phone) {
+    public void setE_phone(String e_phone) {
         this.e_phone = e_phone;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getE_address() {
+        return e_address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setE_address(String e_address) {
+        this.e_address = e_address;
     }
 
     public boolean isGender() {
@@ -90,25 +82,19 @@ public class Employee {
         this.gender = gender;
     }
 
-    public String getB_id() {
-        return b_id;
+
+    public String getDOB() {
+        return DOB;
     }
 
-    public void setB_id(String b_id) {
-        this.b_id = b_id;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setDOB(String DOB) {
+        this.DOB = DOB;
     }
 
     @Override
     public String toString() {
-        return "Employee{" + "e_id=" + e_id + ", e_name=" + e_name + ", position=" + position + ", e_email=" + e_email + ", e_phone=" + e_phone + ", adress=" + adress + ", gender=" + gender + ", b_id=" + b_id + ", dob=" + dob + '}';
+        return "Employee{" + "e_id=" + e_id + ", e_name=" + e_name + ", position=" + position + ", e_email=" + e_email + ", e_phone=" + e_phone + ", e_address=" + e_address + ", gender=" + gender + ", DOB=" + DOB + '}';
     }
-    
+
+   
 }

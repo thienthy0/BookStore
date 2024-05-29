@@ -34,7 +34,7 @@ public class DAOAccount extends DBConnect {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Account cus = new Account(
-                        rs.getInt("account_id"), 
+                        rs.getInt("account_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -42,7 +42,9 @@ public class DAOAccount extends DBConnect {
                         rs.getString("password"),
                         rs.getString("account_image"),
                         rs.getString("address"),
+                        
                         rs.getBoolean("is_admin"),
+                        rs.getBoolean("is_employee"),
                         rs.getBoolean("active")
                 );
                 list.add(cus);
@@ -71,6 +73,7 @@ public class DAOAccount extends DBConnect {
                         rs.getString("account_image"),
                         rs.getString("address"),
                         rs.getBoolean("is_admin"),
+                        rs.getBoolean("is_employee"),
                         rs.getBoolean("active")
                 );
                 return cus;
@@ -90,8 +93,8 @@ public class DAOAccount extends DBConnect {
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                acc = new Account(
-                        rs.getInt("account_id"), 
+                acc = new  Account(
+                        rs.getInt("account_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -99,10 +102,11 @@ public class DAOAccount extends DBConnect {
                         rs.getString("password"),
                         rs.getString("account_image"),
                         rs.getString("address"),
+                        
                         rs.getBoolean("is_admin"),
+                        rs.getBoolean("is_employee"),
                         rs.getBoolean("active")
-                );
-                return acc;
+                );                return acc;
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -213,7 +217,9 @@ public class DAOAccount extends DBConnect {
                         rs.getString("password"),
                         rs.getString("account_image"),
                         rs.getString("address"),
+                        
                         rs.getBoolean("is_admin"),
+                        rs.getBoolean("is_employee"),
                         rs.getBoolean("active")
                 );
                 return cus;
@@ -243,7 +249,7 @@ public class DAOAccount extends DBConnect {
     public static void main(String[] args) throws SQLException {
         DAOAccount dao = new DAOAccount();
         Account acc = dao.getAccountByEmail("thientrieu20002@gmail.com");
-        dao.changePassword("12121212", 1);
+        dao.changePassword("123123", acc.getAccount_id());
         if (acc != null) {
             System.out.println(acc);
         } else {

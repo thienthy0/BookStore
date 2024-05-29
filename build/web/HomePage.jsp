@@ -155,5 +155,20 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         </div>
                         </section>
                         <%@include file="./Footer.jsp" %>
+                        <script>
+                            function handleSearch() {
+                                const headerInput = document.getElementById("header-search");
+                                window.location = "Search?keyword=" + headerInput.value;
+                            }
+
+                            // Lắng nghe sự kiện khi click vào "Clear all"
+                            document.getElementById("clearAll").addEventListener("click", function () {
+                               
+                                // Gửi form để quay về đường dẫn gốc
+                                window.location = "BookURL"
+                            }
+                            );
+
+                        </script>
                         </body>
                         </html>

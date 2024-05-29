@@ -34,7 +34,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-1">
                         <div class="header-logo">
-                            <a href="ProductURL"><img src="./images/Logo.jpg" alt=""></a>
+                            <a href="BookURL"><img src="./images/Logo.jpg" alt=""></a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -46,37 +46,37 @@
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item">
-                                            <a class="nav-link" aria-current="page" href="#">Men</a>
+                                            <a class="nav-link" aria-current="page" href="#">Adventure</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Women</a>
+                                            <a class="nav-link" href="#">Novel</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Kids</a>
+                                            <a class="nav-link" href="#">Horror</a>
                                         </li>
                                         <li class="nav-item has-child">
                                             <a class="nav-link" href="#">
-                                                Home
+                                                Text Book
                                             </a>
                                             <ul class="submenu">
-                                                <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
-                                                <li class="nav-item has-child"><a class="nav-link" href="">Kids</a>
+                                                <li class="nav-item"><a class="nav-link" href="">Primary School</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="">Secondary School</a></li>
+                                                <li class="nav-item has-child"><a class="nav-link" href="">High School</a>
                                                     <ul class="submenu">
-                                                        <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">9</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">10</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">11</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">13</a></li>
                                                     </ul>
                                                 </li>
-                                                <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="">Reference</a></li>
                                             </ul>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Beauty</a>
+                                            <a class="nav-link" href="#">Romance</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Studio</a>
+                                            <a class="nav-link" href="#">Detective</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -117,7 +117,7 @@
                                                 </a>
                                                 <%} else {%>
                                                 <a href="profile" class="d-block">
-                                                    <img src="./images/accountImg.png" alt="">
+                                                    <img src="./images/avata.jpg" alt="">
                                                 </a>
                                                 <%}%>
 
@@ -134,7 +134,7 @@
                                             <%} else {%>
                                             <!-- not access -->
                                             <div class="user-not-access">
-                                                <span class="not-access-title">Wellcome</span>
+                                                <span class="not-access-title">Welcome</span>
                                                 <p>To access account and manage orders</p>
                                                 <a href="login" class="login-link">
                                                     <div class="login-button">
@@ -147,7 +147,7 @@
                                         <hr>
                                         <ul class="user-access-link">
                                             <li><a href="CartURL">Orders</a></li>
-                                            <li><a href="#">Wishlist</a></li>
+                                            <li><a href="ManageProduct">Manage Product</a></li>
                                             <li><a href="#">Gift Cards</a></li>
                                             <li><a href="#">Contact Us</a></li>
                                             <li class="access-new">
