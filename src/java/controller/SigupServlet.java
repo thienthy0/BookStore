@@ -89,25 +89,25 @@ public class SigupServlet extends HttpServlet {
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-
+//
         if (!isValidEmail(email)) {
             String mess = "Invalid email format.";
             setCommonValues(request, response, mess, first_name, last_name, "", phone);
             return;
         }
-
+//check format password
         if (!isValidPassword(password)) {
             String mess = "Password must be at least 8 character and combination of letters and numbers.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-
+//check password equal with confirm
         if (!password.equals(confirmPassword)) {
             String mess = "Password and confirm password do not match.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-
+//Check dublicate email
         Account haveExistEmail = d.getAccountByEmail(email);
         if (haveExistEmail != null) {
             String mess = "Email already exists.";

@@ -10,7 +10,7 @@ public class DAOAccount extends DBConnect {
 
     // Display all accounts
     public ArrayList<Account> getAllAccount() {
-        String sql = "SELECT * FROM Account";
+        String sql = "SELECT * FROM Account WHERE 1=1";
         ArrayList<Account> list = new ArrayList<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);

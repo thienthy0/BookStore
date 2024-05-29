@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.EmployeeDao;
+import dal.DaoEmployee;
 import entity.Employee;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -87,7 +87,7 @@ public class AddEmployee extends HttpServlet {
         Employee newEmployee = new Employee(e_id, e_name, position, e_email, e_phone, e_address, gender, DOB);
         
         // Thực hiện thêm mới nhân viên
-        EmployeeDao employeeDao = new EmployeeDao();
+        DaoEmployee employeeDao = new DaoEmployee();
         employeeDao.createEmployee(newEmployee);
         response.sendRedirect("employee");
     }

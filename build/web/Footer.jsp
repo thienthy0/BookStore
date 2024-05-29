@@ -82,7 +82,7 @@
                     <p class="my-4 desc-app">Secured Payment Gaeways</p>
                     <div>
                         <a href="" class="d-block">
-                            <img src="./images/pay.png" alt="" class="h-auto">
+                            <img src="./images/Payment.jpg" alt="" class="h-auto">
                         </a>
                     </div>
                 </div>

@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.EmployeeDao;
+import dal.DaoEmployee;
 import entity.Employee;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -61,7 +61,7 @@ public class updateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int e_id = Integer.parseInt(request.getParameter("e_id"));
-        EmployeeDao dao = new EmployeeDao();
+        DaoEmployee dao = new DaoEmployee();
         Employee e = dao.getEmployeeById(e_id);
         
         request.setAttribute("ed", e);
@@ -89,7 +89,7 @@ public class updateServlet extends HttpServlet {
         boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
         
         String DOB = request.getParameter("DOB");
-         EmployeeDao dao = new EmployeeDao();
+         DaoEmployee dao = new DaoEmployee();
          dao.updateEmployee(e_id, e_name, position, e_email, e_phone, e_address, gender, DOB);
          response.sendRedirect("employee");
     }

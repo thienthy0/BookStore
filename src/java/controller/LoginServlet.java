@@ -32,9 +32,9 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("account", account);
             
             if (account.getIs_admin()) {
-                response.sendRedirect("ManageProduct");
-            } else if (account.getIs_employee()) {
                 response.sendRedirect("employee");
+            } else if (account.getIs_employee()) {
+                response.sendRedirect("ManageProduct");
             } else if (account.getActive()) {
                 response.sendRedirect("HomePage.jsp");
             } else {

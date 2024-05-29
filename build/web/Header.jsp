@@ -7,7 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-    
+    <%@page import="DAL.*" %>
+    <%@page import="entity.*" %>
+    <%@page import="java.util.*" %>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,13 +23,18 @@
     </head>
 
     <body>
-       
+        <%
+            Account account = null;
+            if(session.getAttribute("account") != null) {
+                account = (Account)session.getAttribute("account");
+            }
+        %>
         <section id="header">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-1">
                         <div class="header-logo">
-                            <a href="HomePage.jsp"><img src="./images/Logo.jpg" alt=""></a>
+                            <a href="BookURL"><img src="./images/Logo.jpg" alt=""></a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -52,17 +59,17 @@
                                                 Text Book
                                             </a>
                                             <ul class="submenu">
-                                                <li class="nav-item"><a class="nav-link" href="">Primary school</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="">Secondary school</a></li>
-                                                <li class="nav-item has-child"><a class="nav-link" href="">High school</a>
+                                                <li class="nav-item"><a class="nav-link" href="">Primary School</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="">Secondary School</a></li>
+                                                <li class="nav-item has-child"><a class="nav-link" href="">High School</a>
                                                     <ul class="submenu">
                                                         <li class="nav-item"><a class="nav-link" href="">9</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="">10</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="">11</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="">12</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">13</a></li>
                                                     </ul>
                                                 </li>
-                                                <li class="nav-item"><a class="nav-link" href="">College</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="">Reference</a></li>
                                             </ul>
                                         </li>
                                         <li class="nav-item">
@@ -85,7 +92,7 @@
                             </div>
                             <div class="search-input" >
                                 <input type="text" id="header-search"
-                                       placeholder="Search for products, brands and more" 
+                                       placeholder="Search for name book and more" 
                                        aria-label="Example text with button addon"
                                        />
                             </div>
@@ -102,10 +109,32 @@
                                     <div class="user-box_access">
                                         <div class="user-box-header">
                                             <!-- access -->
-                                          
+                                            <%if(account != null) {%>
+                                            <div class="user-access">
+                                                <%if(account.getAccount_image() != null) {%>
+                                                <a href="profile" class="d-block">
+                                                    <img src="./images/<%=account.getAccount_image()%>" alt="">
+                                                </a>
+                                                <%} else {%>
+                                                <a href="profile" class="d-block">
+                                                    <img src="./images/avata.jpg" alt="">
+                                                </a>
+                                                <%}%>
+
+                                                <div class="user-access-info">
+                                                    <span><%=account.getFirst_name() +" "+ account.getLast_name()%></span>
+                                                    <p><%=account.getAddress()%></p>
+                                                </div>
+                                                <a href="logout" class="logout-link">
+                                                    <div class="logout-button">
+                                                        Logout
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <%} else {%>
                                             <!-- not access -->
                                             <div class="user-not-access">
-                                                <span class="not-access-title">Wellcome</span>
+                                                <span class="not-access-title">Welcome</span>
                                                 <p>To access account and manage orders</p>
                                                 <a href="login" class="login-link">
                                                     <div class="login-button">
@@ -113,12 +142,12 @@
                                                     </div>
                                                 </a>
                                             </div>
-                                            
+                                            <%}%>
                                         </div>
                                         <hr>
                                         <ul class="user-access-link">
                                             <li><a href="CartURL">Orders</a></li>
-                                            <li><a href="#">Wishlist</a></li>
+                                            <li><a href="ManageProduct">Manage Product</a></li>
                                             <li><a href="#">Gift Cards</a></li>
                                             <li><a href="#">Contact Us</a></li>
                                             <li class="access-new">
