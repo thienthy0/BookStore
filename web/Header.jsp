@@ -7,7 +7,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-    
+    <%@page import="DAL.*" %>
+    <%@page import="entity.*" %>
+    <%@page import="java.util.*" %>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,13 +23,18 @@
     </head>
 
     <body>
-       
+        <%
+            Account account = null;
+            if(session.getAttribute("account") != null) {
+                account = (Account)session.getAttribute("account");
+            }
+        %>
         <section id="header">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-md-1">
                         <div class="header-logo">
-                            <a href="BookURL"><img src="./images/Logo.jpg" alt=""></a>
+                            <a href="ProductURL"><img src="./images/Logo.jpg" alt=""></a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -39,37 +46,37 @@
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item">
-                                            <a class="nav-link" aria-current="page" href="#">Adventure</a>
+                                            <a class="nav-link" aria-current="page" href="#">Men</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Novel</a>
+                                            <a class="nav-link" href="#">Women</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Horror</a>
+                                            <a class="nav-link" href="#">Kids</a>
                                         </li>
                                         <li class="nav-item has-child">
                                             <a class="nav-link" href="#">
-                                                Text Book
+                                                Home
                                             </a>
                                             <ul class="submenu">
-                                                <li class="nav-item"><a class="nav-link" href="">Primary school</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="">Secondary school</a></li>
-                                                <li class="nav-item has-child"><a class="nav-link" href="">High school</a>
+                                                <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
+                                                <li class="nav-item has-child"><a class="nav-link" href="">Kids</a>
                                                     <ul class="submenu">
-                                                        <li class="nav-item"><a class="nav-link" href="">9</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="">10</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="">11</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="">12</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
                                                     </ul>
                                                 </li>
-                                                <li class="nav-item"><a class="nav-link" href="">College</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="">Kids</a></li>
                                             </ul>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Romance</a>
+                                            <a class="nav-link" href="#">Beauty</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Detective</a>
+                                            <a class="nav-link" href="#">Studio</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -102,7 +109,29 @@
                                     <div class="user-box_access">
                                         <div class="user-box-header">
                                             <!-- access -->
-                                          
+                                            <%if(account != null) {%>
+                                            <div class="user-access">
+                                                <%if(account.getAccount_image() != null) {%>
+                                                <a href="profile" class="d-block">
+                                                    <img src="./images/<%=account.getAccount_image()%>" alt="">
+                                                </a>
+                                                <%} else {%>
+                                                <a href="profile" class="d-block">
+                                                    <img src="./images/accountImg.png" alt="">
+                                                </a>
+                                                <%}%>
+
+                                                <div class="user-access-info">
+                                                    <span><%=account.getFirst_name() +" "+ account.getLast_name()%></span>
+                                                    <p><%=account.getAddress()%></p>
+                                                </div>
+                                                <a href="logout" class="logout-link">
+                                                    <div class="logout-button">
+                                                        Logout
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <%} else {%>
                                             <!-- not access -->
                                             <div class="user-not-access">
                                                 <span class="not-access-title">Wellcome</span>
@@ -113,7 +142,7 @@
                                                     </div>
                                                 </a>
                                             </div>
-                                            
+                                            <%}%>
                                         </div>
                                         <hr>
                                         <ul class="user-access-link">

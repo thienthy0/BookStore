@@ -79,7 +79,7 @@ public class LoginServlet extends HttpServlet {
             if(acc.getIs_admin()==true) {
              response.sendRedirect("HomePage.jsp");
             } else {
-             response.sendRedirect("HomePage.jsp");
+             response.sendRedirect("BookURL");
             }
         } else {
          request.setAttribute("mess", "Email or pasword is wrong");
