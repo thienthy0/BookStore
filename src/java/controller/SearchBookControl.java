@@ -40,6 +40,13 @@ public class SearchBookControl extends HttpServlet {
         List<Book> listN =dao.getProductbyName(nameTxt);
         DAOCategory ca=new DAOCategory();   
        
+        
+       List<Book> list=dao.getAllProduct();
+       List<Category> listC=ca.getCategory();
+       String[] category_name = request.getParameterValues("category");
+       
+       request.setAttribute("listBook",list);
+       request.setAttribute("listC",listC);
       request.setAttribute("listBook",listN);
         request.getRequestDispatcher("HomePage.jsp").forward(request, response);
         
