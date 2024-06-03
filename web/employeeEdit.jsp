@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Add New Employee</title>
+    <title>Update Employee</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .modal-header {
@@ -31,9 +31,9 @@
                 <form action="edit" method="post">
                     <div class="modal-header">
                         <h4 class="modal-title">Update Employee</h4>
-                        <button type="button" class="close" onclick="$('#myModal').modal('hide'); window.history.back();" aria-hidden="true">&times;</button>
+                        <button type="button" class="close" onclick="$('#addEmployeeModal').modal('hide'); window.history.back();" aria-hidden="true">&times;</button>
                     </div>
-                    <!-- Hiển thị thông báo lỗi nếu có -->
+                    <!-- Display error message if any -->
                     <p style="color: red; text-align: center;">${error}</p>
                     <div class="modal-body">
                         <div class="form-group">
@@ -46,7 +46,12 @@
                         </div>
                         <div class="form-group">
                             <label for="position">Position</label>
-                            <input type="number" value="${ed.position}" name="position" class="form-control" required readonly>
+                            <select name="position" class="form-control" required >
+                                <option value="1" ${ed.position == 1 ? 'selected' : ''}>Marketing</option>
+                                <option value="2" ${ed.position == 2 ? 'selected' : ''}>Sales</option>
+                                <option value="3" ${ed.position == 3 ? 'selected' : ''}>Shipper</option>
+                               
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="e_email">Email</label>

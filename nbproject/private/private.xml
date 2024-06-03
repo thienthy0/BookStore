@@ -4,19 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/admin/Desktop/nam/src/java/controller/EmployeeServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/nam/src/java/dal/DAOEmployee.java</file>
-            <file>file:/C:/Users/admin/Desktop/nam/src/java/controller/BookServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/nam/src/java/controller/LoginServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/nam/web/createEmployee.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/nam/src/java/controller/DeleteEmployeeServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/nam/src/java/controller/AddEmployeeServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/nam/web/Login.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/nam/src/java/controller/updateEmployeeServlet.java</file>
-            <file>file:/C:/Users/admin/Desktop/nam/src/java/entity/Employee.java</file>
             <file>file:/C:/Users/admin/Desktop/nam/web/employeeList.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/nam/web/SignUp.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/nam/web/Profile.jsp</file>
-            <file>file:/C:/Users/admin/Desktop/nam/src/java/dal/DAOOrder.java</file>
+            <file>file:/C:/Users/admin/Desktop/nam/src/java/dal/DAOEmployee.java</file>
+            <file>file:/C:/Users/admin/Desktop/nam/web/createEmployee.jsp</file>
+            <file>file:/C:/Users/admin/Desktop/nam/src/java/entity/Account.java</file>
+            <file>file:/C:/Users/admin/Desktop/nam/web/employeeEdit.jsp</file>
+            <file>file:/C:/Users/admin/Desktop/nam/src/java/controller/AddEmployeeServlet.java</file>
+            <file>file:/C:/Users/admin/Desktop/nam/src/java/controller/updateEmployeeServlet.java</file>
         </group>
     </open-files>
 </project-private>

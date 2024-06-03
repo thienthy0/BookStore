@@ -88,7 +88,7 @@ public class updateEmployeeServlet extends HttpServlet {
     String DOB = request.getParameter("DOB");
 
     // Kiểm tra điều kiện cho position và e_phone
-    if (position > 4) {
+    if (position >= 4) {
         request.setAttribute("error", "Position must be less than or equal to 4");
         // Lưu các thông tin đã nhập vào request attribute để giữ lại trên form
         request.setAttribute("ed", new Employee(e_id, e_name, position, e_email, e_phone, e_address, gender, DOB));

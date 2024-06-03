@@ -47,7 +47,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
     String DOB = request.getParameter("DOB");
 
-    if (position >= 5) {
+    if (position >= 4) {
         request.setAttribute("error", "Position must be less than 4");
         request.setAttribute("ed", new Employee(0, e_name, position, e_email, e_phone, e_address, gender, DOB)); 
         request.getRequestDispatcher("createEmployee.jsp").forward(request, response);

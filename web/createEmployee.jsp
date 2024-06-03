@@ -40,44 +40,49 @@
                 <form action="add" method="post">
                     <div class="modal-header">
                         <h4 class="modal-title">Create Employee</h4>
-                        <button type="button" class="close" onclick="window.history.back(); $('#myModal').modal('hide');" aria-hidden="true">&times;</button>
+                        <button type="button" class="close" onclick="window.history.back(); $('#addEmployeeModal').modal('hide');" aria-hidden="true">&times;</button>
                     </div>
                     <p style="color: red; text-align: center;">${error}</p>
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="e_name">Name</label>
-                            <input type="text" value="${ed.e_name}" name="e_name" class="form-control" required>
+                            <input type="text" name="e_name" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="position">Position</label>
-                            <input type="number" value="${ed.position}" name="position" class="form-control" required>
+                            <select name="position" class="form-control" required>
+                                <option value="1" ${ed != null && ed.position == 1 ? 'selected' : ''}>Marketing</option>
+                                <option value="2" ${ed != null && ed.position == 2 ? 'selected' : ''}>Sales</option>
+                                <option value="3" ${ed != null && ed.position == 3 ? 'selected' : ''}>Shipper</option>
+                                
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="e_email">Email</label>
-                            <input type="email" value="${ed.e_email}" name="e_email" class="form-control" required>
+                            <input type="email" name="e_email" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="e_phone">Phone</label>
-                            <input type="text" value="${ed.e_phone}" name="e_phone" class="form-control" required>
+                            <input type="text" name="e_phone" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="e_address">Address</label>
-                            <input type="text" value="${ed.e_address}" name="e_address" class="form-control" required>
+                            <input type="text" name="e_address" class="form-control" required>
                         </div>
                         <div class="form-group">
                             <label for="gender">Gender</label>
                             <select name="gender" class="form-control" required>
-                                <option value="true" ${ed.gender ? 'selected' : ''}>Male</option>
-                                <option value="false" ${!ed.gender ? 'selected' : ''}>Female</option>
+                                <option value="true" ${ed != null && ed.gender ? 'selected' : ''}>Male</option>
+                                <option value="false" ${ed != null && !ed.gender ? 'selected' : ''}>Female</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="DOB">Date of Birth</label>
-                            <input type="date" value="${ed.DOB}" name="DOB" class="form-control" required>
+                            <input type="date" name="DOB" class="form-control" required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" onclick="window.history.back(); $('#myModal').modal('hide');">Cancel</button>
+                        <button type="button" class="btn btn-default" onclick="window.history.back(); $('#addEmployeeModal').modal('hide');">Cancel</button>
                         <button type="submit" class="btn btn-success">Create</button>
                     </div>
                 </form>

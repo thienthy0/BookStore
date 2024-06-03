@@ -114,7 +114,15 @@
                                         <tr>
                                             <td>${e.e_id}</td>
                                             <td>${e.e_name}</td>
-                                            <td>${e.position}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${e.position == 1}">Marketing</c:when>
+                                                    <c:when test="${e.position == 2}">Sales</c:when>
+                                                    <c:when test="${e.position == 3}">Shipper</c:when>
+                                                   
+                                                    <c:otherwise>Unknown</c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <td>${e.e_email}</td>
                                             <td>${e.e_phone}</td>
                                             <td>${e.e_address}</td>
