@@ -88,7 +88,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                         <!--<form action="ProductURL" method="get">-->
                         <div class="boder p-4">
                             <div class="d-flex align-items-center justify-content-between">
-                                <h3 class="text-uppercase fs-5 fw-bold">Thể loại: </h3>
+                                <h3 class="text-uppercase fs-5 fw-bold">Category: </h3>
                                 <i class="fa-solid fa-magnifying-glass search-icon-filter pointer"></i>
                             </div>
                             <form action="category" method="GET">
@@ -163,7 +163,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 
                             // Lắng nghe sự kiện khi click vào "Clear all"
                             document.getElementById("clearAll").addEventListener("click", function () {
-                               
+
                                 // Gửi form để quay về đường dẫn gốc
                                 window.location = "BookURL"
                             }

@@ -16,14 +16,14 @@ public class Book {
     private String author;
     private String image;
     private String language;
-    private int category;
+    private String category;
     private String publisher;
     private int num_of_page;
 
     public Book() {
     }
 
-    public Book(String name, int id, int quantity, int price, String author, String image, String language, int category, String publisher, int num_of_page) {
+    public Book(String name, int id, int quantity, int price, String author, String image, String language, String category, String publisher, int num_of_page) {
         this.name = name;
         this.id = id;
         this.quantity = quantity;
@@ -92,11 +92,11 @@ public class Book {
         this.language = language;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
