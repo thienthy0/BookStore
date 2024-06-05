@@ -12,19 +12,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/Login.jsp</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/src/java/controller/ProfileServlet.java</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/src/java/controller/LoginServlet.java</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/SignUp.jsp</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/src/java/controller/updateServlet.java</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/images/Logo.jpg</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/src/java/dal/DaoEmployee.java</file>
+            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/style.css</file>
             <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/Profile.jsp</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/src/java/dal/DBConnect.java</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/Header.jsp</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/Footer.jsp</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/src/java/controller/EmployeeServlet.java</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/employeeEdit.jsp</file>
         </group>
     </open-files>
 </project-private>

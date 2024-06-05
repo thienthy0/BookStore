@@ -24,21 +24,22 @@
         <%@include file="./Header.jsp" %>
         <section>
             <div class="w-60 m-auto">
-                <h1 class="my-4">Account</h1>
+                <h1 class="my-4">Profile</h1>
                 <div class="mt-5">
                     <ul class="d-flex py-4 border-top border-bottom text-center px-3">
                         <c:forEach var="service" items="${listService}">
                             <li class="me-5">
                                 <a href="profile?Service=${service}"
                                    <c:if test="${service == current}">
-                                       style="text-decoration: underline; text-decoration-color: var(--pink-color);"
+                                       style="border-bottom: 5px solid var(--pink-color); text-decoration: none;"
                                    </c:if>
                                    <c:if test="${service != current}">
                                        style="text-decoration: none;"
                                    </c:if>
-                                   class="fs-3 text-dark ">${service}</a>
+                                   class="fs-3 text-dark">${service}</a>
                             </li>
                         </c:forEach>
+
                     </ul>
                 </div>
                 <div class="">

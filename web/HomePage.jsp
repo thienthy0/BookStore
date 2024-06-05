@@ -91,7 +91,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <!--<form action="ProductURL" method="get">-->
                             <div class="boder p-4">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h3 class="text-uppercase fs-5 fw-bold">Thể loại: </h3>
+                                    <h3 class="text-uppercase fs-5 fw-bold">Category: </h3>
                                     <i class="fa-solid fa-magnifying-glass search-icon-filter pointer"></i>
                                 </div>
                                 <form action="category" method="GET">
@@ -127,7 +127,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                             <c:forEach items="${requestScope.listBook}" 
                                        var="o">
                                 <div class="col-sm-6 col-md-4 col-lg-3">
-                                    <a href="ProductURL?Service=ProductDetail&Pid=${o.id}" class="d-block h-100 product-item text-decoration-none position-relative">
+                                    <a href="BookDetail?Pid=${o.id}" class="d-block h-100 product-item text-decoration-none position-relative">
                                         <div class="boder-radius-3 position-relative overflow-hidden">
 
                                             <img src="${o.image}" alt="" class="overflow-hidden" style="width: 270px; height: 380px">
@@ -138,7 +138,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                                 </button>
                                                 <button class="button-product me-3">
                                                     <i class="fa-solid fa-arrows-up-down-left-right"></i>
-                                                    &ensp; Qick view
+                                                    &ensp; Quick view
                                                 </button>
                                             </div>
 
@@ -149,7 +149,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
                                                 <p class="fs-4 product-des">${o.category}</p>
 
                                                 <div class="d-flex align-items-center justify-content-between mt-4">
-                                                    <span class="product-price">${o.price}₫</span>
+                                                    <span class="product-price">${o.price}$</span>
                                                     <div class="d-flex align-items-center">                                                                                                              
                                                     </div>
                                                 </div>

@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 
 /**
  *
@@ -66,7 +65,7 @@ public class SigupServlet extends HttpServlet {
      * Handles the HTTP <code>POST</code> method.
      *
      * @param request servlet request
-     * @param response servlet response
+     * @param response servlet response)
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
@@ -80,34 +79,43 @@ public class SigupServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-        //khai bao 1 bien error
-        String error = "error";
-
-        // Kiểm tra dữ liệu đầu vào
+        
+// Check input data
         if (first_name.isEmpty() || last_name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
             String mess = "Please fill in all fields.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-//
+        
+// Check format of names
+        if (!isValidName(first_name) || !isValidName(last_name)) {
+            String mess = "Names cannot contain numbers or special characters.";
+            setCommonValues(request, response, mess, first_name, last_name, email, phone);
+            return;
+        }
+        
+// Check format of email
         if (!isValidEmail(email)) {
             String mess = "Invalid email format.";
             setCommonValues(request, response, mess, first_name, last_name, "", phone);
             return;
         }
-//check format password
+        
+// Check format of password
         if (!isValidPassword(password)) {
-            String mess = "Password must be at least 8 character and combination of letters and numbers.";
+            String mess = "Password must be at least 8 characters long and contain a combination of letters and numbers.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-//check password equal with confirm
+        
+// Check if password matches confirm password
         if (!password.equals(confirmPassword)) {
             String mess = "Password and confirm password do not match.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-//Check dublicate email
+        
+// Check for duplicate email
         Account haveExistEmail = d.getAccountByEmail(email);
         if (haveExistEmail != null) {
             String mess = "Email already exists.";
@@ -124,11 +132,10 @@ public class SigupServlet extends HttpServlet {
             session.setAttribute("account", acc);
             response.sendRedirect("HomePage.jsp");
         } else {
-            String mess = "have error";
+            String mess = "An error occurred. Please try again.";
             request.setAttribute("message", mess);
             request.getRequestDispatcher("SignUp.jsp").forward(request, response);
         }
-
     }
 
     private void setCommonValues(HttpServletRequest request, HttpServletResponse response, String mess, String first_name,
@@ -141,15 +148,21 @@ public class SigupServlet extends HttpServlet {
         request.getRequestDispatcher("SignUp.jsp").forward(request, response);
     }
 
+    private boolean isValidName(String name) {
+        // Check if the name contains only letters (both uppercase and lowercase)
+        return name.matches("[A-Za-z]+");
+    }
+
     private boolean isValidEmail(String email) {
-        // Kiểm tra định dạng email
+        // Check email format
         return email.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
     }
 
     private boolean isValidPassword(String password) {
-        // Kiểm tra độ dài mật khẩu và mức độ mạnh
+        // Check password length and strength
         return password.length() >= 8 && password.matches(".*[A-Za-z].*") && password.matches(".*\\d.*");
     }
+
     /**
      * Returns a short description of the servlet.
      *
@@ -162,7 +175,7 @@ public class SigupServlet extends HttpServlet {
 
     public static void main(String[] args) {
         DAOAccount d = new DAOAccount();
-        Account acc = new Account(21, "Nguyen", "vu", "0912393759", "vu@gmail.com", "123");
+        Account acc = new Account(21, "Nguyen", "vu", "0912393759", "vu3@gmail.com", "123");
         boolean haveAdd = d.addAccount(acc);
         System.out.println(haveAdd);
     }

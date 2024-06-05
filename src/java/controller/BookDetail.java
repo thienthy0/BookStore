@@ -4,23 +4,22 @@
  */
 package controller;
 
-import dal.DaoEmployee;
-import entity.Employee;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import dal.DAOBook;
+import entity.Book;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author admin
+ * @author trand
  */
-public class UpdateServlet extends HttpServlet {
+@WebServlet(name = "BookDetail", urlPatterns = {"/BookDetail"})
+public class BookDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class UpdateServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet updateServlet</title>");            
+            out.println("<title>Servlet BookDetail</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet updateServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BookDetail at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,15 +59,12 @@ public class UpdateServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int e_id = Integer.parseInt(request.getParameter("e_id"));
-        DaoEmployee dao = new DaoEmployee();
-        Employee e = dao.getEmployeeById(e_id);
-        
-        request.setAttribute("ed", e);
-      
-       
-        
-      request.getRequestDispatcher("employeeEdit.jsp").forward(request, response);
+        DAOBook d = new DAOBook();
+        String pid_raw = request.getParameter("Pid");
+        int pid = Integer.parseInt(pid_raw);
+        Book currentP = d.getProductById(pid);
+        request.setAttribute("currentProduct", currentP);
+        request.getRequestDispatcher("ProductDetail.jsp").forward(request, response);
     }
 
     /**
@@ -79,20 +75,17 @@ public class UpdateServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int e_id = Integer.parseInt(request.getParameter("e_id"));
-        String e_name = request.getParameter("e_name");
-        int position = Integer.parseInt(request.getParameter("position"));
-        String e_email = request.getParameter("e_email");
-        String e_phone = request.getParameter("e_phone");
-        String e_address = request.getParameter("e_address");
-        boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-        
-        String DOB = request.getParameter("DOB");
-         DaoEmployee dao = new DaoEmployee();
-         dao.updateEmployee(e_id, e_name, position, e_email, e_phone, e_address, gender, DOB);
-         response.sendRedirect("employee");
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

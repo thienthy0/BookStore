@@ -14,7 +14,7 @@
                 <div class="row align-items-center h-78">
                     <div class="col-md-1">
                         <div class="header-logo">
-                            <a href="HomePage.jsp"><img src="./images/Logo.jpg" alt=""></a>
+                            <a href="BookURL"><img src="./images/Logo.jpg" alt=""></a>
                         </div>
                     </div>
                 </div>

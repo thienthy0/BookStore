@@ -36,12 +36,11 @@ public class LoginServlet extends HttpServlet {
             } else if (account.getIs_employee()) {
                 response.sendRedirect("ManageProduct");
             } else if (account.getActive()) {
-                response.sendRedirect("HomePage.jsp");
+                response.sendRedirect("BookURL");
             } else {
-                // Người dùng không có quyền hoặc không hoạt động
-                request.setAttribute("mess", "You do not have permission to access the system.");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
+                response.sendRedirect("BookURL");
             }
+
         } else {
             request.setAttribute("mess", "Email or password is wrong");
             request.getRequestDispatcher("Login.jsp").forward(request, response);

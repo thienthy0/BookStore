@@ -1474,16 +1474,17 @@ input {
 .insert-product-input input {
   height: 5rem;
 }
-.error-message {
-    position: fixed;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -70%);
-    background-color: red;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.underline {
+    position: relative;
+}
+
+.underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Điều chỉnh vị trí của gạch chân so với văn bản */
+    width: 100%;
+    height: 3px; /* Độ rộng của gạch chân */
+    background-color: var(--pink-color); /* Màu của gạch chân */
 }

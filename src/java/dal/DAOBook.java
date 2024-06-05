@@ -4,17 +4,14 @@
  */
 package dal;
 
-import entity.Author;
 import entity.Book;
 import entity.Category;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Connection;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +27,9 @@ public class DAOBook extends DBConnect {
 
     public List<Book> getAllProduct() {
         List<Book> list = new ArrayList<>();
-        String query = "select * from Book";
+        String query = "select b.name,b.book_id,b.quantity,b.price,a.author_name,b.image,b.language,c.category_name,b.publisher,b.number_of_pages\n"
+                + "from Book b , Category c ,Author a\n"
+                + "where c.category_id=b.category_id and a.author_id=b.author_id";
         try {
             conn = new DBConnect().connection;
             ps = conn.prepareStatement(query);
@@ -43,7 +42,7 @@ public class DAOBook extends DBConnect {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getInt(8),
+                        rs.getString(8),
                         rs.getString(9),
                         rs.getInt(10)));
             }
@@ -72,7 +71,7 @@ public class DAOBook extends DBConnect {
                         rs.getString(5),
                         rs.getString(6),
                         rs.getString(7),
-                        rs.getInt(8),
+                        rs.getString(8),
                         rs.getString(9),
                         rs.getInt(10)));
             }
@@ -83,6 +82,64 @@ public class DAOBook extends DBConnect {
 
     }
 
+    public List<Book> getProductbyName(String name) {
+        List<Book> list = new ArrayList<>();
+        String query = "SELECT * FROM Book WHERE name LIKE ?";
+
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + name + "%"); // Correct way to include wildcards
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Book(rs.getString(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getInt(10)));
+            }
+        } catch (Exception e) {
+
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e) {
+
+            }
+        }
+
+        return list;
+    }
+
+    public int getTotalBook() {
+        String query = "select count(*) from Book";
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+        }
+
+        return 0;
+    }
+
     public static void main(String[] args) {
         DAOBook dao = new DAOBook();
         List<Book> list = dao.getProductbyCID("1");
@@ -91,92 +148,81 @@ public class DAOBook extends DBConnect {
         }
     }
 
-    public Book getBookById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public Vector<Book> getAllProduct(String start, String numPP) throws SQLException {
-            String sql = "SELECT P.[name], P.[id], P.[quantity], P.[price], P.[author_id], P.[image], P.[language], " +
-                 "P.[category_id], C.[category_name], P.[publisher], P.[number_of_pages] " +
-                 "FROM [Bookstore].[dbo].[Book] P " +
-                 "JOIN [Bookstore].[dbo].[Category] C ON C.[category_id] = P.[category_id] " +
-                 "ORDER BY P.[id] " +
-                 "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        Vector<Book> list = new Vector<>();
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Author brand = new Author(
-                        rs.getInt("author_id"),
-                        rs.getString("author_name")
-                );
-                Category category = new Category(
-                        rs.getInt("category_id"),
-                        rs.getString("category_name")
-                );
-                Book p = new Book(
-                        rs.getString("name"),
-                        rs.getInt("id"),
-                        rs.getInt("discount"),
-                        rs.getInt("quantity"),
-                        rs.getString("author"),
-                        rs.getString("image"),
-                        rs.getString("language"),
-                        rs.getInt("category"),
-                        rs.getString("publisher"),
-                        rs.getInt("num of page")
-                );
-                list.add(p);
+    public int getTotalBooksByCategory(int categoryId) {
+        String sql = "SELECT COUNT(*) FROM Book WHERE category_id = ?";
+        try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, categoryId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
             }
         } catch (SQLException e) {
-            System.out.println(e);
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public List<Book> getBooksByCategoryWithPagination(int categoryId, int page, int pageSize) {
+        List<Book> list = new ArrayList<>();
+        String sql = "SELECT * FROM Book WHERE category_id = ? LIMIT ? OFFSET ?";
+        try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, categoryId);
+            ps.setInt(2, pageSize);
+            ps.setInt(3, (page - 1) * pageSize);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    list.add(new Book(rs.getString(1),
+                            rs.getInt(2),
+                            rs.getInt(3),
+                            rs.getInt(4),
+                            rs.getString(5),
+                            rs.getString(6),
+                            rs.getString(7),
+                            rs.getString(8),
+                            rs.getString(9),
+                            rs.getInt(10)));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return list;
     }
 
     public Book getProductById(int pid) {
-        String sql = "Select * from Book P\n"
-                + "join categorys C on C.category_id = P.category_id\n"
-                + "join brands B on B.brand_id = P.brand_id WHERE P.product_id = ?";
-        Book p = null;
+        String sql = "Select * from Book P \n"
+                + "inner join Author A on A.author_id = P.author_id\n"
+                + "inner join Category C on C.category_id = P.category_id\n"
+                + "WHERE P.book_id = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, pid);
-            ResultSet rs = st.executeQuery();
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, pid);
+            rs = ps.executeQuery();
             while (rs.next()) {
-                Author brand = new Author(
-                        rs.getInt("author_id"),
-                        rs.getString("author_name")
-                );
-                Category category = new Category(
-                        rs.getInt("category_id"),
-                        rs.getString("category_name")
-                );
-                p = new Book(
+                return new Book(
                         rs.getString("name"),
-                        rs.getInt("id"),
-                        rs.getInt("discount"),
+                        rs.getInt("book_id"),
                         rs.getInt("quantity"),
-                        rs.getString("author"),
+                        rs.getInt("price"),
+                        rs.getString("author_name"),
                         rs.getString("image"),
                         rs.getString("language"),
-                        rs.getInt("category"),
+                        rs.getString("category_name"),
                         rs.getString("publisher"),
-                        rs.getInt("num of page")
+                        rs.getInt("number_of_pages")
                 );
-                return p;
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return p;
+        return null;
     }
 
     public void addProduct(Book pro) {
         String sql = "INSERT INTO [dbo].[Book]\n"
                 + "           ([name]\n"
-                + "           ,[id]\n"
+                + "           ,[book_id]\n"
                 + "           ,[quantity]\n"
                 + "           ,[price]\n"
                 + "           ,[author_id]\n"
@@ -193,11 +239,12 @@ public class DAOBook extends DBConnect {
             st.setInt(2, pro.getId());
             st.setInt(3, pro.getQuantity());
             st.setInt(4, pro.getPrice());
-            st.setString(5, pro.getAuthor()); // Assuming author_id is stored as a string in getAuthor()
+            st.setString(5, "1");
             st.setString(6, pro.getImage());
             st.setString(7, pro.getLanguage());
-            st.setInt(8, pro.getCategory());
+            st.setString(8, pro.getCategory());
             st.setString(9, pro.getPublisher());
+            st.setInt(10, pro.getNum_of_page());
             st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -205,8 +252,8 @@ public class DAOBook extends DBConnect {
     }
 
     public int deleteProduct(int pid) {
-        String sql = "DELETE FROM [dbo].[book]\n"
-                + " WHERE id = ?";
+        String sql = "DELETE FROM [dbo].[Book]\n"
+                + " WHERE book_id = ?";
         int n = -1;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -220,67 +267,63 @@ public class DAOBook extends DBConnect {
     }
 
     public void updateProduct(Book pro) {
-        String sql = "INSERT INTO [dbo].[Book] " +
-                 "([name], [id], [quantity], [price], [author_id], [image], [language], [category_id], [publisher], [number_of_pages]) " +
-                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+        String sql = "UPDATE [dbo].[Book]\n"
+                + "SET \n"
+                + "    [name] = ?,\n"
+                + "    [quantity] = ?,\n"
+                + "    [price] = ?,\n"
+                + "    [author_id] = ?,\n"
+                //                + "    [image] = ?,\n"
+                + "    [language] = ?,\n"
+                + "    [category_id] = ?,\n"
+                + "    [publisher] = ?,\n"
+                + "    [number_of_pages] = ?\n"
+                + "WHERE \n"
+                + "    [book_id] = ?";
+        if (!pro.getImage().equals("")) {
+            sql = "UPDATE [dbo].[Book]\n"
+                    + "SET \n"
+                    + "    [name] = ?,\n"
+                    + "    [quantity] = ?,\n"
+                    + "    [price] = ?,\n"
+                    + "    [author_id] = ?,\n"
+                    + "    [image] = ?,\n"
+                    + "    [language] = ?,\n"
+                    + "    [category_id] = ?,\n"
+                    + "    [publisher] = ?,\n"
+                    + "    [number_of_pages] = ?\n"
+                    + "WHERE \n"
+                    + "    [book_id] = ?";
+        }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, pro.getName());
-            st.setInt(2, pro.getId());
-            st.setInt(3, pro.getQuantity());
-            st.setInt(4, pro.getPrice());
-            st.setString(5, pro.getAuthor()); // Assuming author_id is stored as a string in getAuthor()
-            st.setString(6, pro.getImage());
-            st.setString(7, pro.getLanguage());
-            st.setInt(8, pro.getCategory());
-            st.setString(9, pro.getPublisher());
+            if (!pro.getImage().equals("")) {
+                st.setString(1, pro.getName());
+                st.setInt(2, pro.getQuantity());
+                st.setInt(3, pro.getPrice());
+                st.setString(4, "1"); // Assuming author_id is stored as a string in getAuthor()
+                st.setString(5, pro.getImage());
+                st.setString(6, pro.getLanguage());
+                st.setString(7, pro.getCategory());
+                st.setString(8, pro.getPublisher());
+                st.setInt(9, pro.getNum_of_page());
+                st.setInt(10, pro.getId());
+            } else {
+                st.setString(1, pro.getName());
+                st.setInt(2, pro.getQuantity());
+                st.setInt(3, pro.getPrice());
+                st.setString(4, "1"); // Assuming author_id is stored as a string in getAuthor()
+//            st.setString(5, pro.getImage());
+                st.setString(5, pro.getLanguage());
+                st.setString(6, pro.getCategory());
+                st.setString(7, pro.getPublisher());
+                st.setInt(8, pro.getNum_of_page());
+                st.setInt(9, pro.getId());
+            }
             st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-
-    }
-
-    public Vector<Book> getAllProduct(String orderType) throws SQLException {
-        String sql = "Select * from Book P\n"
-                + " join categorys C on C.category_id = P.category_id\n"
-                + " join brands B on B.brand_id = P.brand_id";
-        if (orderType != null && !orderType.equals("")) {
-            sql += " order by P.list_price " + orderType;
-        }
-        Vector<Book> list = new Vector<>();
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Author brand = new Author(
-                        rs.getInt("Author_id"),
-                        rs.getString("Author_name")
-                );
-                Category category = new Category(
-                        rs.getInt("category_id"),
-                        rs.getString("category_name")
-                );
-                Book p;
-                p = new Book(
-                        rs.getString("name"),
-                        rs.getInt("id"),
-                        rs.getInt("discount"),
-                        rs.getInt("quantity"),
-                        rs.getString("author"),
-                        rs.getString("image"),
-                        rs.getString("language"),
-                        rs.getInt("category"),
-                        rs.getString("publisher"),
-                        rs.getInt("num of page")
-                );
-                list.add(p);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return list;
 
     }
 }
