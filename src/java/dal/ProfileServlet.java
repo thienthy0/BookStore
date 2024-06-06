@@ -10,7 +10,6 @@ import dal.DAOOrder;
 import dal.DAOOrderItem;
 import entity.Account;
 import entity.Order;
-import entity.OrderItem;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
