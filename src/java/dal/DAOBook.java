@@ -27,7 +27,7 @@ public class DAOBook extends DBConnect {
 
     public List<Book> getAllProduct() {
         List<Book> list = new ArrayList<>();
-        String query = "select b.name,b.book_id,b.quantity,b.price,a.author_name,b.image,b.language,c.category_name,b.publisher,b.number_of_pages,b.discount\n"
+        String query = "select b.name,b.book_id,b.quantity,b.price,a.author_name,b.image,b.language,c.category_name,b.publisher,b.description,b.number_of_pages,b.discount\n"
                 + "from Book b , Category c ,Author a\n"
                 + "where c.category_id=b.category_id and a.author_id=b.author_id";
         try {
@@ -44,8 +44,9 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10),
-                        rs.getInt(11)));
+                        rs.getString(10),
+                        rs.getInt(11),
+                        rs.getInt(12)));
             }
         } catch (Exception e) {
         }
@@ -74,8 +75,9 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10),
-                        rs.getInt(11)));
+                        rs.getString(10),
+                        rs.getInt(11),
+                        rs.getInt(12)));
             }
         } catch (Exception e) {
         }
@@ -103,8 +105,9 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10),
-                        rs.getInt(11)));
+                        rs.getString(10),
+                        rs.getInt(11),
+                        rs.getInt(12)));
             }
         } catch (Exception e) {
 
@@ -146,7 +149,7 @@ public class DAOBook extends DBConnect {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     list.add(new Book(rs.getString(1),
-                            rs.getInt(2),
+                        rs.getInt(2),
                         rs.getInt(3),
                         rs.getInt(4),
                         rs.getString(5),
@@ -154,8 +157,9 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10),
-                        rs.getInt(11)));
+                        rs.getString(10),
+                        rs.getInt(11),
+                        rs.getInt(12)));
                 }
             }
         } catch (SQLException e) {
@@ -184,6 +188,7 @@ public class DAOBook extends DBConnect {
                         rs.getString("language"),
                         rs.getString("category_name"),
                         rs.getString("publisher"),
+                        rs.getString("description"),
                         rs.getInt("number_of_pages"),
                         rs.getInt("discount")
                 );
@@ -206,8 +211,9 @@ public class DAOBook extends DBConnect {
                 + "           ,[category_id]\n"
                 + "           ,[publisher]\n"
                 + "           ,[number_of_pages])\n"
+                + "           ,[description])\n"
                 + "           ,[discount])\n"
-                + "     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n";
+                + "     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -220,7 +226,8 @@ public class DAOBook extends DBConnect {
             st.setString(7, pro.getLanguage());
             st.setString(8, pro.getCategory());
             st.setString(9, pro.getPublisher());
-            st.setInt(10, pro.getNum_of_page());
+            st.setString(10, pro.getDescription());
+            st.setInt(11, pro.getNum_of_page());
             st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -310,7 +317,7 @@ public class DAOBook extends DBConnect {
         if (categoryIds.isEmpty()) {
             return list;
         }
-        StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher, b.number_of_pages, b.discount "
+        StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher,b.description, b.number_of_pages, b.discount "
                 + "FROM Book b, Category c, Author a "
                 + "WHERE c.category_id = b.category_id AND a.author_id = b.author_id AND b.category_id IN (");
 
@@ -339,8 +346,9 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10),
-                        rs.getInt(11)));
+                        rs.getString(10),
+                        rs.getInt(11),
+                        rs.getInt(12)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -363,7 +371,7 @@ public class DAOBook extends DBConnect {
     }
     public List<Book> getBooksByCategoryAndAuthor(List<Integer> categoryIds, List<Integer> authorIds) {
         List<Book> list = new ArrayList<>();
-        StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher, b.number_of_pages, b.discount "
+        StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher, b.description, b.number_of_pages, b.discount "
                 + "FROM Book b, Category c, Author a "
                 + "WHERE c.category_id = b.category_id AND a.author_id = b.author_id");
 
@@ -421,8 +429,9 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10),
-                        rs.getInt(11)));
+                        rs.getString(10),
+                        rs.getInt(11),
+                        rs.getInt(12)));
             }
         } catch (SQLException e) {
             e.printStackTrace();

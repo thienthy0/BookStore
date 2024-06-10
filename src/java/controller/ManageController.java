@@ -154,7 +154,7 @@ public class ManageController extends HttpServlet {
 
             int prId = daoBook.getAllProduct().get(daoBook.getAllProduct().size() - 1).getId() + 1;
 //            Book product = new Book(proName, prId, quantity, prId, addBtn, proImage, proImage, catId, proImage, prId);
-            Book product = new Book(proName, prId, quantity, prId, authorRaw, proImage, proImage, categoryIdRaw, publisher, numberOfPage, prId);
+            Book product = new Book(proName, prId, quantity, prId, authorRaw, proImage, proImage, categoryIdRaw, publisher, proPriceRaw, numberOfPage, prId);
             daoBook.addProduct(product);
             response.sendRedirect("ManageProduct");
         }
@@ -224,7 +224,7 @@ public class ManageController extends HttpServlet {
 
             int prId = Integer.parseInt(proIdRaw);
 //            Book product = new Book(proName, prId, quantity, prId, addBtn, proImage, proImage, catId, proImage, prId);
-            Book product = new Book(proName, prId, quantity, prId, authorRaw, proImage, proImage, categoryIdRaw, publisher, numberOfPage, prId);
+            Book product = new Book(proName, prId, quantity, prId, authorRaw, proImage, proImage, categoryIdRaw, publisher, proPriceRaw, numberOfPage, prId);
             daoBook.updateProduct(product);
             response.sendRedirect("ManageProduct");
         } else {

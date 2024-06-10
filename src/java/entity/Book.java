@@ -18,13 +18,14 @@ public class Book {
     private String language;
     private String category;
     private String publisher;
+    private String description;
     private int num_of_page;
     private int discount;
 
     public Book() {
     }
 
-    public Book(String name, int id, int quantity, int price, String author, String image, String language, String category, String publisher, int num_of_page, int discount) {
+    public Book(String name, int id, int quantity, int price, String author, String image, String language, String category, String publisher, String description, int num_of_page, int discount) {
         this.name = name;
         this.id = id;
         this.quantity = quantity;
@@ -34,6 +35,7 @@ public class Book {
         this.language = language;
         this.category = category;
         this.publisher = publisher;
+        this.description = description;
         this.num_of_page = num_of_page;
         this.discount = discount;
     }
@@ -110,6 +112,14 @@ public class Book {
         this.publisher = publisher;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public int getNum_of_page() {
         return num_of_page;
     }
@@ -128,7 +138,7 @@ public class Book {
 
     @Override
     public String toString() {
-        return "Book{" + "name=" + name + ", id=" + id + ", quantity=" + quantity + ", price=" + price + ", author=" + author + ", image=" + image + ", language=" + language + ", category=" + category + ", publisher=" + publisher + ", num_of_page=" + num_of_page + ", discount=" + discount + '}';
+        return "Book{" + "name=" + name + ", id=" + id + ", quantity=" + quantity + ", price=" + price + ", author=" + author + ", image=" + image + ", language=" + language + ", category=" + category + ", publisher=" + publisher + ", description=" + description + ", num_of_page=" + num_of_page + ", discount=" + discount + '}';
     }
 
     

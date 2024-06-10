@@ -148,7 +148,7 @@
                                                     <textarea name="account_description" id="account_description" cols="30" rows="10" class="w-100">${account.description}</textarea>
                                                 </div>
                                             </div>    
-                                          
+
                                         </div>
                                         <div class="mt-5">
                                             <button type="submit" class="border-0 px-5 py-4 fs-4 bg-dark text-white rounded-xl fw-bold">Update information</button>
@@ -198,53 +198,85 @@
                             </div>
                         </div>
                     </c:if>
-
-                    <!-- Form for Update Preferences -->
-                    <c:if test="${'Preferences'.equals(current)}">
-                        <div class="h-100vh mt-5">
-                            <h1 class="fw-bold">Preferences</h1>
-                            <div class="row py-5">
-                                <div class="col-md-12">
-                                    <form action="profile" method="post">
-                                        <input name="Service" value="updatePreferences" type="hidden" />
-                                        <div class="preferences">
-                                            <div class="mt-5">
-                                                <h3 class="fw-medium">Language</h3>
-                                                <div class="input-group flex-nowrap">
-                                                    <select class="form-control px-4 py-3 fs-3 rounded-xl" name="language">
-                                                        <option value="en" ${preferences.language == 'en' ? 'selected' : ''}>English</option>
-                                                        <option value="es" ${preferences.language == 'es' ? 'selected' : ''}>Spanish</option>
-                                                        <option value="fr" ${preferences.language == 'fr' ? 'selected' : ''}>French</option>
-                                                    </select>
+                    
+                    <!--My Order-->
+                    
+                    <c:if test="${requestScope.current.equals('My order')}">
+                        <c:forEach var="order" items="${myOrder}">
+                            <div class="box-shadow1 py-2 px-3 rounded-sm mt-5 d-flex justify-content-between align-items-center">
+                                <c:choose>
+                                    <c:when test="${order.status eq 'wait'}">
+                                        <div><span class="fs-3 fw-bold">Status: </span> <span class="text-danger fs-4">${order.status}</span></div>
+                                        </c:when>
+                                        <c:when test="${order.status eq 'process'}">
+                                        <div><span class="fs-3 fw-bold">Status: </span> <span class="text-warning  fs-4">${order.status}</span></div>
+                                        </c:when>
+                                        <c:when test="${order.status eq 'done'}">
+                                        <div><span class="fs-3 fw-bold">Status: </span> <span class="text-success fs-4">${order.status}</span></div>
+                                        </c:when>
+                                        <c:otherwise>
+                                        <div><span class="fs-3">Status: ${order.status}</span></div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <span class="ms-auto fs-4 fw-medium text-black">${order.order_date}</span>
+                            </div>
+                            <c:forEach var="orderItem" items="${myOrderDetail}">
+                                <c:if test="${order.order_id == orderItem.order_id}">
+                                    <div class="h-100vh mt-5">
+                                        <div class="col-md-12 border-end border-start pe-5">
+                                            <div class="row order-item pb-5">
+                                                <div class="col-2">
+                                                    <a href="ProductURL?Service=ProductDetail&Pid=${orderItem.getProduct().product_id}" class="d-block h-100">
+                                                        <img src="./images/${orderItem.getProduct().product_img}" alt="" class="rounded-lg object-fit-cover">
+                                                    </a>
                                                 </div>
-                                            </div>
-                                            <div class="mt-5">
-                                                <h3 class="fw-medium">Time Zone</h3>
-                                                <div class="input-group flex-nowrap">
-                                                    <select class="form-control px-4 py-3 fs-3 rounded-xl" name="timezone">
-                                                        <c:forEach var="tz" items="${timezones}">
-                                                            <option value="${tz}" ${preferences.timezone == tz ? 'selected' : ''}>${tz}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="mt-5">
-                                                <h3 class="fw-medium">Notifications</h3>
-                                                <div class="input-group flex-nowrap">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" id="emailNotifications" name="emailNotifications" ${preferences.emailNotifications ? 'checked' : ''}>
-                                                        <label class="form-check-label fs-3" for="emailNotifications">Email Notifications</label>
+                                                <div class="col-9 d-flex flex-fill flex-column justify-content-between ">
+                                                    <div class="h-50 d-flex align-items-center justify-content-between flex-fill">
+                                                        <div class="">
+                                                            <h3 class="fw-bold">${orderItem.getProduct().product_name}</h3>
+                                                            <div class="d-flex align-items-center position-relative hover-change">
+                                                                <div class="">
+                                                                    <i class="fa-solid fa-fill-drip me-3"></i>
+                                                                    <span class="text-black"> a </span>
+                                                                </div>
+                                                                <div class="border-line border-l mx-3"></div>
+                                                                <div class="">
+                                                                    <i class="fa-solid fa-store me-3"></i>
+                                                                    <span class="text-black"> a </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="">
+                                                            <span class="fs-4">đ${orderDetail.price}</span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="box-input">
+                                                                <button class="border-0 bg-white">
+                                                                    <a class="p-3 text-black"><i class="fa-solid fa-minus fs-5"></i></a>
+                                                                </button>
+                                                                <input type="text" value="${orderDetail.quantity}" class="input-number" id="numberValue" />
+                                                                <button class="border-0 bg-white">
+                                                                    <a class="p-3 text-black"><i class="fa-solid fa-plus fs-5"></i></a>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="fs-4">
+                                                            <!--//gia * sl-->
+                                                            <span class="text-danger">đ${orderDetail.orderItemPrice()}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="h-50 d-flex align-items-center justify-content-between">
+                                                        <c:if test="${orderDetail.getDiscount() > 0}">
+                                                            <span class="text-white p-1 mx-2 fs-5 fw-bold bg-danger tag-sale">Sale ${orderDetail.getDiscount()}%</span>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-5">
-                                                <button type="submit" class="border-0 px-5 py-4 fs-4 bg-dark text-white rounded-xl fw-bold">Update Preferences</button>
-                                            </div>
                                         </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                                    </div>
+                                </c:if>
+                            </c:forEach>
+                        </c:forEach>
                     </c:if>
                 </div>
             </div>

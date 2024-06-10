@@ -4,61 +4,74 @@
  */
 package entity;
 
+import java.sql.Date;
+import java.util.Vector;
+
 /**
  *
  * @author laptop368
  */
 public class Order {
-    private String o_id;
-    private String date;
-    private String c_id;
-    private boolean status;
+    private int o_id, account_id;
+    private String status;
+    private Date order_date, receive_date;
 
-    public Order() {
+    public Order(int aInt, int aInt1, String string, Date date, Date date1, Vector<OrderDetail> orderItemByOrderId, Account acc) {
     }
 
-    public Order(String o_id, String date, String c_id, boolean status) {
+    public Order(int o_id, int account_id, String status, Date order_date, Date receive_date) {
         this.o_id = o_id;
-        this.date = date;
-        this.c_id = c_id;
+        this.account_id = account_id;
         this.status = status;
+        this.order_date = order_date;
+        this.receive_date = receive_date;
     }
 
-    public String getO_id() {
+    public int getO_id() {
         return o_id;
     }
 
-    public void setO_id(String o_id) {
+    public void setO_id(int o_id) {
         this.o_id = o_id;
     }
 
-    public String getDate() {
-        return date;
+    public int getAccount_id() {
+        return account_id;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setAccount_id(int account_id) {
+        this.account_id = account_id;
     }
 
-    public String getC_id() {
-        return c_id;
-    }
-
-    public void setC_id(String c_id) {
-        this.c_id = c_id;
-    }
-
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Date getOrder_date() {
+        return order_date;
+    }
+
+    public void setOrder_date(Date order_date) {
+        this.order_date = order_date;
+    }
+
+    public Date getReceive_date() {
+        return receive_date;
+    }
+
+    public void setReceive_date(Date receive_date) {
+        this.receive_date = receive_date;
     }
 
     @Override
     public String toString() {
-        return "Order{" + "o_id=" + o_id + ", date=" + date + ", c_id=" + c_id + ", status=" + status + '}';
+        return "Order{" + "o_id=" + o_id + ", account_id=" + account_id + ", status=" + status + ", order_date=" + order_date + ", receive_date=" + receive_date + '}';
     }
+
    
+    
 }

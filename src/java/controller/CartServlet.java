@@ -62,6 +62,7 @@ public class CartServlet extends HttpServlet {
                         p_root.getLanguage(),
                         p_root.getCategory(),
                         p_root.getPublisher(),
+                        p_root.getDescription(),
                         p_root.getNum_of_page(),
                         p_root.getDiscount()
                 );
@@ -78,6 +79,7 @@ public class CartServlet extends HttpServlet {
                         p.getLanguage(),
                         p.getCategory(),
                         p.getPublisher(),
+                        p.getDescription(),
                         p.getNum_of_page(),
                         p.getDiscount()
                 );

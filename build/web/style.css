@@ -405,10 +405,10 @@ input {
 }
 
 .input-box {
-/*    display: flex;
-    align-items: center;
-    align-items: center;
-    overflow: hidden;*/
+    /*    display: flex;
+        align-items: center;
+        align-items: center;
+        overflow: hidden;*/
 }
 
 .input-box .search-icon,
@@ -846,10 +846,10 @@ input {
 }
 
 .left-nav {
-/*    overflow-y: scroll;
-    position: sticky;
-    height: 100%;
-    top: 0;*/
+    /*    overflow-y: scroll;
+        position: sticky;
+        height: 100%;
+        top: 0;*/
 }
 
 .left-nav h3 {
@@ -1150,7 +1150,8 @@ input {
 
 /* .product-detail */
 
-#product-detail {}
+#product-detail {
+}
 
 .main-image {
     border: 1px solid var(--pink-color);
@@ -1333,7 +1334,8 @@ input {
 
 /* Categories  */
 
-.order-item img {}
+.order-item img {
+}
 
 .box-change {
     display: none;
@@ -1392,7 +1394,8 @@ input {
     opacity: 0;
 }
 
-.user-info {}
+.user-info {
+}
 
 .user-info input,
 .user-info select {
@@ -1438,23 +1441,24 @@ input {
 .ordered-item:hover {
     background-color: var(--ordered-hover-bg) !important;
     color: var(--white-color) !important;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    ;
 }
 .box-detail:hover .change-status {
-   display: block !important;
-   z-index: 100!important;
+    display: block !important;
+    z-index: 100!important;
 }
 .display-order.choose {
-   background-color: var(--pink-color);
-   color: var(--white-color);
+    background-color: var(--pink-color);
+    color: var(--white-color);
 }
 .display-order.choose a {
     color: var(--white-color);
- }
+}
 .left-nav-admin {
     background-color: var(--ordered-hover-bg);
-   
- }
+
+}
 .left-nav-admin li.active {
     background-color: var(--white-color);
     border-top-left-radius: 2.5rem;
@@ -1463,7 +1467,7 @@ input {
 .left-nav-admin li.active a {
     color: var(--ordered-hover-bg) !important;
 
-} 
+}
 .box-input-image {
     height: 50rem;
 }
@@ -1472,7 +1476,7 @@ input {
 }
 /* insert-product-iput */
 .insert-product-input input {
-  height: 5rem;
+    height: 5rem;
 }
 
 .underline {
@@ -1500,5 +1504,11 @@ input {
     color: inherit;
 }
 
+.black-link {
+    text-decoration: none;
+    color: black;
+}
 
-                
+.black-link:hover {
+    color: gray;
+}

@@ -83,8 +83,12 @@
         </section>
         <section id="body" class="mt-5">
             <div class="container">
-                <h2 class="fs-40 my-5 fw-bold">Discover more. <span class="black-weak">The world is waiting for you to explore
-                    </span></h2>
+
+                <h2 class="fs-40 my-5 fw-bold">
+                    <a href="BookURL" class="black-link">Explore</a>.
+                    <span class="black-weak">Top of book this week</span>
+                </h2>
+
                 <div class="row gx-4">
                     <div class="col-md-3 mt-4">
                         <div class="dis-item">
@@ -93,7 +97,7 @@
                                     <p>Explore new arrivals</p>
                                     <h2>Shop the latest <br>from top Adventure book</h2>
                                 </div>
-                                <a href="BookURL"><button>Show me all</button></a>
+                                <a href="BookDetail?Pid=21"><button>Show me this</button></a>
                             </div>
                             <img src="./images/Top1.jpg" alt="">
                         </div>
@@ -105,7 +109,7 @@
                                     <p>Explore new arrivals</p>
                                     <h2>Shop the latest <br>from top Novel book</h2>
                                 </div>
-                                <a href="BookURL"><button>Show me all</button></a>
+                                <a href="BookDetail?Pid=22"><button>Show me this</button></a>
                             </div>
                             <img src="./images/Top2.jpg" alt="">
                         </div>
@@ -117,7 +121,7 @@
                                     <p>Explore new arrivals</p>
                                     <h2>Shop the latest <br>from top Comic</h2>
                                 </div>
-                                <a href="BookURL"><button>Show me all</button></a>
+                                <a href="BookDetail?Pid=23"><button>Show me this</button></a>
                             </div>
                             <img src="./images/Top3.jpg" alt="">
                         </div>
@@ -129,20 +133,32 @@
                                     <p>Explore new arrivals</p>
                                     <h2>Shop the latest <br>from top Horror book</h2>
                                 </div>
-                                <a href="BookURL"><button>Show me all</button></a>
+                                <a href="BookDetail?Pid=24"><button>Show me this</button></a>
                             </div>
                             <img src="./images/Top4.jpg" alt="">
                         </div>
                     </div>
                 </div>
+
+
+
+                <h2 class="fs-40 my-5 fw-bold">
+                    <a href="BookURL" class="black-link">Discover more</a>.
+                    <span class="black-weak">The world is waiting for you to explore</span>
+                </h2>
+
+
+
             </div>
         </section>
         <!-- Logo section -->
+
+
         <section id="logos" class="mt-5 py-4 bg-light">
             <div class="container text-center">
                 <div class="row">
                     <div class="col-6 col-md-3">
-                        <a href="BAdventure.jsp">
+                        <a href="BookURL?category_id=1" class="logo-link">
                             <figure>
                                 <img src="./images/AdventureLogo.png" alt="Logo 1" class="img-fluid logo-image">
                                 <figcaption>Adventure</figcaption>
@@ -150,7 +166,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="bookURL2">
+                        <a href="BookURL?category_id=2" class="logo-link">
                             <figure>
                                 <img src="./images/ComicLogo.jpg" alt="Logo 2" class="img-fluid logo-image">
                                 <figcaption>Comic</figcaption>
@@ -158,7 +174,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="bookURL3">
+                        <a href="BookURL?category_id=2" class="logo-link">
                             <figure>
                                 <img src="./images/NovelLogo.jpg" alt="Logo 3" class="img-fluid logo-image">
                                 <figcaption>Novel</figcaption>
@@ -166,7 +182,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="bookURL4">
+                        <a href="BookURL?category_id=7" class="logo-link">
                             <figure>
                                 <img src="./images/DetectiveLogo.png" alt="Logo 4" class="img-fluid logo-image">
                                 <figcaption>Detective</figcaption>
@@ -174,7 +190,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="bookURL5">
+                        <a href="BookURL?category_id=10" class="logo-link">
                             <figure>
                                 <img src="./images/HistoryLogo.jpg" alt="Logo 5" class="img-fluid logo-image">
                                 <figcaption>History</figcaption>
@@ -182,7 +198,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="bookURL6">
+                        <a href="BookURL?category_id=6" class="logo-link">
                             <figure>
                                 <img src="./images/RomanceLogo.png" alt="Logo 6" class="img-fluid logo-image">
                                 <figcaption>Romance</figcaption>
@@ -190,7 +206,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="bookURL7">
+                        <a href="BookURL?category_id=5" class="logo-link">
                             <figure>
                                 <img src="./images/ScienceLogo.jpg" alt="Logo 7" class="img-fluid logo-image">
                                 <figcaption>Science</figcaption>
@@ -198,7 +214,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="bookURL8">
+                        <a href="BookURL?category_id=3" class="logo-link">
                             <figure>
                                 <img src="./images/HorrorLogo.jpg" alt="Logo 8" class="img-fluid logo-image">
                                 <figcaption>Horror</figcaption>
@@ -208,6 +224,7 @@
                 </div>
             </div>
         </section>
+
 
 
 
@@ -366,3 +383,34 @@
 </script>
 </body>
 </html>
+
+<!--CSS-->
+<style>
+    .black-link {
+        text-decoration: none;
+        color: black;
+    }
+
+    .black-link:hover {
+        color: gray;
+    }
+    .logo-link {
+        text-decoration: none;
+        color: black;
+    }
+
+    .logo-link:hover figcaption {
+        color: #ff00a6;
+    }
+
+    /* CSS to change button text color on hover */
+    /* CSS to change button text color and make it bold on hover */
+    /* CSS to change button text color to yellow and make it extremely bold on hover */
+    .dis-item .dis-info a button:hover {
+        color: red;
+        font-weight: 700;
+    }
+
+
+
+</style>

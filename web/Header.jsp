@@ -46,13 +46,13 @@
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item">
-                                            <a class="nav-link" aria-current="page" href="BAdventure.jsp">Adventure</a>
+                                            <a class="nav-link" aria-current="page" href="BookURL?category_id=1">Adventure</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Novel</a>
+                                            <a class="nav-link" href="BookURL?category_id=2">Novel</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Horror</a>
+                                            <a class="nav-link" href="BookURL?category_id=3">Horror</a>
                                         </li>
                                         <li class="nav-item has-child">
                                             <a class="nav-link" href="#">
@@ -66,17 +66,17 @@
                                                         <li class="nav-item"><a class="nav-link" href="">9</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="">10</a></li>
                                                         <li class="nav-item"><a class="nav-link" href="">11</a></li>
-                                                        <li class="nav-item"><a class="nav-link" href="">13</a></li>
+                                                        <li class="nav-item"><a class="nav-link" href="">Reference</a></li>
                                                     </ul>
                                                 </li>
                                                 <li class="nav-item"><a class="nav-link" href="">Reference</a></li>
                                             </ul>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Romance</a>
+                                            <a class="nav-link" href="BookURL?category_id=6">Romance</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Detective</a>
+                                            <a class="nav-link" href="BookURL?category_id=7">Detective</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -154,9 +154,9 @@
                                             <li><a href="CartURL">Orders</a></li>
                                             <li><a href="ManageProduct">Manage Product</a></li>
                                             <li><a href="#">Gift Cards</a></li>
-                                            <li><a href="#">Contact Us</a></li>
+                                            <li><a href="#">Wish List</a></li>
                                             <li class="access-new">
-                                                <a href="#">Myntra Insider</a>
+                                                <a href="#">Blog</a>
                                                 <div class="special">New</div>
                                             </li>
                                         </ul>
