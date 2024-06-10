@@ -27,7 +27,7 @@
         <h3 class="text-danger">${requestScope.mess?requestScope.mess:""}</h3>
         <section>
             <div class="row h-100">
-                <div class="col-md-2 h-100 left-nav-admin p-0">
+                <div style="background-color: #ff00a6" class="col-md-2 h-100 p-0">
                     <div class="p-5 pe-0 vh-100">
                         <ul>
                             <li class="py-4 ps-3 mb-3">
@@ -93,13 +93,7 @@
                                        />
                             </form>
                         </div>
-                        <div class="col-md-6">
-                            <select class="form-select w-50 ms-auto fs-3" aria-label="Default select example">
-                                <option value="1">Order list by: Id</option>
-                                <option value="2">Order list by: Date</option>
-                                <option value="3">Order list by: Total</option>
-                            </select>
-                        </div>
+                        
                     </div>
                     <div class="">
                         <div class="row bg-weak rounded-lg px-3 py-4 fs-4">

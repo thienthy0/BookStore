@@ -27,7 +27,7 @@ public class DAOBook extends DBConnect {
 
     public List<Book> getAllProduct() {
         List<Book> list = new ArrayList<>();
-        String query = "select b.name,b.book_id,b.quantity,b.price,a.author_name,b.image,b.language,c.category_name,b.publisher,b.number_of_pages\n"
+        String query = "select b.name,b.book_id,b.quantity,b.price,a.author_name,b.image,b.language,c.category_name,b.publisher,b.number_of_pages,b.discount\n"
                 + "from Book b , Category c ,Author a\n"
                 + "where c.category_id=b.category_id and a.author_id=b.author_id";
         try {
@@ -44,7 +44,8 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10)));
+                        rs.getInt(10),
+                        rs.getInt(11)));
             }
         } catch (Exception e) {
         }
@@ -73,7 +74,8 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10)));
+                        rs.getInt(10),
+                        rs.getInt(11)));
             }
         } catch (Exception e) {
         }
@@ -101,7 +103,8 @@ public class DAOBook extends DBConnect {
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getInt(10)));
+                        rs.getInt(10),
+                        rs.getInt(11)));
             }
         } catch (Exception e) {
 
@@ -124,21 +127,6 @@ public class DAOBook extends DBConnect {
         return list;
     }
 
-    public int getTotalBook() {
-        String query = "select count(*) from Book";
-        try {
-            conn = new DBConnect().connection;
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-
-        } catch (Exception e) {
-        }
-
-        return 0;
-    }
 
     public static void main(String[] args) {
         DAOBook dao = new DAOBook();
@@ -146,21 +134,6 @@ public class DAOBook extends DBConnect {
         for (Book o : list) {
             System.out.println(o);
         }
-    }
-
-    public int getTotalBooksByCategory(int categoryId) {
-        String sql = "SELECT COUNT(*) FROM Book WHERE category_id = ?";
-        try (Connection conn = connection; PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, categoryId);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
     }
 
     public List<Book> getBooksByCategoryWithPagination(int categoryId, int page, int pageSize) {
@@ -174,14 +147,15 @@ public class DAOBook extends DBConnect {
                 while (rs.next()) {
                     list.add(new Book(rs.getString(1),
                             rs.getInt(2),
-                            rs.getInt(3),
-                            rs.getInt(4),
-                            rs.getString(5),
-                            rs.getString(6),
-                            rs.getString(7),
-                            rs.getString(8),
-                            rs.getString(9),
-                            rs.getInt(10)));
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11)));
                 }
             }
         } catch (SQLException e) {
@@ -210,7 +184,8 @@ public class DAOBook extends DBConnect {
                         rs.getString("language"),
                         rs.getString("category_name"),
                         rs.getString("publisher"),
-                        rs.getInt("number_of_pages")
+                        rs.getInt("number_of_pages"),
+                        rs.getInt("discount")
                 );
             }
         } catch (SQLException e) {
@@ -231,7 +206,8 @@ public class DAOBook extends DBConnect {
                 + "           ,[category_id]\n"
                 + "           ,[publisher]\n"
                 + "           ,[number_of_pages])\n"
-                + "     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n";
+                + "           ,[discount])\n"
+                + "     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n";
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -278,6 +254,7 @@ public class DAOBook extends DBConnect {
                 + "    [category_id] = ?,\n"
                 + "    [publisher] = ?,\n"
                 + "    [number_of_pages] = ?\n"
+                + "    [discount] = ?\n"
                 + "WHERE \n"
                 + "    [book_id] = ?";
         if (!pro.getImage().equals("")) {
@@ -292,6 +269,7 @@ public class DAOBook extends DBConnect {
                     + "    [category_id] = ?,\n"
                     + "    [publisher] = ?,\n"
                     + "    [number_of_pages] = ?\n"
+                    + "    [discount] = ?\n"
                     + "WHERE \n"
                     + "    [book_id] = ?";
         }
@@ -325,5 +303,144 @@ public class DAOBook extends DBConnect {
             System.out.println(ex);
         }
 
+    }
+
+    public List<Book> getBooksByCategory(List<Integer> categoryIds) {
+        List<Book> list = new ArrayList<>();
+        if (categoryIds.isEmpty()) {
+            return list;
+        }
+        StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher, b.number_of_pages, b.discount "
+                + "FROM Book b, Category c, Author a "
+                + "WHERE c.category_id = b.category_id AND a.author_id = b.author_id AND b.category_id IN (");
+
+        for (int i = 0; i < categoryIds.size(); i++) {
+            queryBuilder.append("?");
+            if (i < categoryIds.size() - 1) {
+                queryBuilder.append(", ");
+            }
+        }
+        queryBuilder.append(")");
+
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(queryBuilder.toString());
+            for (int i = 0; i < categoryIds.size(); i++) {
+                ps.setInt(i + 1, categoryIds.get(i));
+            }
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Book(rs.getString(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
+    }
+    public List<Book> getBooksByCategoryAndAuthor(List<Integer> categoryIds, List<Integer> authorIds) {
+        List<Book> list = new ArrayList<>();
+        StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher, b.number_of_pages, b.discount "
+                + "FROM Book b, Category c, Author a "
+                + "WHERE c.category_id = b.category_id AND a.author_id = b.author_id");
+
+        if (!categoryIds.isEmpty() || !authorIds.isEmpty()) {
+            queryBuilder.append(" AND (");
+
+            if (!categoryIds.isEmpty()) {
+                queryBuilder.append("b.category_id IN (");
+                for (int i = 0; i < categoryIds.size(); i++) {
+                    queryBuilder.append("?");
+                    if (i < categoryIds.size() - 1) {
+                        queryBuilder.append(", ");
+                    }
+                }
+                queryBuilder.append(")");
+            }
+
+            if (!authorIds.isEmpty()) {
+                if (!categoryIds.isEmpty()) {
+                    queryBuilder.append(" OR ");
+                }
+                queryBuilder.append("b.author_id IN (");
+                for (int i = 0; i < authorIds.size(); i++) {
+                    queryBuilder.append("?");
+                    if (i < authorIds.size() - 1) {
+                        queryBuilder.append(", ");
+                    }
+                }
+                queryBuilder.append(")");
+            }
+
+            queryBuilder.append(")");
+        }
+
+        try {
+            conn = new DBConnect().connection;
+            ps = conn.prepareStatement(queryBuilder.toString());
+
+            int index = 1;
+            for (int categoryId : categoryIds) {
+                ps.setInt(index++, categoryId);
+            }
+            for (int authorId : authorIds) {
+                ps.setInt(index++, authorId);
+            }
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Book(rs.getString(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getInt(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11)));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
     }
 }

@@ -1,11 +1,15 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
 import dal.DAOBook;
+import dal.DAOCategory;
 import entity.Book;
+import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,44 +17,44 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author trand
+ * @author laptop368
  */
-@WebServlet(name = "BookDetail", urlPatterns = {"/BookDetail"})
-public class BookDetail extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="BookCategoryServlet", urlPatterns={"/BookCategory"})
+public class BookCategoryServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet BookDetail</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet BookDetail at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+        DAOBook dao=new DAOBook();
+        DAOCategory ca=new DAOCategory();
+        
+       List<Book> list=dao.getAllProduct();
+       List<Category> listC=ca.getCategory();
+       String[] category_name = request.getParameterValues("category");
+       
+       request.setAttribute("listBook",list);
+       request.setAttribute("listC",listC);
+       
+       request.getRequestDispatcher("AdventureBookList.jsp").forward(request, response);
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -58,18 +62,16 @@ public class BookDetail extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        DAOBook d = new DAOBook();
-        String pid_raw = request.getParameter("Pid");
-        int pid = Integer.parseInt(pid_raw);
-        Book currentP = d.getProductById(pid);
-        request.setAttribute("currentProduct", currentP);
-        request.getRequestDispatcher("ProductDetail.jsp").forward(request, response);
-    }
+    throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -77,13 +79,16 @@ public class BookDetail extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

@@ -6,6 +6,7 @@ import entity.Account;
 import entity.Author;
 import entity.Category;
 import entity.Book;
+import entity.Role;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -26,7 +28,8 @@ import java.util.logging.Logger;
 
 @WebServlet(name = "ManageController", urlPatterns = {"/ManageProduct"})
 @MultipartConfig
-public class ManageServlet extends HttpServlet {
+public class ManageController extends HttpServlet {
+
     private static final long serialVersionUID = 1L;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -79,10 +82,10 @@ public class ManageServlet extends HttpServlet {
             pid = -1;
         }
         Book product = daoBook.getProductById(pid);
-        Vector<Book> list = new Vector<>();
+        List<Book> list = new ArrayList<>();
         if (product == null) {
             request.setAttribute("mess", "Not found this book");
-            list = (Vector<Book>) daoBook.getAllProduct();
+            list = daoBook.getAllProduct();
         } else {
             list.add(product);
         }
@@ -103,19 +106,23 @@ public class ManageServlet extends HttpServlet {
                 proImage = request.getParameter("beforeImage");
             }
             String applicationPath = request.getServletContext().getRealPath("");
-            String uploadFilePath = applicationPath+ File.separator + "images";
+            String uploadFilePath = applicationPath + File.separator + "images";
 
             // Creates the directory if it does not exist.
             File uploadDir = new File(uploadFilePath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
-            Part part = request.getPart("file");
-            String fileName="";
-            if(part != null){
-                fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-                part.write(uploadFilePath + File.separator + fileName);
+            String fileName = "";
+            try {
+                Part part = request.getPart("file");
+                if (part != null) {
+                    fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    part.write(uploadFilePath + File.separator + fileName);
+                }
+            } catch (Exception e) {
             }
+
             String categoryIdRaw = request.getParameter("category");
             String authorRaw = request.getParameter("author");
             String proPriceRaw = request.getParameter("pro_price");
@@ -124,14 +131,30 @@ public class ManageServlet extends HttpServlet {
             String quantityRaw = request.getParameter("quantity");
             String numberOfPageRaw = request.getParameter("numberPage");
 
-            int numberOfPage = Integer.parseInt(numberOfPageRaw);
+            int numberOfPage = 0;
 //            int authorId = Integer.parseInt(authorRaw);
-            int quantity = Integer.parseInt(quantityRaw);
-            int proPrice = Integer.parseInt(proPriceRaw);
+            int quantity = 0;
+            int proPrice = 0;
+            try {
+                numberOfPage = Integer.parseInt(numberOfPageRaw);
+//            int authorId = Integer.parseInt(authorRaw);
+                quantity = Integer.parseInt(quantityRaw);
+                proPrice = Integer.parseInt(proPriceRaw);
+            } catch (Exception e) {
+                request.setAttribute("productName", proName);
+                request.setAttribute("author", authorRaw);
+                request.setAttribute("pro_price", proPriceRaw);
+                request.setAttribute("language", productLanguage);
+                request.setAttribute("publisher", publisher);
+                request.setAttribute("quantity", quantityRaw);
+                request.setAttribute("numberPage", numberOfPageRaw);
+                request.setAttribute("error", "Must be positive number");
+                request.getRequestDispatcher("UpdateProduct.jsp").forward(request, response);
+            }
 
             int prId = daoBook.getAllProduct().get(daoBook.getAllProduct().size() - 1).getId() + 1;
 //            Book product = new Book(proName, prId, quantity, prId, addBtn, proImage, proImage, catId, proImage, prId);
-            Book product = new Book(proName, prId, quantity, proPrice, authorRaw, fileName, productLanguage, categoryIdRaw, publisher, numberOfPage);
+            Book product = new Book(proName, prId, quantity, prId, authorRaw, proImage, proImage, categoryIdRaw, publisher, numberOfPage, prId);
             daoBook.addProduct(product);
             response.sendRedirect("ManageProduct");
         }
@@ -145,28 +168,32 @@ public class ManageServlet extends HttpServlet {
     }
 
     private void handleUpdateProduct(HttpServletRequest request, HttpServletResponse response, DAOBook daoBook) throws SQLException, ServletException, IOException {
+
         String submit = request.getParameter("Submit");
         if (submit != null) {
             String proIdRaw = request.getParameter("productId");
             String proName = request.getParameter("productName");
             String proImage = request.getParameter("productImage");
-            if (proImage == null || proImage.isEmpty()) {
-                proImage = request.getParameter("beforeImage");
-            }
+
             String applicationPath = request.getServletContext().getRealPath("");
-            String uploadFilePath = applicationPath+ File.separator + "images";
+            String uploadFilePath = applicationPath + File.separator + "images";
 
             // Creates the directory if it does not exist.
             File uploadDir = new File(uploadFilePath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
-            Part part = request.getPart("file");
-            String fileName="";
-            if(part != null){
-                fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
-                part.write(uploadFilePath + File.separator + fileName);
+            String fileName = "";
+            try {
+                Part part = request.getPart("file");
+                if (part != null) {
+                    fileName = Paths.get(part.getSubmittedFileName()).getFileName().toString();
+                    part.write(uploadFilePath + File.separator + fileName);
+                }
+            } catch (Exception e) {
+                fileName = "";
             }
+
             String categoryIdRaw = request.getParameter("category");
             String authorRaw = request.getParameter("author");
             String proPriceRaw = request.getParameter("pro_price");
@@ -174,15 +201,30 @@ public class ManageServlet extends HttpServlet {
             String publisher = request.getParameter("publisher");
             String quantityRaw = request.getParameter("quantity");
             String numberOfPageRaw = request.getParameter("numberPage");
-
-            int numberOfPage = Integer.parseInt(numberOfPageRaw);
+            int numberOfPage = 0;
 //            int authorId = Integer.parseInt(authorRaw);
-            int quantity = Integer.parseInt(quantityRaw);
-            int proPrice = Integer.parseInt(proPriceRaw);
+            int quantity = 0;
+            int proPrice = 0;
+            try {
+                numberOfPage = Integer.parseInt(numberOfPageRaw);
+//            int authorId = Integer.parseInt(authorRaw);
+                quantity = Integer.parseInt(quantityRaw);
+                proPrice = Integer.parseInt(proPriceRaw);
+            } catch (Exception e) {
+                DAOCategory daoC = new DAOCategory();
+                int pid = Integer.parseInt(proIdRaw);
+                Book product = daoBook.getProductById(pid);
+                List<Category> listCategory = daoC.getAllCategory();
+                request.setAttribute("product", product);
+                request.setAttribute("listCategory", listCategory);
+                setCommonAttributes(request);
+                request.setAttribute("error", "Must be positive number");
+                request.getRequestDispatcher("UpdateProduct.jsp").forward(request, response);
+            }
 
             int prId = Integer.parseInt(proIdRaw);
 //            Book product = new Book(proName, prId, quantity, prId, addBtn, proImage, proImage, catId, proImage, prId);
-            Book product = new Book(proName, prId, quantity, proPrice, authorRaw, fileName, productLanguage, categoryIdRaw, publisher, numberOfPage);
+            Book product = new Book(proName, prId, quantity, prId, authorRaw, proImage, proImage, categoryIdRaw, publisher, numberOfPage, prId);
             daoBook.updateProduct(product);
             response.sendRedirect("ManageProduct");
         } else {
@@ -211,10 +253,19 @@ public class ManageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("account");
-        if (acc != null && acc.getIs_admin()) {
-            processRequest(request, response);
+
+        if (acc != null) {
+            int roleId = acc.getRole_id();
+
+            if (roleId == 1) { // Admin
+                processRequest(request, response);
+            } else if (roleId == 2) { // Manage
+                processRequest(request, response);
+            } else {
+                response.sendRedirect("BookURL"); // Redirect to ProductURL for other roles
+            }
         } else {
-            response.sendRedirect(acc == null ? "login" : "ProductURL");
+            response.sendRedirect("login"); // Redirect to login if the user is not logged in
         }
     }
 

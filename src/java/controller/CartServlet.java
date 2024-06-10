@@ -38,48 +38,54 @@ public class CartServlet extends HttpServlet {
         DAOBook dp = new DAOBook();
         HttpSession session = request.getSession();
         String service = request.getParameter("Service");
-        if(service == null) {
-            request.getRequestDispatcher("Cart.jsp").forward(request, response);return;
+        if (service == null) {
+            request.getRequestDispatcher("Cart.jsp").forward(request, response);
+            return;
         }
-        if(service.equals("addToCart")) {
+        if (service.equals("addToCart")) {
             String pid_raw = request.getParameter("id");
             String key = "cart-" + pid_raw;
             String quantity_raw = request.getParameter("quantity");
             int pid = Integer.parseInt(pid_raw);
             int quantity = Integer.parseInt(quantity_raw);
-            Book p = (Book)session.getAttribute(key);
+            Book p = (Book) session.getAttribute(key);
             //IF DONT EXIST
-            if(p == null) {
-            Book p_root = dp.getProductById(pid);
-            Book pAdd = new Book(
-                    p_root.getName(),
-                    pid,
-                    quantity,
-                    p_root.getPrice(),
-                    p_root.getAuthor(),
-                    p_root.getImage(),
-                    p_root.getLanguage(),
-                    p_root.getCategory(),
-                    p_root.getPublisher(),
-                    p_root.getNum_of_page());
-            session.setAttribute(key, pAdd);
+            if (p == null) {
+                Book p_root = dp.getProductById(pid);
+                Book pAdd = new Book(
+                        p_root.getName(),
+                        pid,
+                        quantity,
+                        p_root.getPrice(),
+                        p_root.getAuthor(),
+                        p_root.getImage(),
+                        p_root.getLanguage(),
+                        p_root.getCategory(),
+                        p_root.getPublisher(),
+                        p_root.getNum_of_page(),
+                        p_root.getDiscount()
+                );
+                session.setAttribute(key, pAdd);
             } else {
-            //IF HAVE EXIST create a new p and set in old key
-            Book pAdd = new Book(
-                    p.getName(),
-                    pid,
-                    p.getQuantity()+quantity,
-                    p.getPrice(),
-                    p.getAuthor(),
-                    p.getImage(),
-                    p.getLanguage(),
-                    p.getCategory(),
-                    p.getPublisher(),
-                    p.getNum_of_page());
+                //IF HAVE EXIST create a new p and set in old key
+                Book pAdd = new Book(
+                        p.getName(),
+                        pid,
+                        p.getQuantity() + quantity,
+                        p.getPrice(),
+                        p.getAuthor(),
+                        p.getImage(),
+                        p.getLanguage(),
+                        p.getCategory(),
+                        p.getPublisher(),
+                        p.getNum_of_page(),
+                        p.getDiscount()
+                );
 
-	    session.setAttribute(key, pAdd);
+                session.setAttribute(key, pAdd);
             }
-            response.sendRedirect("Cart.jsp"); return;
+            response.sendRedirect("Cart.jsp");
+            return;
         }
     }
 

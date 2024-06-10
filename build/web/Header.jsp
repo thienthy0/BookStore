@@ -34,7 +34,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-1">
                         <div class="header-logo">
-                            <a href="BookURL"><img src="./images/Logo.jpg" alt=""></a>
+                            <a href="Home.jsp"><img src="./images/Logo.jpg" alt=""></a>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -46,7 +46,7 @@
                                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
                                     <ul class="navbar-nav">
                                         <li class="nav-item">
-                                            <a class="nav-link" aria-current="page" href="#">Adventure</a>
+                                            <a class="nav-link" aria-current="page" href="BAdventure.jsp">Adventure</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#">Novel</a>
@@ -108,7 +108,9 @@
                                     <span class="user-title">Profile</span>
                                     <div class="user-box_access">
                                         <div class="user-box-header">
+
                                             <!-- access -->
+
                                             <%if(account != null) {%>
                                             <div class="user-access">
                                                 <%if(account.getAccount_image() != null) {%>
@@ -122,9 +124,12 @@
                                                 <%}%>
 
                                                 <div class="user-access-info">
-                                                    <span><%=account.getFirst_name() +" "+ account.getLast_name()%></span>
-                                                    <p><%=account.getAddress()%></p>
+                                                    <span><%= account.getFirst_name() + " " + account.getLast_name() %></span>
+                                                    <% if (account.getAddress() != null) { %>
+                                                    <p><%= account.getAddress() %></p>
+                                                    <% } %>
                                                 </div>
+
                                                 <a href="logout" class="logout-link">
                                                     <div class="logout-button">
                                                         Logout

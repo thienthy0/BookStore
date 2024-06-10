@@ -73,11 +73,24 @@
                                             </div>
                                             <input type="file" 
                                                    onchange="inputImage(this)"
-                                                   accept="image/gif, image/jpeg, image/png"
+                                                   accept="image/gif, image/jpeg, image/png, image/jpg"
                                                    class="input-userImg"
                                                    name="accountImage">
                                             <input value="${account.account_image}" name="beforeImage" type="hidden"/>
-                                        </div>
+                                        </div> 
+
+                                        <script>
+                                            function inputImage(input) {
+                                                if (input.files && input.files[0]) {
+                                                    const reader = new FileReader();
+                                                    reader.onload = function (e) {
+                                                        document.getElementById('boxImage').src = e.target.result;
+                                                    }
+                                                    reader.readAsDataURL(input.files[0]);
+                                                }
+                                            }
+                                        </script>
+
                                     </div>
                                     <div class="col-md-9">
                                         <div class="user-info">
@@ -95,17 +108,19 @@
                                                            value="${account.last_name}" class="form-control px-4 py-3 fs-3 rounded-xl" placeholder="Last name">
                                                 </div>
                                             </div>
-                                            <div class="mt-5">
+
+                                            <div class="mt-5" style="color: black;">
                                                 <h3>Email</h3>
                                                 <div class="input-group mb-3 rounded-xl">
                                                     <span class="input-group-text p-4" id="basic-addon1">
-                                                        <i class="fa-regular fa-envelope fs-3"></i>
+                                                        <i class="fa-regular fa-envelope fs-3" style="color: #808080;"></i>
                                                     </span>
-                                                    <input type="text" name="account_email"
-                                                           readonly
-                                                           value="${account.email}" class="form-control px-4 py-3 fs-3" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                                                    <input type="text" name="account_email" readonly value="${account.email}" class="form-control px-4 py-3 fs-3" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" style="color: #808080;">
                                                 </div>
                                             </div>
+
+
+
                                             <div class="mt-5">
                                                 <h3>Address</h3>
                                                 <div class="input-group mb-3 rounded-xl">
@@ -126,6 +141,14 @@
                                                            value="${account.phone}"  class="form-control px-4 py-3 fs-3" placeholder="Phone" aria-label="Phone" aria-describedby="basic-addon1">
                                                 </div>
                                             </div>
+
+                                            <div class="mt-5">
+                                                <h3>About you</h3>
+                                                <div class="input-group mb-3">
+                                                    <textarea name="account_description" id="account_description" cols="30" rows="10" class="w-100">${account.description}</textarea>
+                                                </div>
+                                            </div>    
+                                          
                                         </div>
                                         <div class="mt-5">
                                             <button type="submit" class="border-0 px-5 py-4 fs-4 bg-dark text-white rounded-xl fw-bold">Update information</button>

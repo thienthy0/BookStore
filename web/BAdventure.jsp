@@ -24,59 +24,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     </head>
     <body>
         <%@include file="./Header.jsp" %>    
-        <section id="banner">
-            <div class="swiper mySwiper swiper-initialized swiper-horizontal swiper-backface-hidden">
-                <div class="swiper-wrapper" id="swiper-wrapper-9f6c7920a6102d84" aria-live="off" style="transition-duration: 0ms; transform: translate3d(-1728px, 0px, 0px); transition-delay: 0ms;">
-
-
-
-                    <div class="swiper-slide swiper-slide-next" role="group" aria-label="1 / 3" data-swiper-slide-index="0" style="width: 834px; margin-right: 30px;">
-                        <div class="slider-img">
-                            <img src="./images/B1.jpg" alt="">
-                        </div>
-                        <div class="slider-info">
-                            <h2 class="slider-title">Exclusive collection for everyone</h2>
-                            <p class="slider-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam tenetur molestiae magnam.</p>
-                            <a href="#" class="slider-button">
-                                Order now
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div><div class="swiper-slide swiper-slide-prev" role="group" aria-label="2 / 3" data-swiper-slide-index="1" style="width: 834px; margin-right: 30px;">
-                        <div class="slider-img">
-                            <img src="./images/B2.jpg" alt="">
-                        </div>
-                        <div class="slider-info">
-                            <h2 class="slider-title">Exclusive collection for everyone</h2>
-                            <p class="slider-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam tenetur molestiae magnam.</p>
-                            <a href="#" class="slider-button">
-                                Order now
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div><div class="swiper-slide swiper-slide-active" role="group" aria-label="3 / 3" data-swiper-slide-index="2" style="width: 834px; margin-right: 30px;">
-                        <div class="slider-img">
-                            <img src="./images/B3.jpg" alt="">
-                        </div>
-                        <div class="slider-info">
-                            <h2 class="slider-title">Exclusive collection for everyone</h2>
-                            <p class="slider-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam tenetur molestiae magnam.</p>
-                            <a href="#" class="slider-button">
-                                Order now
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </div></div>
-                <div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-9f6c7920a6102d84" fdprocessedid="bgn3t">
-
-                </div>
-                <div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide" aria-controls="swiper-wrapper-9f6c7920a6102d84" fdprocessedid="eqytz">
-
-                </div>
-                <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 1"></span><span class="swiper-pagination-bullet" tabindex="0" role="button" aria-label="Go to slide 2"></span><span class="swiper-pagination-bullet swiper-pagination-bullet-active" tabindex="0" role="button" aria-label="Go to slide 3" aria-current="true"></span></div>
-                <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
-        </section>
-
         <section id="body" class="mt-5">
 
 

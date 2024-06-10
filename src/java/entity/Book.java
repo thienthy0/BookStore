@@ -19,11 +19,12 @@ public class Book {
     private String category;
     private String publisher;
     private int num_of_page;
+    private int discount;
 
     public Book() {
     }
 
-    public Book(String name, int id, int quantity, int price, String author, String image, String language, String category, String publisher, int num_of_page) {
+    public Book(String name, int id, int quantity, int price, String author, String image, String language, String category, String publisher, int num_of_page, int discount) {
         this.name = name;
         this.id = id;
         this.quantity = quantity;
@@ -34,6 +35,7 @@ public class Book {
         this.category = category;
         this.publisher = publisher;
         this.num_of_page = num_of_page;
+        this.discount = discount;
     }
 
     public String getName() {
@@ -116,13 +118,18 @@ public class Book {
         this.num_of_page = num_of_page;
     }
 
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
     @Override
     public String toString() {
-        return "Book{" + "name=" + name + ", id=" + id + ", quantity=" + quantity + ", price=" + price + ", author=" + author + ", image=" + image + ", language=" + language + ", category=" + category + ", publisher=" + publisher + ", num_of_page=" + num_of_page + '}';
+        return "Book{" + "name=" + name + ", id=" + id + ", quantity=" + quantity + ", price=" + price + ", author=" + author + ", image=" + image + ", language=" + language + ", category=" + category + ", publisher=" + publisher + ", num_of_page=" + num_of_page + ", discount=" + discount + '}';
     }
-    
 
-
-   
     
 }

@@ -25,26 +25,31 @@ public class LoginServlet extends HttpServlet {
         DAOAccount daoAccount = new DAOAccount();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        Account account = daoAccount.validateCustomer(username, password);
-        
+        Account account = daoAccount.validateUser(username, password);
+
         if (account != null) {
             HttpSession session = request.getSession();
             session.setAttribute("account", account);
-            
-            if (account.getIs_admin()) {
-                response.sendRedirect("employee");
-            } else if (account.getIs_employee()) {
+
+            // Kiểm tra vai trò của tài khoản và chuyển hướng phù hợp
+            int roleId = account.getRole_id();
+
+            if (roleId == 1) { // Admin
+                response.sendRedirect("Home.jsp");
+            } else if (roleId == 2) { // Quản lý
+                response.sendRedirect("ManageProduct"); // Điều chỉnh điều này đến trang quản lý
+            } else if (roleId == 3) { // Nhân viên
                 response.sendRedirect("ManageProduct");
-            } else if (account.getActive()) {
+            } else if (roleId == 4) { // Người dùng
                 response.sendRedirect("BookURL");
             } else {
-                response.sendRedirect("BookURL");
+                response.sendRedirect("BookURL"); // Trường hợp vai trò không xác định
             }
-
         } else {
-            request.setAttribute("mess", "Email or password is wrong");
+            request.setAttribute("mess", "Email or Password is wrong");
             request.getRequestDispatcher("Login.jsp").forward(request, response);
         }
+
     }
 
     @Override

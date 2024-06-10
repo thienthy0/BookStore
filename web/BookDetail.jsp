@@ -43,28 +43,22 @@
                                 <div class="px-4 py-1 border-green rounded-sm">
                                     <span class="text-green fs-3 fw-bold">${product.price}₫</span>
                                 </div>
-
+                                <c:if test="${product.discount>0}">
+                                    <span class="text-white p-2 mx-2 fs-5 fw-bold bg-danger tag-sale">Giảm ${product.discount}%</span>
+                                </c:if>
                                 <div class="border-line border-l"></div>
                                 <div class="d-flex align-items-center px- ">
-                                    <div class="rating-stars yellow-color">
-                                        <i class="fa-solid fa-star fs-3"></i>
-                                    </div>
-                                    <div class="">
-                                        <span class="fs-4 fw-semibold ms-3">4.8</span>
-                                        <span class="fs-3 mx-2">·</span>
-                                        <span class="fs-4 text-decoration-underline pointer">142 reviews</span>
-                                        <span class="fs-3 mx-2">·</span>
-                                    </div>
+
                                 </div>
                             </div>
-                                
+
                             <div class="w-75 mt-5">
                                 <h3 class="fw-semibold">Number of Pages :</h3>
                                 <div class="d-flex flex-wrap gap-4 fs-4">
                                     ${product.num_of_page}
                                 </div>
                             </div>
-                                
+
                             <div class="w-75 mt-5">
                                 <h3 class="fw-semibold ">Category name: </h3>
                                 <div class="d-flex flex-wrap gap-4 fs-4">
@@ -83,7 +77,7 @@
                                     ${product.publisher}
                                 </div>
                             </div>
-                                
+
                             <form action="CartURL" method="post">
                                 <input type="text" name="Service" value="addToCart" hidden/>
                                 <input value="${product.id}" name="id" hidden/>
@@ -100,7 +94,7 @@
                                             </button>
                                         </div>
                                         <div class="ms-4 fs-5">
-                                            <span id="number-available">${product.quantity}</span> sản phẩm có sẵn
+                                            <span id="number-available">${product.quantity}</span> Products available
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +110,7 @@
                                     </div>
                                 </div>
                             </form>    
-                            
+
                         </div>
                     </div>
                 </div>
@@ -124,7 +118,7 @@
         </section>
         <script>
             function addCart() {
-               let url = "?Service=addCart&"
+                let url = "?Service=addCart&"
             }
         </script>
         <script src="./js/app.js"></script>

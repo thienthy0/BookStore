@@ -19,7 +19,7 @@ public class ProfileServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        String[] listService = {"Account info", "Change password"};
+        String[] listService = {"Account info","My oder", "Change password"};
         request.setAttribute("listService", listService);
 
         Account acc = (Account) session.getAttribute("account");
@@ -70,14 +70,15 @@ public class ProfileServlet extends HttpServlet {
         String account_email = request.getParameter("account_email");
         String account_address = request.getParameter("account_address");
         String account_phone = request.getParameter("account_phone");
-
+        String account_description = request.getParameter("account_description");
+        
         String mess = "";
         boolean isSuccess = false;
 
         if (isValidName(first_name) && isValidName(last_name)) {
             boolean haveUpdate = d.updateAccount(
                     acc.getAccount_id(), account_email, first_name, last_name,
-                    account_phone, accountImage, account_address
+                    account_phone, accountImage, account_address,account_description
             );
 
             Account updatedAccount = d.getAccountById(acc.getAccount_id());
@@ -86,7 +87,7 @@ public class ProfileServlet extends HttpServlet {
             mess = haveUpdate ? "Update success" : "Update unsuccess";
             isSuccess = haveUpdate;
         } else {
-            mess = "First name and last name must not contain numbers or special characters";
+            mess = "First name and last name must not contain numbers, leading spaces, or special character.";
         }
 
         request.setAttribute("mess", mess);
@@ -105,7 +106,7 @@ public class ProfileServlet extends HttpServlet {
         String mess = "";
         boolean isSuccess = false;
 
-        if (d.validateCustomer(acc.getEmail(), currentPassword) != null) {
+        if (d.validateUser(acc.getEmail(), currentPassword) != null) {
             if (isValidPassword(newPassword)) {
                 if (newPassword.equals(confirmPassword)) {
                     d.updatePassword(newPassword, acc.getAccount_id());
@@ -127,7 +128,8 @@ public class ProfileServlet extends HttpServlet {
         request.setAttribute("current", "Change password");
         request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
-//Password has at least 8 characters including numbers and letters
+
+    // Password has at least 8 characters including numbers and letters
     private boolean isValidPassword(String password) {
         if (password.length() < 8) {
             return false;
@@ -148,13 +150,14 @@ public class ProfileServlet extends HttpServlet {
     }
 
     private boolean isValidName(String name) {
-        // Check if name contains only letters and spaces
-        String regex = "^[a-zA-Z\\s]+$";
+        // Check if name does not start with a space, does not contain more than two consecutive spaces,
+        // and contains only letters and spaces
+        String regex = "^(?! )[a-zA-ZÀ-ÿ\\s]*(?! {3,})$";
         return Pattern.matches(regex, name);
     }
 
     private void setCommonAttributes(HttpServletRequest request) {
-        String[] listService = {"Account info", "Change password"};
+        String[] listService = {"Account info","My oder", "Change password"};
         request.setAttribute("listService", listService);
     }
 
@@ -163,5 +166,3 @@ public class ProfileServlet extends HttpServlet {
         return "ProfileServlet handles profile-related requests";
     }
 }
-
-

@@ -1,85 +1,71 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controller;
 
 import dal.DAOBook;
 import dal.DAOCategory;
+import dal.DAOAuthor;
 import entity.Book;
 import entity.Category;
+import entity.Author;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author laptop368
- */
-@WebServlet(name="BookServlet", urlPatterns={"/BookURL"})
+@WebServlet(name = "BookServlet", urlPatterns = {"/BookURL"})
 public class BookServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");
-        DAOBook dao=new DAOBook();
-        DAOCategory ca=new DAOCategory();
-        
-       List<Book> list=dao.getAllProduct();
-       List<Category> listC=ca.getCategory();
-       String[] category_name = request.getParameterValues("category");
-       
-       request.setAttribute("listBook",list);
-       request.setAttribute("listC",listC);
-       
-       request.getRequestDispatcher("HomePage.jsp").forward(request, response);
-    } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException {
+        response.setContentType("text/html;charset=UTF-8");
+        DAOBook dao = new DAOBook();
+        DAOCategory categoryDao = new DAOCategory();
+        DAOAuthor authorDao = new DAOAuthor();
+
+        List<Book> list;
+        String[] categoryIds = request.getParameterValues("category_id");
+        String[] authorIds = request.getParameterValues("author_id");
+
+        if (categoryIds != null || authorIds != null) {
+            List<Integer> categoryIdList = new ArrayList<>();
+            List<Integer> authorIdList = new ArrayList<>();
+
+            if (categoryIds != null) {
+                for (String categoryId : categoryIds) {
+                    categoryIdList.add(Integer.parseInt(categoryId));
+                }
+            }
+
+            if (authorIds != null) {
+                for (String authorId : authorIds) {
+                    authorIdList.add(Integer.parseInt(authorId));
+                }
+            }
+
+            list = dao.getBooksByCategoryAndAuthor(categoryIdList, authorIdList);
+        } else {
+            list = dao.getAllProduct();
+        }
+
+        List<Category> category = categoryDao.getCategory();
+        List<Author> authors = authorDao.getAllAuthors();
+
+        request.setAttribute("listBook", list);
+        request.setAttribute("category", category);
+        request.setAttribute("authors", authors);
+
+        request.getRequestDispatcher("BookList.jsp").forward(request, response);
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(BookServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
@@ -87,13 +73,18 @@ public class BookServlet extends HttpServlet {
         }
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(BookServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }
 }

@@ -1488,3 +1488,17 @@ input {
     height: 3px; /* Độ rộng của gạch chân */
     background-color: var(--pink-color); /* Màu của gạch chân */
 }
+/* styles.css */
+.dis-item a {
+    text-decoration: none;
+    color: inherit; /* Ensure the text color remains unchanged */
+}
+
+/* Optionally, add hover effect if needed */
+.dis-item a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+                

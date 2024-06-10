@@ -4,8 +4,8 @@
  */
 package controller;
 
-import dal.DaoEmployee;
-import entity.Employee;
+import dal.DAOBook;
+import entity.Book;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +13,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  *
- * @author admin
+ * @author trand
  */
-@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employee"})
-public class EmployeeServlet extends HttpServlet {
+@WebServlet(name = "BookDetail", urlPatterns = {"/BookDetail"})
+public class BookDetailServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,15 +33,19 @@ public class EmployeeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       DaoEmployee employee = new DaoEmployee();
-        List<Employee> list = employee.getAllEmployee();
-        request.setAttribute("listEmployee", list);
-        request.getRequestDispatcher("employeeList.jsp").forward(request, response);
-   
-        
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet BookDetail</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet BookDetail at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
-
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -56,7 +59,12 @@ public class EmployeeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        DAOBook d = new DAOBook();
+        String pid_raw = request.getParameter("Pid");
+        int pid = Integer.parseInt(pid_raw);
+        Book currentP = d.getProductById(pid);
+        request.setAttribute("currentProduct", currentP);
+        request.getRequestDispatcher("BookDetail.jsp").forward(request, response);
     }
 
     /**

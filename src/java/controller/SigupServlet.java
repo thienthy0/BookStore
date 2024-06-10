@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  *
@@ -77,6 +78,7 @@ public class SigupServlet extends HttpServlet {
         String last_name = request.getParameter("last_name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
+        String DateOfBirth= request.getParameter("dateofbirth");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         
@@ -125,12 +127,12 @@ public class SigupServlet extends HttpServlet {
         }
 
         int newId = d.getAllAccount().get(d.getAllAccount().size() - 1).getAccount_id() + 1;
-        Account acc = new Account(newId, first_name, last_name, phone, email, password);
+        Account acc = new Account(newId, newId, first_name, last_name, phone, email, password, last_name, phone, DateOfBirth, DateOfBirth, Boolean.TRUE);
         boolean haveAdd = d.addAccount(acc);
         HttpSession session = request.getSession();
         if (haveAdd) {
             session.setAttribute("account", acc);
-            response.sendRedirect("HomePage.jsp");
+            response.sendRedirect("Home.jsp");
         } else {
             String mess = "An error occurred. Please try again.";
             request.setAttribute("message", mess);
@@ -173,10 +175,5 @@ public class SigupServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public static void main(String[] args) {
-        DAOAccount d = new DAOAccount();
-        Account acc = new Account(21, "Nguyen", "vu", "0912393759", "vu3@gmail.com", "123");
-        boolean haveAdd = d.addAccount(acc);
-        System.out.println(haveAdd);
-    }
+  
 }

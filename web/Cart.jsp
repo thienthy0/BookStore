@@ -28,9 +28,8 @@
                     <h1 class="fw-semibold">Shopping Cart</h1>
                     <nav aria-label="breadcrumb mt-4">
                         <ol class="breadcrumb fs-4">
-                            <li class="breadcrumb-item"><a class="text-dark" href="BookURL">Home</a></li>
-                            <li class="breadcrumb-item"><a class="text-dark" href="#">Library</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Data</li>
+                            <li class="breadcrumb-item"><a class="text-dark" href="Home.jsp">Home</a></li>
+                            <li class="breadcrumb-item"><a class="text-dark" href="BookURL">Library</a></li>
                         </ol>
                     </nav>
                 </div>
@@ -114,7 +113,7 @@
                             <div class="text-dark">
                                 <% if(numberOrder == 0) {%>
                                 <h4 class="text-danger">Let's shopping now</h4>
-                                <img src="./images/emptyCart.png" alt="emptycart" class="w-75 object-fit-cover"/>
+                                <img src="./images/EmptyCart.png" alt="emptycart" class="w-75 object-fit-cover"/>
                                 <%}%>
                             </div>   
                             
@@ -156,7 +155,7 @@
                                     <%}%>
                                 </div> 
                                 <div class="">
-                                    <a href="" class="fs-4 text-info text-decoration-none">change</a>
+                                    <a href="profile" class="fs-4 text-info text-decoration-none">change</a>
                                 </div>
                             </div>
                             <a href="CartURL?Service=checkout" class="mt-5 d-block

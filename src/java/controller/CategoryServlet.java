@@ -37,7 +37,7 @@ public class CategoryServlet extends HttpServlet {
         DAOBook dao=new DAOBook();
         List<Book> list =dao.getProductbyCID(cateID);
         request.setAttribute("listBook",list);
-        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+        request.getRequestDispatcher("BookList.jsp").forward(request, response);
         
     } 
 

@@ -1,19 +1,22 @@
 package entity;
 
+import java.util.Date;
+
 /**
  *
  * @author HP
  */
 public class Account {
-    private int account_id;
-    private String first_name, last_name, phone, email, password, account_image, address;
-    private Boolean is_admin, is_employee, active;
+    private int account_id,role_id;
+    private String first_name, last_name, phone, email, password, account_image, address,description,DateOFBirth;
+    private Boolean gender;
 
     public Account() {
     }
 
-    public Account(int account_id, String first_name, String last_name, String phone, String email, String password, String account_image, String address, Boolean is_admin, Boolean is_employee, Boolean active) {
+    public Account(int account_id, int role_id, String first_name, String last_name, String phone, String email, String password, String account_image, String address, String description, String DateOFBirth, Boolean gender) {
         this.account_id = account_id;
+        this.role_id = role_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.phone = phone;
@@ -21,18 +24,9 @@ public class Account {
         this.password = password;
         this.account_image = account_image;
         this.address = address;
-        this.is_admin = is_admin;
-        this.is_employee = is_employee;
-        this.active = active;
-    }
-    
-    public Account(int account_id, String first_name, String last_name, String phone, String email, String password) {
-        this.account_id = account_id;
-        this.email = email;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.phone = phone;
-        this.password = password;
+        this.description = description;
+        this.DateOFBirth = DateOFBirth;
+        this.gender = gender;
     }
 
     public int getAccount_id() {
@@ -41,6 +35,14 @@ public class Account {
 
     public void setAccount_id(int account_id) {
         this.account_id = account_id;
+    }
+
+    public int getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(int role_id) {
+        this.role_id = role_id;
     }
 
     public String getFirst_name() {
@@ -99,32 +101,33 @@ public class Account {
         this.address = address;
     }
 
-    public Boolean getIs_admin() {
-        return is_admin;
+    public String getDescription() {
+        return description;
     }
 
-    public void setIs_admin(Boolean is_admin) {
-        this.is_admin = is_admin;
-    }
-    
-    public Boolean getIs_employee() {
-        return is_employee;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setIs_employee(Boolean is_employee) {
-        this.is_employee = is_employee;
+    public String getDateOFBirth() {
+        return DateOFBirth;
     }
 
-    public Boolean getActive() {
-        return active;
+    public void setDateOFBirth(String DateOFBirth) {
+        this.DateOFBirth = DateOFBirth;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
     }
 
     @Override
     public String toString() {
-        return "Account{" + "account_id=" + account_id + ", first_name=" + first_name + ", last_name=" + last_name + ", phone=" + phone + ", email=" + email + ", password=" + password + ", account_image=" + account_image + ", address=" + address + ", is_admin=" + is_admin + ", is_employee=" + is_employee + ", active=" + active + '}';
+        return "Account{" + "account_id=" + account_id + ", role_id=" + role_id + ", first_name=" + first_name + ", last_name=" + last_name + ", phone=" + phone + ", email=" + email + ", password=" + password + ", account_image=" + account_image + ", address=" + address + ", description=" + description + ", DateOFBirth=" + DateOFBirth + ", gender=" + gender + '}';
     }
+
 }

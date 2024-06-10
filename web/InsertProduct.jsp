@@ -48,6 +48,7 @@
                                     onchange="inputImage(this)"
                                   class="form-control w-100 h-100 position-absolute top-0 start-0" style="z-index: 100; opacity: 0;" name="photo" placeholder="Enter photo">
                             <img src="" alt="" class="position-absolute start-0" id="boxImage"/>
+                            
                             <!-- <input onchange="chooseFile(this)" type="file" accept="image/gif, image/jpeg, image/png" class="w-100 bg-danger h-100 position-absolute top-0 end-0 opacity-0"> -->
                         </div>
                     </div>

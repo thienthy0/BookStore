@@ -4,7 +4,7 @@ import entity.Account;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 
 public class DAOAccount extends DBConnect {
 
@@ -18,6 +18,7 @@ public class DAOAccount extends DBConnect {
             while (rs.next()) {
                 Account acc = new Account(
                         rs.getInt("account_id"),
+                        rs.getInt("role_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -25,9 +26,9 @@ public class DAOAccount extends DBConnect {
                         rs.getString("password"),
                         rs.getString("account_image"),
                         rs.getString("address"),
-                        rs.getBoolean("is_admin"),
-                        rs.getBoolean("is_employee"),
-                        rs.getBoolean("active")
+                        rs.getString("description"),
+                        rs.getString("Dateofbirth"),
+                        rs.getBoolean("gender")
                 );
                 list.add(acc);
             }
@@ -48,6 +49,7 @@ public class DAOAccount extends DBConnect {
             while (rs.next()) {
                 acc = new Account(
                         rs.getInt("account_id"),
+                        rs.getInt("role_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -55,9 +57,9 @@ public class DAOAccount extends DBConnect {
                         rs.getString("password"),
                         rs.getString("account_image"),
                         rs.getString("address"),
-                        rs.getBoolean("is_admin"),
-                        rs.getBoolean("is_employee"),
-                        rs.getBoolean("active")
+                        rs.getString("description"),
+                        rs.getString("Dateofbirth"),
+                        rs.getBoolean("gender")
                 );
                 return acc;
             }
@@ -78,6 +80,7 @@ public class DAOAccount extends DBConnect {
             while (rs.next()) {
                 acc = new Account(
                         rs.getInt("account_id"),
+                        rs.getInt("role_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -85,9 +88,9 @@ public class DAOAccount extends DBConnect {
                         rs.getString("password"),
                         rs.getString("account_image"),
                         rs.getString("address"),
-                        rs.getBoolean("is_admin"),
-                        rs.getBoolean("is_employee"),
-                        rs.getBoolean("active")
+                        rs.getString("description"),
+                        rs.getString("Dateofbirth"),
+                        rs.getBoolean("gender")
                 );
                 return acc;
             }
@@ -98,8 +101,8 @@ public class DAOAccount extends DBConnect {
     }
 
     // Validate customer credentials
-    public Account validateCustomer(String email, String password) {
-        String sql = "SELECT * FROM Account WHERE email = ? AND password = ?";
+    public Account validateUser(String email, String password) {
+        String sql = "SELECT * FROM Account WHERE email = ? AND password = ? ";
         Account acc = null;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -109,6 +112,7 @@ public class DAOAccount extends DBConnect {
             while (rs.next()) {
                 acc = new Account(
                         rs.getInt("account_id"),
+                        rs.getInt("role_id"),
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
@@ -116,9 +120,9 @@ public class DAOAccount extends DBConnect {
                         rs.getString("password"),
                         rs.getString("account_image"),
                         rs.getString("address"),
-                        rs.getBoolean("is_admin"),
-                        rs.getBoolean("is_employee"),
-                        rs.getBoolean("active")
+                        rs.getString("description"),
+                        rs.getString("Dateofbirth"),
+                        rs.getBoolean("gender")
                 );
                 return acc;
             }
@@ -157,10 +161,9 @@ public class DAOAccount extends DBConnect {
     }
 
     // Update account information
-    public boolean updateAccount(int account_id, String email, String first_name,
-            String last_name, String phone, String account_image, String address) {
+    public boolean updateAccount(int account_id, String email, String first_name, String last_name, String phone, String account_image, String address, String account_description) {
         String sql = "UPDATE Account SET email = ?, first_name = ?, last_name = ?,"
-                + " phone = ?, account_image = ?, address = ? WHERE account_id = ?";
+                + " phone = ?, account_image = ?, address = ?, description = ? WHERE account_id = ?";
         int n = 0;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -170,7 +173,8 @@ public class DAOAccount extends DBConnect {
             st.setString(4, phone);
             st.setString(5, account_image);
             st.setString(6, address);
-            st.setInt(7, account_id);
+            st.setString(7, account_description);
+            st.setInt(8, account_id);
             n = st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
