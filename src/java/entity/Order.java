@@ -12,12 +12,14 @@ import java.util.Vector;
  * @author laptop368
  */
 public class Order {
+
     private int o_id, account_id;
     private String status;
     private Date order_date, receive_date;
+    private Vector<OrderDetail> listOrder;
+    private Account acc;
 
-    public Order(int aInt, int aInt1, String string, Date date, Date date1, Vector<OrderDetail> orderItemByOrderId, Account acc) {
-    }
+    
 
     public Order(int o_id, int account_id, String status, Date order_date, Date receive_date) {
         this.o_id = o_id;
@@ -26,6 +28,17 @@ public class Order {
         this.order_date = order_date;
         this.receive_date = receive_date;
     }
+
+    public Order(int o_id, String status, Date order_date, Date receive_date, Vector<OrderDetail> listOrder, Account acc) {
+        this.o_id = o_id;
+        this.status = status;
+        this.order_date = order_date;
+        this.receive_date = receive_date;
+        this.listOrder = listOrder;
+        this.acc = acc;
+    }
+
+    
 
     public int getO_id() {
         return o_id;
@@ -67,11 +80,31 @@ public class Order {
         this.receive_date = receive_date;
     }
 
+    public String getAccountFullName() {
+        return acc.getFirst_name() + " " + acc.getLast_name();
+    }
+
+    public Double totalOrder() {
+        double total = 0;
+        for (OrderDetail orderItem : listOrder) {
+            total += orderItem.orderItemPrice();
+        }
+        return total;
+    }
+
+    public String getOrderTotal() {
+        String formattedPrice = String.format("%,.0f", totalOrder());
+        formattedPrice = formattedPrice.replace(",", ".");
+        return formattedPrice;
+    }
+
+    public String getAccountImg() {
+        return acc.getAccount_image();
+    }
+
     @Override
     public String toString() {
         return "Order{" + "o_id=" + o_id + ", account_id=" + account_id + ", status=" + status + ", order_date=" + order_date + ", receive_date=" + receive_date + '}';
     }
 
-   
-    
 }

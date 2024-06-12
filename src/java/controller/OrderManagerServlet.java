@@ -32,76 +32,113 @@ public class OrderManagerServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        DAOOrder o = new DAOOrder();
-        String service = request.getParameter("Service");
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+throws ServletException, IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    
+    // Create PrintWriter for logging
+    PrintWriter out = response.getWriter();
+    
+    DAOOrder o = new DAOOrder();
+    String service = request.getParameter("Service");
+
+    // Logging the service parameter
+    out.println("Service: " + service);
+
+    if(service == null) {
+        service = "getAll";
+    }
+    
+    if(service.equals("getAll")) {
+        Vector<Order> listOrder = o.getAllOrder();
+        request.setAttribute("listOrder", listOrder);
         
-        if(service == null) {
-         service = "getAll";
-        }
+        // Logging the number of orders retrieved
+        out.println("Number of Orders: " + listOrder.size());
         
-        if(service.equals("getAll")) {
-          Vector<Order> listOrder = o.getAllOrder();
-          request.setAttribute("listOrder", listOrder);
-          request.getRequestDispatcher("OrderManager.jsp").forward(request, response);
-        }
-        
-        if (service.equals("searchOrder")) {
-            int oid = -1;
-            String pid_raw = request.getParameter("searchId");
-            try {
-                oid = Integer.parseInt(pid_raw);
-            } catch (NumberFormatException e) {
-                oid = -1;
-            }
-            Order order = o.getOrderById(oid);
-            //if not found will return the get all order
-            Vector<Order> listOrder = new Vector<>();
-            if (order == null) {
-                request.setAttribute("mess", "Not found this product");
-                listOrder = o.getAllOrder();
-            } else {
-                //if have order found will add to list
-                listOrder.add(order);
-            }
-            request.setAttribute("listOrder", listOrder);
-            request.setAttribute("valueSearch", pid_raw);
-            request.getRequestDispatcher("OrderManager.jsp").forward(request, response);
-        }
-        if(service.equals("searchByStatus")) {
-          String status = request.getParameter("status");
-          Vector<Order> listOrder = o.getOrderByStatus(status);
-          request.setAttribute("listOrder", listOrder);
-          request.setAttribute("statusSearch", status);
-          request.getRequestDispatcher("OrderManager.jsp").forward(request, response);
+        request.getRequestDispatcher("OrderManager.jsp").forward(request, response);
+    }
+
+    if (service.equals("searchOrder")) {
+        int oid = -1;
+        String pid_raw = request.getParameter("searchId");
+        try {
+            oid = Integer.parseInt(pid_raw);
+        } catch (NumberFormatException e) {
+            oid = -1;
         }
         
-        if (service.equals("updateStatus")) {
-            String oId_raw = request.getParameter("oId");
-            int oId = Integer.parseInt(oId_raw);
-            String status = request.getParameter("status");
-            
-            boolean n = o.updateStatusOrder(status, oId);
-            if (n) {
-                request.setAttribute("mess", "update success");
-            } else {
-                request.setAttribute("mess", "update unsuccess");
-            }
-            response.sendRedirect("orderManager");
+        // Logging the search id
+        out.println("Search Order ID: " + oid);
+        
+        Order order = o.getOrderById(oid);
+        Vector<Order> listOrder = new Vector<>();
+        if (order == null) {
+            request.setAttribute("mess", "Not found this product");
+            listOrder = o.getAllOrder();
+        } else {
+            listOrder.add(order);
         }
         
-        if(service.equals("detailOrder")) {
-         String orderId_raw = request.getParameter("OId");
-         int orderId = Integer.parseInt(orderId_raw);
-         DAOOrderDetail DOI = new DAOOrderDetail();
-         Vector<OrderDetail> orderDetails = DOI.getOrderDetail(orderId);
-         request.setAttribute("orderDetails", orderDetails);
-         request.setAttribute("OrderId", orderId);
-         request.getRequestDispatcher("views/OrderDetail.jsp").forward(request, response);
+        // Logging the search result
+        out.println("Orders found: " + listOrder.size());
+        
+        request.setAttribute("listOrder", listOrder);
+        request.setAttribute("valueSearch", pid_raw);
+        request.getRequestDispatcher("OrderManager.jsp").forward(request, response);
+    }
+    
+    if(service.equals("searchByStatus")) {
+        String status = request.getParameter("status");
+        Vector<Order> listOrder = o.getOrderByStatus(status);
+        request.setAttribute("listOrder", listOrder);
+        request.setAttribute("statusSearch", status);
+        
+        // Logging the status and number of orders found
+        out.println("Search Status: " + status);
+        out.println("Orders found: " + listOrder.size());
+        
+        request.getRequestDispatcher("OrderManager.jsp").forward(request, response);
+    }
+
+    if (service.equals("updateStatus")) {
+        String oId_raw = request.getParameter("oId");
+        int oId = Integer.parseInt(oId_raw);
+        String status = request.getParameter("status");
+        
+        // Logging the update request
+        out.println("Update Order ID: " + oId + " to Status: " + status);
+        
+        boolean n = o.updateStatusOrder(status, oId);
+        if (n) {
+            request.setAttribute("mess", "update success");
+            out.println("Update success");
+        } else {
+            request.setAttribute("mess", "update unsuccess");
+            out.println("Update unsuccess");
         }
-    } 
+        response.sendRedirect("OrderManager");
+    }
+    
+    if(service.equals("detailOrder")) {
+        String orderId_raw = request.getParameter("OId");
+        int orderId = Integer.parseInt(orderId_raw);
+        DAOOrderDetail DOI = new DAOOrderDetail();
+        Vector<OrderDetail> orderDetails = DOI.getOrderDetail(orderId);
+        
+        // Logging the order details request
+        out.println("Order ID for Details: " + orderId);
+        out.println("Number of Order Details: " + orderDetails.size());
+        
+        request.setAttribute("orderDetails", orderDetails);
+        request.setAttribute("OrderId", orderId);
+        request.getRequestDispatcher("OrderDetail.jsp").forward(request, response);
+    }
+    
+    // Close the PrintWriter
+    out.close();
+}
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

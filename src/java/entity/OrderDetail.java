@@ -9,17 +9,29 @@ package entity;
  * @author laptop368
  */
 public class OrderDetail {
-    private String detail_id;
-    private String book_id;
-    private String o_id;
+
+    private int detail_id;
+    private int book_id;
+    private int o_id;
     private int price;
     private int quantity;
     private int discount;
+    private Order order;
+    private Book book;
 
-    public OrderDetail(String string, String string1, String string2, int aInt, int aInt1, int aInt2, Book Pro) {
+    public OrderDetail() {
     }
 
-    public OrderDetail(String detail_id, String book_id, String o_id, int price, int quantity, int discount) {
+    public OrderDetail( int book_id, int o_id, int price, int quantity, int discount, Book book) {
+        this.book_id = book_id;
+        this.o_id = o_id;
+        this.price = price;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.book = book;
+    }
+
+    public OrderDetail(int detail_id, int o_id, int book_id, int discount, int quantity, int price) {
         this.detail_id = detail_id;
         this.book_id = book_id;
         this.o_id = o_id;
@@ -28,27 +40,43 @@ public class OrderDetail {
         this.discount = discount;
     }
 
-    public String getDetail_id() {
+    public OrderDetail(int detail_id, int discount, int price, int quantity, Book book) {
+        this.detail_id = detail_id;
+        this.discount = discount;
+        this.price = price;
+        this.quantity = quantity;
+        this.book = book;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public int getDetail_id() {
         return detail_id;
     }
 
-    public void setDetail_id(String detail_id) {
+    public void setDetail_id(int detail_id) {
         this.detail_id = detail_id;
     }
 
-    public String getBook_id() {
+    public int getBook_id() {
         return book_id;
     }
 
-    public void setBook_id(String book_id) {
+    public void setBook_id(int book_id) {
         this.book_id = book_id;
     }
 
-    public String getO_id() {
+    public int getO_id() {
         return o_id;
     }
 
-    public void setO_id(String o_id) {
+    public void setO_id(int o_id) {
         this.o_id = o_id;
     }
 
@@ -76,10 +104,27 @@ public class OrderDetail {
         this.discount = discount;
     }
 
-    @Override
-    public String toString() {
-        return "Order_Detail{" + "detail_id=" + detail_id + ", book_id=" + book_id + ", o_id=" + o_id + ", price=" + price + ", quantity=" + quantity + ", discount=" + discount + '}';
+    public Order getOrder() {
+        return order;
     }
 
-    
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Double orderItemPrice() {
+        return price * (1 - (discount * 0.01)) * quantity;
+    }
+
+    public String getorderItemPrice() {
+        String formattedPrice = String.format("%,.0f", orderItemPrice());
+        formattedPrice = formattedPrice.replace(",", ".");
+        return formattedPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderDetail{" + "detailId=" + detail_id + ", bookId=" + book_id + ", o_id=" + o_id + ", price=" + price + ", quantity=" + quantity + ", discount=" + discount + '}';
+    }
+
 }

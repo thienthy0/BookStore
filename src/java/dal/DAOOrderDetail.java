@@ -19,80 +19,37 @@ import java.util.Vector;
  */
 public class DAOOrderDetail extends DBConnect {
 
-
     public Vector<OrderDetail> getOrderDetail(int OrderId) {
-        String sql = "SELECT * FROM Order_items O\n"
-                + "JOIN Products P ON P.product_id = O.product_id\n"
-                + "WHERE O.order_id = ?";
+        String sql = "SELECT * FROM Order_details O\n"
+                + "JOIN Book B ON B.book_id = O.book_id\n"
+                + "WHERE O.o_id = ?";
         Vector<OrderDetail> list = new Vector<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, OrderId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                Book Pro = new Book(
+                Book book = new Book(
                         rs.getString("name"),
                         rs.getInt("book_id"),
                         rs.getInt("quantity"),
                         rs.getInt("price"),
-                        rs.getString("author_name"),
+                        rs.getString("author_id"),
                         rs.getString("image"),
                         rs.getString("language"),
-                        rs.getString("category_name"),
+                        rs.getString("category_id"),
                         rs.getString("publisher"),
                         rs.getString("description"),
                         rs.getInt("number_of_pages"),
                         rs.getInt("discount")
                 );
-                
-                OrderDetail OD = new OrderDetail(
-                        rs.getString("item_id"),
-                        rs.getString("item_id"),
-                        rs.getString("item_id"),
-                        rs.getInt("item_id"),
-                        rs.getInt("discount"),
-                        rs.getInt("quantity"),
-                        Pro
-                );
-                list.add(OD);
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return list;
-    }
-    
-    public Vector<OrderDetail> getAllOrderDetail() {
-        String sql = "SELECT * FROM Order_items O\n"
-                + "JOIN Products P ON P.product_id = O.product_id";
-        Vector<OrderDetail> list = new Vector<>();
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {
-                Book Pro = new Book(
-                        rs.getString("name"),
-                        rs.getInt("book_id"),
-                        rs.getInt("quantity"),
-                        rs.getInt("price"),
-                        rs.getString("author_name"),
-                        rs.getString("image"),
-                        rs.getString("language"),
-                        rs.getString("category_name"),
-                        rs.getString("publisher"),
-                        rs.getString("description"),
-                        rs.getInt("number_of_pages"),
-                        rs.getInt("discount")
-                );
-                
+
                 OrderDetail OI = new OrderDetail(
-                        rs.getString("item_id"),
-                        rs.getString("item_id"),
-                        rs.getString("item_id"),
-                        rs.getInt("item_id"),
+                        rs.getInt("detail_id"),
                         rs.getInt("discount"),
+                        rs.getInt("price"),
                         rs.getInt("quantity"),
-                        Pro
+                        book
                 );
                 list.add(OI);
             }
@@ -101,22 +58,39 @@ public class DAOOrderDetail extends DBConnect {
         }
         return list;
     }
-    
-    public Vector<OrderDetail> getOrderItemByOrderId(int OrderId) {
-        String sql = "Select * from order_items where order_id = ?";
+public static void main(String[] args) {
+        DAOOrderDetail Dao = new DAOOrderDetail();
+        System.out.println(Dao.getOrderDetail(1));
+    }
+    public Vector<OrderDetail> getAllOrderDetail() {
+        String sql = "SELECT * FROM Order_details O JOIN Book B ON B.book_id = O.book_id";
         Vector<OrderDetail> list = new Vector<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, OrderId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
+                Book Book = new Book(
+                        rs.getString("name"),
+                        rs.getInt("book_id"),
+                        rs.getInt("quantity"),
+                        rs.getInt("price"),
+                        rs.getString("author_id"),
+                        rs.getString("image"),
+                        rs.getString("language"),
+                        rs.getString("category_id"),
+                        rs.getString("publisher"),
+                        rs.getString("description"),
+                        rs.getInt("number_of_pages"),
+                        rs.getInt("discount")
+                );
+
                 OrderDetail OD = new OrderDetail(
-                        rs.getString("item_id"),
-                        rs.getString("item_id"),
-                        rs.getString("item_id"),
-                        rs.getInt("item_id"),
+                        rs.getInt("book_id"),
+                        rs.getInt("o_id"),
+                        rs.getInt("price"),
+                        rs.getInt("quantity"),
                         rs.getInt("discount"),
-                        rs.getInt("quantity")
+                        Book
                 );
                 list.add(OD);
             }
@@ -126,20 +100,44 @@ public class DAOOrderDetail extends DBConnect {
         return list;
     }
     
+    public Vector<OrderDetail> getOrderItemByOrderId(int OrderId) {
+        String sql = "Select * from Order_details where o_id = ?";
+        Vector<OrderDetail> list = new Vector<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, OrderId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                OrderDetail OD = new OrderDetail(
+                        rs.getInt("detail_id"),
+                        rs.getInt("o_id"),
+                        rs.getInt("book_id"),
+                        rs.getInt("discount"),
+                        rs.getInt("quantity"),
+                        rs.getInt("price")
+                );
+                list.add(OD);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
     public Vector<OrderDetail> getAllOrderItem() {
-        String sql = "SELECT * FROM [order_items]";
+        String sql = "SELECT * FROM [Order_details]";
         Vector<OrderDetail> list = new Vector<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 OrderDetail OI = new OrderDetail(
-                        rs.getString("item_id"),
-                        rs.getString("item_id"),
-                        rs.getString("item_id"),
-                        rs.getInt("item_id"),
+                        rs.getInt("detail_id"),
+                        rs.getInt("o_id"),
+                        rs.getInt("book_id"),
                         rs.getInt("discount"),
-                        rs.getInt("quantity")
+                        rs.getInt("quantity"),
+                        rs.getInt("price")
                 );
                 list.add(OI);
             }

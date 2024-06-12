@@ -1,13 +1,19 @@
 package controller;
 
 import dal.DAOAccount;
+import dal.DAOOrder;
+import dal.DAOOrderDetail;
 import entity.Account;
+import entity.Order;
+import entity.OrderDetail;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Vector;
 import java.util.regex.Pattern;
 
 /**
@@ -19,20 +25,31 @@ public class ProfileServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
-        String[] listService = {"Account info","My oder", "Change password"};
+        String[] listService = {"Account info", "My order", "Change password"};
         request.setAttribute("listService", listService);
-
-        Account acc = (Account) session.getAttribute("account");
+        
+        Account acc = (Account)session.getAttribute("account");
         String service = request.getParameter("Service");
-
+        
         if (acc != null) {
             if (service == null) {
                 service = listService[0];
             }
+            
+            if(service.equals(listService[1])) {
+                DAOOrderDetail doi = new DAOOrderDetail();
+                DAOOrder dorder = new DAOOrder();
+                int accId = acc.getAccount_id();
+                Vector<Order> myOrder = dorder.getAllOrderByAccount(accId);
+                Vector<OrderDetail> orderItems = doi.getAllOrderDetail();
+                request.setAttribute("myOrder", myOrder);
+                request.setAttribute("myOrderItem", orderItems);
+            }
             request.setAttribute("current", service);
             request.getRequestDispatcher("Profile.jsp").forward(request, response);
+            return;
         } else {
-            response.sendRedirect("login");
+         response.sendRedirect("login");
         }
     }
 
@@ -71,14 +88,14 @@ public class ProfileServlet extends HttpServlet {
         String account_address = request.getParameter("account_address");
         String account_phone = request.getParameter("account_phone");
         String account_description = request.getParameter("account_description");
-        
+
         String mess = "";
         boolean isSuccess = false;
 
         if (isValidName(first_name) && isValidName(last_name)) {
             boolean haveUpdate = d.updateAccount(
                     acc.getAccount_id(), account_email, first_name, last_name,
-                    account_phone, accountImage, account_address,account_description
+                    account_phone, accountImage, account_address, account_description
             );
 
             Account updatedAccount = d.getAccountById(acc.getAccount_id());
@@ -157,7 +174,7 @@ public class ProfileServlet extends HttpServlet {
     }
 
     private void setCommonAttributes(HttpServletRequest request) {
-        String[] listService = {"Account info","My oder", "Change password"};
+        String[] listService = {"Account info", "My oder", "Change password"};
         request.setAttribute("listService", listService);
     }
 

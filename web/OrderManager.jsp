@@ -36,7 +36,7 @@
                             </a>
                         </li>
                         <li class="py-4 ps-3 mb-3 active">
-                            <a href="ManageOrder"  class="fs-3 text-white text-decoration-none">
+                            <a href="OrderManager"  class="fs-3 text-white text-decoration-none">
                                 <i class='bx bx-cart me-3'></i>
                                 <span>Order</span>
                             </a>
@@ -89,22 +89,22 @@
                     <div class="col-md-6">
                         <ul class="d-flex flex-wrap align-items-center">
                             <li class="px-4 py-2 rounded-xl border fs-4 me-3 display-order ${statusSearch==null?"choose":""}">
-                                <a href="orderManager" class="text-black-weak text-decoration-none">
+                                <a href="OrderManager" class="text-black-weak text-decoration-none">
                                     All order
                                 </a>
                             </li>
                             <li class="px-4 py-2 rounded-xl border fs-4 me-3 display-order ${statusSearch.equals('process')?"choose":""}">
-                                <a href="orderManager?Service=searchByStatus&status=process" class="text-black-weak text-decoration-none">
+                                <a href="OrderManager?Service=searchByStatus&status=process" class="text-black-weak text-decoration-none">
                                     Process
                                 </a>
                             </li>
                             <li class="px-4 py-2 rounded-xl border fs-4 me-3 display-order ${statusSearch.equals('wait')?"choose":""}">
-                                <a href="orderManager?Service=searchByStatus&status=wait" class="text-black-weak text-decoration-none">
+                                <a href="OrderManager?Service=searchByStatus&status=wait" class="text-black-weak text-decoration-none">
                                     Wait
                                 </a>
                             </li>
                             <li class="px-4 py-2 rounded-xl border fs-4 display-order ${statusSearch.equals('done')?"choose":""}">
-                                <a href="orderManager?Service=searchByStatus&status=done"  class="text-black-weak text-decoration-none">
+                                <a href="OrderManager?Service=searchByStatus&status=done"  class="text-black-weak text-decoration-none">
                                     Done
                                 </a>
                             </li>
@@ -133,22 +133,22 @@
                     <c:forEach items="${listOrder}" var="order">
                         <div class="mt-5 border-top bg-white rounded-lg border">
                         <div class="row fs-4 py-4 px-5 d-flex align-items-center justify-content-between">
-                            <div class="col fw-bold">#${order.getOrder_id()}</div>
+                            <div class="col fw-bold">#${order.getO_id()}</div>
                             <div class="col d-flex align-items-center">
                                 <div class="rounded-fill me-3">
-                                    <c:if test="${order.getAccountImg() != null}">
-                                        <img src="./images/${order.getAccountImg()}" alt="" 
+                                    <c:if test="${order.getAccount_image() != null}">
+                                        <img src="./images/${order.getAccount_image()}" alt="" 
                                          style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover" %>
                                     </c:if>
-                                    <c:if test="${order.getAccountImg() == null}">
-                                        <img src="./images/accountImg.png" alt="" 
+                                    <c:if test="${order.getAccount_image() == null}">
+                                        <img src="./images/AccountImage.png" alt="" 
                                          style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover" %>
                                     </c:if>
                                 </div>
                                 <span class="fs-4">${order.getAccountFullName()}</span>
                             </div>
                             <div class="col">${order.getOrder_date()}</div>
-                            <div class="col">${order.getOrderTotal()} <span class="text-success">vnd</span></div>
+                            <div class="col">${order.getOrderTotal()} <span class="text-success">$</span></div>
                             <c:if test="${order.getStatus().equals('done')}">
                                 <div class="col text-success">${order.getStatus()}</div>
                             </c:if>
@@ -162,19 +162,19 @@
                                 <div class="d-flex align-items-center position-relative box-detail">
                                     <div class="">
                                         <span class="me-3">
-                                            <a class="text-decoration-none text-black" href="orderManager?Service=detailOrder&OId=${order.getOrder_id()}">Detail</a>
+                                            <a class="text-decoration-none text-black" href="OrderManager?Service=detailOrder&OId=${order.getO_id()}">Detail</a>
                                         </span>
                                     </div>
                                     <div class="">
                                     <c:if test="${order.getStatus().equals('wait')}">
-                                                        <select onchange="changeStatus([this, ${order.getOrder_id()}])">
+                                                        <select onchange="changeStatus([this, ${order.getO_id()}])">
                                                             <option value="process" ${order.getStatus().equals('process')?"selected":""}>process</option>
                                                             <option value="done" ${order.getStatus().equals('done')?"selected":""}>done</option>
                                                             <option value="wait" ${order.getStatus().equals('wait')?"selected":""}>wait</option>
                                                         </select>
                                     </c:if>
                                     <c:if test="${order.getStatus().equals('process')}">
-                                             <select onchange="changeStatus([this, ${order.getOrder_id()}])">
+                                             <select onchange="changeStatus([this, ${order.getO_id()}])">
                                                     <option value="wait"  ${order.getStatus().equals('wait')?"selected":""}>wait</option>
                                                     <option value="done" ${order.getStatus().equals('done')?"selected":""}>done</option>
                                                     <option value="process" ${order.getStatus().equals('process')?"selected":""}>process</option>

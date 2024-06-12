@@ -23,8 +23,7 @@ import java.util.Vector;
 public class DAOOrder extends DBConnect {
 
     public Order getOrderById(int orderId) {
-        String sql = "select * from orders O\n"
-                + " JOIN accounts A on A.account_id = O.account_id WHERE O.o_id = ?";
+        String sql = "SELECT * FROM Orders O JOIN Account A ON A.account_id = O.account_id WHERE O.o_id = ?";
         Order order = null;
         DAOOrderDetail d = new DAOOrderDetail();
         try {
@@ -47,11 +46,10 @@ public class DAOOrder extends DBConnect {
                         rs.getBoolean("gender")
                 );
                 order = new Order(
-                        rs.getInt("order_id"),
-                        rs.getInt("account_id"),
+                        rs.getInt("o_id"),
                         rs.getString("status"),
                         rs.getDate("order_date"),
-                        rs.getDate("recieve_date"),
+                        rs.getDate("receive_date"),
                         d.getOrderItemByOrderId(rs.getInt("o_id")),
                         acc);
                 return order;
@@ -63,18 +61,18 @@ public class DAOOrder extends DBConnect {
     }
 
     public Vector<Order> getAllOrders() {
-        String sql = "select * from orders O";
+        String sql = "select * from Orders O";
         Vector<Order> list = new Vector<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Order order = new Order(
-                        rs.getInt("order_id"),
+                        rs.getInt("o_id"),
                         rs.getInt("account_id"),
                         rs.getString("status"),
                         rs.getDate("order_date"),
-                        rs.getDate("recieve_date")
+                        rs.getDate("receive_date")
                 );
                 list.add(order);
             }
@@ -86,8 +84,8 @@ public class DAOOrder extends DBConnect {
 
     //check ham nay
     public Vector<Order> getAllOrder() {
-        String sql = "select * from orders O\n"
-                + " JOIN accounts A on A.account_id = O.account_id";
+        String sql = "select * from Orders O\n"
+                + " JOIN Account A on A.account_id = O.account_id";
         Vector<Order> list = new Vector<>();
         Vector<OrderDetail> listItem = new Vector<>();
         DAOOrderDetail d = new DAOOrderDetail();
@@ -110,15 +108,14 @@ public class DAOOrder extends DBConnect {
                         rs.getBoolean("gender")
                 );
                 Order order = new Order(
-                        rs.getInt("order_id"),
-                        rs.getInt("account_id"),
+                        rs.getInt("o_id"),
                         rs.getString("status"),
                         rs.getDate("order_date"),
-                        rs.getDate("recieve_date")
-                );
+                        rs.getDate("receive_date"),
+                        d.getOrderItemByOrderId(rs.getInt("o_id")),
+                        acc);
                 list.add(order);
             }
-
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -126,8 +123,8 @@ public class DAOOrder extends DBConnect {
     }
 
     public Vector<Order> getOrderByStatus(String status) {
-        String sql = "select * from orders O\n"
-                + " JOIN accounts A on A.account_id = O.account_id WHERE O.status like ?";
+        String sql = "SELECT * FROM Orders O JOIN Account A ON A.account_id = O.account_id WHERE O.status LIKE ?";
+
         Vector<Order> list = new Vector<>();
         Vector<OrderDetail> listItem = new Vector<>();
         DAOOrderDetail d = new DAOOrderDetail();
@@ -151,25 +148,28 @@ public class DAOOrder extends DBConnect {
                         rs.getBoolean("gender")
                 );
                 Order order = new Order(
-                        rs.getInt("order_id"),
-                        rs.getInt("account_id"),
+                        rs.getInt("o_id"),
                         rs.getString("status"),
                         rs.getDate("order_date"),
-                        rs.getDate("recieve_date")
-                );
+                        rs.getDate("receive_date"),
+                        d.getOrderItemByOrderId(rs.getInt("o_id")),
+                        acc);
                 list.add(order);
             }
-
         } catch (SQLException e) {
             System.out.println(e);
         }
         return list;
     }
-    //get order by account
 
+    public static void main(String[] args) {
+        DAOOrder Dao = new DAOOrder();
+        System.out.println(Dao.getOrderByStatus("done"));
+    }
+    
     public Vector<Order> getAllOrderByAccount(int accId) {
-        String sql = "select * from orders O\n"
-                + " JOIN accounts A on A.account_id = O.account_id WHERE A.account_id = ? order by order_date desc";
+        String sql = "SELECT * FROM Orders O JOIN Account A ON A.account_id = O.account_id WHERE A.account_id = ? ORDER BY order_date DESC";
+
         Vector<Order> list = new Vector<>();
         DAOOrderDetail d = new DAOOrderDetail();
         try {
@@ -192,15 +192,14 @@ public class DAOOrder extends DBConnect {
                         rs.getBoolean("gender")
                 );
                 Order order = new Order(
-                        rs.getInt("order_id"),
-                        rs.getInt("account_id"),
+                        rs.getInt("o_id"),
                         rs.getString("status"),
                         rs.getDate("order_date"),
-                        rs.getDate("recieve_date")
-                );
+                        rs.getDate("receive_date"),
+                        d.getOrderItemByOrderId(rs.getInt("o_id")),
+                        acc);
                 list.add(order);
             }
-
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -220,14 +219,14 @@ public class DAOOrder extends DBConnect {
         int n = 0;
         if (status.equals("done")) {
             isDone = true;
-            sql = "UPDATE [dbo].[orders]\n"
+            sql = "UPDATE [dbo].[Orders]\n"
                     + "   SET [status] = ?,"
-                    + "       [recieve_date] = ?"
-                    + " WHERE [order_id] = ?";
+                    + "       [receive_date] = ?"
+                    + " WHERE [o_id] = ?";
         } else {
-            sql = "UPDATE [dbo].[orders]\n"
+            sql = "UPDATE [dbo].[Orders]\n"
                     + "   SET [status] = ?"
-                    + " WHERE [order_id] = ?";
+                    + " WHERE [o_id] = ?";
         }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -246,61 +245,59 @@ public class DAOOrder extends DBConnect {
         return n > 0;
     }
 
-//    //checkount
-//    public void checkcount(Account acc, Vector<Book> listItem) {
-//     LocalDateTime myDateObj = LocalDateTime.now();  
-//        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
-//        String formattedDate = myDateObj.format(myFormatObj); 
-//        int newOrderId = getAllOrders().get(getAllOrders().size() - 1).getO_id() + 1;
-//        try {
-//            String sql1 = "INSERT INTO [dbo].[orders]\n"
-//                    + "           ([order_id]\n"
-//                    + "           ,[account_id]\n"
-//                    + "           ,[order_date]\n"
-//                    + "           ,[status])\n"
-//                    + "     VALUES(?, ?, ?, ?)\n";
-//            PreparedStatement st = connection.prepareStatement(sql1);
-//            st.setInt(1, newOrderId);
-//            st.setInt(2, acc.getAccount_id());
-//            st.setTimestamp(3, Timestamp.valueOf(formattedDate));
-//            st.setString(4, "wait");
-//            st.executeUpdate();
-//            //insert into order item
-//            String sql2 = "SELECT TOP 1 order_id FROM [orders] ORDER BY order_id DESC";
-//            PreparedStatement st2 = connection.prepareStatement(sql2);
-//            ResultSet rs = st2.executeQuery();
-//            while (rs.next()) {
-//                int orderId = rs.getInt("order_id");
-//                DAOOrderDetail Dod = new DAOOrderDetail();
-//                //get last order Item
-//                int newOrderItemId = Dod.getAllOrderItem().get(Dod.getAllOrderItem().size() - 1).getDetail_id() + 1;
-//                //add all order in cart to database
-//                for (Book item : listItem) {
-//                    String sql3 = "INSERT INTO [dbo].[order_items]\n"
-//                            + "           ([item_id]\n"
-//                            + "           ,[order_id]\n"
-//                            + "           ,[book_id]\n"
-//                            + "           ,[quantity]\n"
-//                            + "           ,[list_price]\n"
-//                            + "           ,[discount])\n"
-//                            + "     VALUES(?, ?, ?, ?, ?, ?)";
-//                    PreparedStatement st3 = connection.prepareStatement(sql3);
-//                    st3.setInt(1, newOrderItemId);
-//                    st3.setInt(2, orderId);
-//                    st3.setInt(3, item.getBook_id());
-//                    st3.setInt(4, item.getQuantity());
-//                    st3.setDouble(5, item.getList_price());
-//                    st3.setInt(6, item.getDiscount());
-//                    st3.executeUpdate();
-//                    newOrderItemId++;
-//                }
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        }
-//    }
-    public static void main(String[] args) {
-        DAOOrder O = new DAOOrder();
-        System.out.println(O.getAllOrder().get(O.getAllOrder().size() - 1).getO_id());
+    //checkount
+    public void checkcount(Account acc, Vector<Book> listItem) {
+        LocalDateTime myDateObj = LocalDateTime.now();
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = myDateObj.format(myFormatObj);
+        int newOrderId = getAllOrders().get(getAllOrders().size() - 1).getO_id() + 1;
+        try {
+            String sql1 = "INSERT INTO [dbo].[Orders]\n"
+                    + "           ([o_id]\n"
+                    + "           ,[account_id]\n"
+                    + "           ,[order_date]\n"
+                    + "           ,[status])\n"
+                    + "     VALUES(?, ?, ?, ?)\n";
+            PreparedStatement st = connection.prepareStatement(sql1);
+            st.setInt(1, newOrderId);
+            st.setInt(2, acc.getAccount_id());
+            st.setTimestamp(3, Timestamp.valueOf(formattedDate));
+            st.setString(4, "wait");
+            st.executeUpdate();
+            //insert into order item
+            String sql2 = "SELECT TOP 1 order_id FROM [orders] ORDER BY order_id DESC";
+            PreparedStatement st2 = connection.prepareStatement(sql2);
+            ResultSet rs = st2.executeQuery();
+            while (rs.next()) {
+                int orderId = rs.getInt("order_id");
+                DAOOrderDetail Dod = new DAOOrderDetail();
+                //get last order Item
+                int newOrderItemId = Dod.getAllOrderItem().get(Dod.getAllOrderItem().size() - 1).getDetail_id() + 1;
+                //add all order in cart to database
+                for (Book item : listItem) {
+                    String sql3 = "INSERT INTO [dbo].[Order_details]\n"
+                            + "           ([item_id]\n"
+                            + "           ,[order_id]\n"
+                            + "           ,[product_id]\n"
+                            + "           ,[quantity]\n"
+                            + "           ,[list_price]\n"
+                            + "           ,[discount])\n"
+                            + "     VALUES(?, ?, ?, ?, ?, ?)";
+                    PreparedStatement st3 = connection.prepareStatement(sql3);
+                    st3.setInt(1, newOrderItemId);
+                    st3.setInt(2, orderId);
+                    st3.setInt(3, item.getId());
+                    st3.setInt(4, item.getQuantity());
+                    st3.setDouble(5, item.getPrice());
+                    st3.setInt(6, item.getDiscount());
+                    st3.executeUpdate();
+                    newOrderItemId++;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
+
+    
 }

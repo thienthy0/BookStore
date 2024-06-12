@@ -39,7 +39,7 @@
 
                     <div class="row px-5">
                         <div class="col-md-5 mt-5">
-                            <h2 class="my-5 fw-bold">Hình ảnh sản phẩm</h2>
+                            <h2 class="my-5 fw-bold">Image Product</h2>
                             <div class="">
                                 <div class="border-dotted p-5 d-flex flex-column box-input-image w-90 position-relative justify-content-center">
                                     <i class='bx bx-image-add fs-1 text-danger'></i>
@@ -51,7 +51,7 @@
                                                 <img src="./images/${product.image}" alt="alt" id="currentImage"/>
                                             </c:otherwise>
                                         </c:choose>
-                                    <span class="text-danger fs-3">Thêm hình ảnh(1)</span>
+                                    <span class="text-danger fs-3">Add Image(1)</span>
                                     <input type="file" 
                                            name="file"
                                            accept="image/gif, image/jpeg, image/png"
@@ -67,11 +67,11 @@
                                value="${product.id}"/>  
                         <div class="col-md-7 mt-5">
                             <div >
-                                <h2 class="my-5">Thông tin chi tiết sản phẩm</h2>
+                                <h2 class="my-5">Information Detail</h2>
                                 <div class="my-5">
                                     <div class="row d-flex align-items-center">
                                         <div class="col-md-2 text-end">
-                                            <label class="fs-4" for="product-name">Tên sản phẩm</label>
+                                            <label class="fs-4" for="product-name">Name</label>
                                         </div>
                                         <div class="col-md-10 insert-product-input">
                                             <input type="text" id="product-name" 
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="my-5 d-flex align-items-center">
                                         <div class="col-md-2 text-end px-3">
-                                            <label class="fs-4" for="product-type">Danh mục</label>
+                                            <label class="fs-4" for="product-type">Category</label>
                                         </div>
                                         <div class="w-100">
                                             <select class="form-select py-3 fs-3" aria-label="Default select example"
@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="row d-flex align-items-center">
                                         <div class="col-md-2 text-end">
-                                            <label class="fs-4" for="product-name">Tác giả</label>
+                                            <label class="fs-4" for="product-name">Author</label>
                                         </div>
                                         <div class="col-md-10 insert-product-input">
                                             <input type="text" id="product-name" 
@@ -111,18 +111,18 @@
                                     </div>
                                     <div class="row mt-5 d-flex align-items-center">
                                         <div class="col-md-2 text-end">
-                                            <label class="fs-4" for="product-quantity">Giá</label>
+                                            <label class="fs-4" for="product-quantity">Price</label>
                                         </div>
                                         <div class="col-md-10 insert-product-input">
                                             <input type="number" min="0" id="product-price"
                                                    name="pro_price"
                                                    value="${product.price}"
-                                                   class="rounded-sm border w-100 fs-3 py-4 px-3" placeholder="Giá sản phẩm..."/>  
+                                                   class="rounded-sm border w-100 fs-3 py-4 px-3" placeholder="Price..."/>  
                                         </div>
                                     </div>
                                     <div class="row mt-5 d-flex align-items-center">
                                         <div class="col-md-2 text-end">
-                                            <label class="fs-4" for="product-quantity">Số lượng</label>
+                                            <label class="fs-4" for="product-quantity">Quantity</label>
                                         </div>
                                         <div class="col-md-10 insert-product-input">
                                             <input type="number" min="0" id="product-quantity"
@@ -145,7 +145,7 @@
                                     </div>
                                     <div class="row d-flex align-items-center">
                                         <div class="col-md-2 text-end">
-                                            <label class="fs-4" for="product-name">Số Trang</label>
+                                            <label class="fs-4" for="product-name">Number of Page</label>
                                         </div>
                                         <div class="col-md-10 insert-product-input">
                                             <input type="text" id="product-name" 
@@ -157,7 +157,7 @@
                                     </div>
                                     <div class="row d-flex align-items-center">
                                         <div class="col-md-2 text-end">
-                                            <label class="fs-4" for="product-name">Ngôn ngữ</label>
+                                            <label class="fs-4" for="product-name">Language</label>
                                         </div>
                                         <div class="col-md-10 insert-product-input">
                                             <input type="text" id="product-name" 

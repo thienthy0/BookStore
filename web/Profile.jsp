@@ -119,8 +119,6 @@
                                                 </div>
                                             </div>
 
-
-
                                             <div class="mt-5">
                                                 <h3>Address</h3>
                                                 <div class="input-group mb-3 rounded-xl">
@@ -198,9 +196,9 @@
                             </div>
                         </div>
                     </c:if>
-                    
+
                     <!--My Order-->
-                    
+
                     <c:if test="${requestScope.current.equals('My order')}">
                         <c:forEach var="order" items="${myOrder}">
                             <div class="box-shadow1 py-2 px-3 rounded-sm mt-5 d-flex justify-content-between align-items-center">
@@ -220,20 +218,22 @@
                                 </c:choose>
                                 <span class="ms-auto fs-4 fw-medium text-black">${order.order_date}</span>
                             </div>
-                            <c:forEach var="orderItem" items="${myOrderDetail}">
-                                <c:if test="${order.order_id == orderItem.order_id}">
+                            
+                            <c:forEach var="orderItem" items="${myOrderItem}">
+                                <c:if test="${order.o_id == orderItem.o_id}">
                                     <div class="h-100vh mt-5">
                                         <div class="col-md-12 border-end border-start pe-5">
                                             <div class="row order-item pb-5">
                                                 <div class="col-2">
-                                                    <a href="ProductURL?Service=ProductDetail&Pid=${orderItem.getProduct().product_id}" class="d-block h-100">
-                                                        <img src="./images/${orderItem.getProduct().product_img}" alt="" class="rounded-lg object-fit-cover">
+                                                    <a href="BookDetail?Pid=${orderItem.getBook().id}" class="d-block h-100">
+                                                        
+                                                        <img src="./images/${orderItem.getBook().image}" alt="" class="rounded-lg object-fit-cover">
                                                     </a>
                                                 </div>
                                                 <div class="col-9 d-flex flex-fill flex-column justify-content-between ">
                                                     <div class="h-50 d-flex align-items-center justify-content-between flex-fill">
                                                         <div class="">
-                                                            <h3 class="fw-bold">${orderItem.getProduct().product_name}</h3>
+                                                            <h3 class="fw-bold">${orderItem.getBook().name}</h3>
                                                             <div class="d-flex align-items-center position-relative hover-change">
                                                                 <div class="">
                                                                     <i class="fa-solid fa-fill-drip me-3"></i>
@@ -242,32 +242,31 @@
                                                                 <div class="border-line border-l mx-3"></div>
                                                                 <div class="">
                                                                     <i class="fa-solid fa-store me-3"></i>
-                                                                    <span class="text-black"> a </span>
+                                                                    <span class="text-black"> FPT </span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="">
-                                                            <span class="fs-4">đ${orderDetail.price}</span>
+                                                            <span class="fs-4">đ${orderItem.price}</span>
                                                         </div>
                                                         <div class="d-flex align-items-center">
                                                             <div class="box-input">
                                                                 <button class="border-0 bg-white">
                                                                     <a class="p-3 text-black"><i class="fa-solid fa-minus fs-5"></i></a>
                                                                 </button>
-                                                                <input type="text" value="${orderDetail.quantity}" class="input-number" id="numberValue" />
+                                                                <input type="text" value="${orderItem.quantity}" class="input-number" id="numberValue" />
                                                                 <button class="border-0 bg-white">
                                                                     <a class="p-3 text-black"><i class="fa-solid fa-plus fs-5"></i></a>
                                                                 </button>
                                                             </div>
                                                         </div>
                                                         <div class="fs-4">
-                                                            <!--//gia * sl-->
-                                                            <span class="text-danger">đ${orderDetail.orderItemPrice()}</span>
+                                                            <span class="text-danger">đ${orderItem.orderItemPrice()}</span>
                                                         </div>
                                                     </div>
                                                     <div class="h-50 d-flex align-items-center justify-content-between">
-                                                        <c:if test="${orderDetail.getDiscount() > 0}">
-                                                            <span class="text-white p-1 mx-2 fs-5 fw-bold bg-danger tag-sale">Sale ${orderDetail.getDiscount()}%</span>
+                                                        <c:if test="${orderItem.getDiscount() > 0}">
+                                                            <span class="text-white p-1 mx-2 fs-5 fw-bold bg-danger tag-sale">sale ${orderItem.getDiscount()}%</span>
                                                         </c:if>
                                                     </div>
                                                 </div>
@@ -278,6 +277,7 @@
                             </c:forEach>
                         </c:forEach>
                     </c:if>
+
                 </div>
             </div>
         </section>
