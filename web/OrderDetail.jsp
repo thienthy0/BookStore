@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Deatil order</title>
+        <title>Detail order</title>
         <link rel="stylesheet" href="./style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="col-md-10 h-100">
-                    <h1 class="fw-bold my-4">Detail Order #${OrderId}</h1>
+                    <h1 class="fw-bold my-4">Detail Order #${O_Id}</h1>
                     <div class="">
                         <h3 class="text-success">${mess}</h3>
                         <div class="mt-5 table-header bg-weak rounded-xl ">
@@ -88,13 +88,13 @@
                         <c:forEach var="orderItem" items="${orderDetails}">
                             <div class="mt-5 border-top bg-white rounded-lg border px-5 ">
                                 <div class="row position-relative fs-4 px-3 py-4 d-flex align-items-center justify-content-between">
-                                    <div class="col-1">${orderItem.getItem_id()}</div>
+                                    <div class="col-1">${orderItem.getDetail_id()}</div>
                                     <div class="col-1">
-                                        <img src="./images/${orderItem.getProduct().getProduct_img()}" alt="alt" />
+                                        <img src="${orderItem.getBook().getImage()}" alt="alt" />
                                     </div>
-                                    <div class="col-3">${orderItem.getProduct().getProduct_name()}</div>
+                                    <div class="col-3">${orderItem.getBook().getName()}</div>
                                     <div class="col-1">${orderItem.getDiscount()}%</div>
-                                    <div class="col-2">${orderItem.getList_price()}</div>
+                                    <div class="col-2">${orderItem.getPrice()}</div>
                                     <div class="col-2">${orderItem.getQuantity()}</div>
                                     <div class="col-2">${orderItem.orderItemPrice()}</div>
                                 </div>

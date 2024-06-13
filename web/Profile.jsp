@@ -218,7 +218,7 @@
                                 </c:choose>
                                 <span class="ms-auto fs-4 fw-medium text-black">${order.order_date}</span>
                             </div>
-                            
+
                             <c:forEach var="orderItem" items="${myOrderItem}">
                                 <c:if test="${order.o_id == orderItem.o_id}">
                                     <div class="h-100vh mt-5">
@@ -226,8 +226,8 @@
                                             <div class="row order-item pb-5">
                                                 <div class="col-2">
                                                     <a href="BookDetail?Pid=${orderItem.getBook().id}" class="d-block h-100">
-                                                        
-                                                        <img src="./images/${orderItem.getBook().image}" alt="" class="rounded-lg object-fit-cover">
+
+                                                        <img src="${orderItem.getBook().image}" alt="" class="rounded-lg object-fit-cover">
                                                     </a>
                                                 </div>
                                                 <div class="col-9 d-flex flex-fill flex-column justify-content-between ">
@@ -247,21 +247,31 @@
                                                             </div>
                                                         </div>
                                                         <div class="">
-                                                            <span class="fs-4">đ${orderItem.price}</span>
+                                                            <span class="fs-4">$ ${orderItem.price}</span>
                                                         </div>
                                                         <div class="d-flex align-items-center">
+
+
+
+                                                            <label class="quantity-label d-block">Quantity: </label>
                                                             <div class="box-input">
-                                                                <button class="border-0 bg-white">
+                                                                <button class="border-0 bg-white" onclick="decreaseValue()" style="display: none;">
                                                                     <a class="p-3 text-black"><i class="fa-solid fa-minus fs-5"></i></a>
                                                                 </button>
-                                                                <input type="text" value="${orderItem.quantity}" class="input-number" id="numberValue" />
-                                                                <button class="border-0 bg-white">
+                                                                <input type="text" value="${orderItem.quantity}" class="input-number" id="numberValue" readonly />
+                                                                <button class="border-0 bg-white" onclick="increaseValue()" style="display: none;">
                                                                     <a class="p-3 text-black"><i class="fa-solid fa-plus fs-5"></i></a>
                                                                 </button>
                                                             </div>
+
+
+
+
+
+
                                                         </div>
                                                         <div class="fs-4">
-                                                            <span class="text-danger">đ${orderItem.orderItemPrice()}</span>
+                                                            <span class="text-danger">$ ${orderItem.orderItemPrice()}</span>
                                                         </div>
                                                     </div>
                                                     <div class="h-50 d-flex align-items-center justify-content-between">
@@ -284,3 +294,11 @@
         <%@include file="./Footer.jsp" %>
     </body>
 </html>
+
+<style>
+    .quantity-label {
+        font-weight: bold;
+        color: #ff00a6;
+        font-size: 15px;
+    }
+</style>

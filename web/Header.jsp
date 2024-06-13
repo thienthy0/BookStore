@@ -143,7 +143,7 @@
                                                 <p>To access account and manage orders</p>
                                                 <a href="login" class="login-link">
                                                     <div class="login-button">
-                                                        Login / Signup
+                                                        Login / Sign up
                                                     </div>
                                                 </a>
                                             </div>
@@ -162,7 +162,7 @@
                                         </ul>
                                         <hr>
                                         <ul class="page-access-link">
-                                            <li><a href="#">Myntra Credit</a></li>
+                                            <li><a href="OrderManager">Manage Order</a></li>
                                             <li><a href="#">Coupons</a></li>
                                             <li><a href="#">Saved Cards</a></li>
                                             <li><a href="#">Saved VPA</a></li>

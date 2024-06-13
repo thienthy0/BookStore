@@ -71,7 +71,7 @@
             <div class="col-md-10 h-100">
                 <h1 class="fw-bold my-4">Order</h1>
                 <div class="w-50 bg-white d-flex align-items-center overflow-hidden">
-                     <form action="orderManager"
+                     <form action="OrderManager"
                                 class="w-50 bg-white border d-flex align-items-center rounded-md overflow-hidden">
                                 <button type="submit" class="p-3 border-0 text-black-weak" name="Service"
                                         value="searchOrder"
@@ -195,7 +195,7 @@
         <script src="../js/app.js"></script>
         <script>
            const changeStatus = (param) => {
-               let url = 'orderManager?Service=updateStatus&oId='+param[1]+"&status="+param[0].value
+               let url = 'OrderManager?Service=updateStatus&oId='+param[1]+"&status="+param[0].value
 //               console.log(url);
                window.location = url
            }

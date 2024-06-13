@@ -162,10 +162,7 @@ public class DAOOrder extends DBConnect {
         return list;
     }
 
-    public static void main(String[] args) {
-        DAOOrder Dao = new DAOOrder();
-        System.out.println(Dao.getOrderByStatus("done"));
-    }
+
     
     public Vector<Order> getAllOrderByAccount(int accId) {
         String sql = "SELECT * FROM Orders O JOIN Account A ON A.account_id = O.account_id WHERE A.account_id = ? ORDER BY order_date DESC";
@@ -243,6 +240,10 @@ public class DAOOrder extends DBConnect {
             System.out.println(e);
         }
         return n > 0;
+    }
+        public static void main(String[] args) {
+        DAOOrder Dao = new DAOOrder();
+        System.out.println(Dao.getOrderByStatus("done"));
     }
 
     //checkount

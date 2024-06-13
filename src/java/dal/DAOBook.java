@@ -130,7 +130,6 @@ public class DAOBook extends DBConnect {
         return list;
     }
 
-
     public static void main(String[] args) {
         DAOBook dao = new DAOBook();
         List<Book> list = dao.getProductbyCID("1");
@@ -149,17 +148,17 @@ public class DAOBook extends DBConnect {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     list.add(new Book(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getInt(11),
-                        rs.getInt(12)));
+                            rs.getInt(2),
+                            rs.getInt(3),
+                            rs.getInt(4),
+                            rs.getString(5),
+                            rs.getString(6),
+                            rs.getString(7),
+                            rs.getString(8),
+                            rs.getString(9),
+                            rs.getString(10),
+                            rs.getInt(11),
+                            rs.getInt(12)));
                 }
             }
         } catch (SQLException e) {
@@ -256,7 +255,7 @@ public class DAOBook extends DBConnect {
                 + "    [quantity] = ?,\n"
                 + "    [price] = ?,\n"
                 + "    [author_id] = ?,\n"
-                //                + "    [image] = ?,\n"
+                + "    [image] = ?,\n"
                 + "    [language] = ?,\n"
                 + "    [category_id] = ?,\n"
                 + "    [publisher] = ?,\n"
@@ -369,6 +368,7 @@ public class DAOBook extends DBConnect {
         }
         return list;
     }
+
     public List<Book> getBooksByCategoryAndAuthor(List<Integer> categoryIds, List<Integer> authorIds) {
         List<Book> list = new ArrayList<>();
         StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher, b.description, b.number_of_pages, b.discount "
