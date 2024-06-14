@@ -22,6 +22,9 @@ public class Book {
     private int num_of_page;
     private int discount;
 
+    private Author authors;
+    private Category categories;
+    
     public Book() {
     }
 
@@ -38,6 +41,31 @@ public class Book {
         this.description = description;
         this.num_of_page = num_of_page;
         this.discount = discount;
+    }
+
+    public Book(String name, int id, int quantity, int price, String author, String image, String language, String category, String publisher, String description, int num_of_page, int discount, Author authors, Category categories) {
+        this.name = name;
+        this.id = id;
+        this.quantity = quantity;
+        this.price = price;
+        this.author = author;
+        this.image = image;
+        this.language = language;
+        this.category = category;
+        this.publisher = publisher;
+        this.description = description;
+        this.num_of_page = num_of_page;
+        this.discount = discount;
+        this.authors = authors;
+        this.categories = categories;
+    }
+
+    public void setAuthors(Author authors) {
+        this.authors = authors;
+    }
+
+    public void setCategories(Category categories) {
+        this.categories = categories;
     }
 
     public String getName() {
@@ -135,7 +163,12 @@ public class Book {
     public void setDiscount(int discount) {
         this.discount = discount;
     }
-
+    public String getPriceAfterDiscount() {
+        double productPrice = price*(1-discount*0.01);
+        String formattedPrice = String.format("%,.0f", productPrice);
+        formattedPrice = formattedPrice.replace(",", ".");
+        return formattedPrice;
+    }
     @Override
     public String toString() {
         return "Book{" + "name=" + name + ", id=" + id + ", quantity=" + quantity + ", price=" + price + ", author=" + author + ", image=" + image + ", language=" + language + ", category=" + category + ", publisher=" + publisher + ", description=" + description + ", num_of_page=" + num_of_page + ", discount=" + discount + '}';

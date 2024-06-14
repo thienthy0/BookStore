@@ -46,7 +46,7 @@ public class DAOCategory extends DBConnect{
 
     public Vector<Category> getAllCategory() {
         Vector<Category> list = new Vector<>();
-        String sql = "Select * from categorys";
+        String sql = "Select*From Category";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();

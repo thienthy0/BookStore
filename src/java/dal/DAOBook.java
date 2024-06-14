@@ -4,6 +4,7 @@
  */
 package dal;
 
+import entity.Author;
 import entity.Book;
 import entity.Category;
 import java.sql.PreparedStatement;
@@ -12,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -130,14 +132,6 @@ public class DAOBook extends DBConnect {
         return list;
     }
 
-    public static void main(String[] args) {
-        DAOBook dao = new DAOBook();
-        List<Book> list = dao.getProductbyCID("1");
-        for (Book o : list) {
-            System.out.println(o);
-        }
-    }
-
     public List<Book> getBooksByCategoryWithPagination(int categoryId, int page, int pageSize) {
         List<Book> list = new ArrayList<>();
         String sql = "SELECT * FROM Book WHERE category_id = ? LIMIT ? OFFSET ?";
@@ -168,10 +162,10 @@ public class DAOBook extends DBConnect {
     }
 
     public Book getProductById(int pid) {
-        String sql = "Select * from Book P \n"
-                + "inner join Author A on A.author_id = P.author_id\n"
-                + "inner join Category C on C.category_id = P.category_id\n"
-                + "WHERE P.book_id = ?";
+        String sql = "Select * from Book B \n"
+                + "inner join Author A on A.author_id = B.author_id\n"
+                + "inner join Category C on C.category_id = B.category_id\n"
+                + "WHERE B.book_id = ?";
         try {
             ps = connection.prepareStatement(sql);
             ps.setInt(1, pid);
@@ -311,145 +305,176 @@ public class DAOBook extends DBConnect {
 
     }
 
-    public List<Book> getBooksByCategory(List<Integer> categoryIds) {
-        List<Book> list = new ArrayList<>();
-        if (categoryIds.isEmpty()) {
-            return list;
-        }
-        StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher,b.description, b.number_of_pages, b.discount "
-                + "FROM Book b, Category c, Author a "
-                + "WHERE c.category_id = b.category_id AND a.author_id = b.author_id AND b.category_id IN (");
+    public Vector<Book> search(String[] category_name, String[] author_name, String minPrice, String maxPrice, String discount, String order) {
+        Vector<Book> list = new Vector<>();
+        String sql = "SELECT * FROM Book B "
+                + "JOIN Category C ON C.category_id = B.category_id "
+                + "JOIN Author A ON A.author_id = B.author_id WHERE 1=1 ";
 
-        for (int i = 0; i < categoryIds.size(); i++) {
-            queryBuilder.append("?");
-            if (i < categoryIds.size() - 1) {
-                queryBuilder.append(", ");
+        // Filter by categories
+        if (category_name != null && category_name.length > 0) {
+            sql += " AND C.category_name IN (";
+            for (int i = 0; i < category_name.length; i++) {
+                sql += "N'" + category_name[i] + "'";
+                if (i < category_name.length - 1) {
+                    sql += ",";
+                }
             }
+            sql += ")";
         }
-        queryBuilder.append(")");
+
+        // Filter by authors
+        if (author_name != null && author_name.length > 0) {
+            sql += " AND A.author_name IN (";
+            for (int i = 0; i < author_name.length; i++) {
+                sql += "N'" + author_name[i] + "'";
+                if (i < author_name.length - 1) {
+                    sql += ",";
+                }
+            }
+            sql += ")";
+        }
+
+        // Filter by price range considering discount
+        if ((minPrice != null && maxPrice != null) && (!minPrice.isEmpty() && !maxPrice.isEmpty())) {
+            sql += " AND ((B.price - COALESCE(B.price * B.discount / 100, 0)) >= " + minPrice
+                    + " AND (B.price - COALESCE(B.price * B.discount / 100, 0)) <= " + maxPrice + ")";
+        } else if (minPrice != null && !minPrice.isEmpty()) {
+            sql += " AND ((B.price - COALESCE(B.price * B.discount / 100, 0)) >= " + minPrice + ")";
+        } else if (maxPrice != null && !maxPrice.isEmpty()) {
+            sql += " AND ((B.price - COALESCE(B.price * B.discount / 100, 0)) <= " + maxPrice + ")";
+        }
+
+        // Filter by discount
+        if (discount != null && !discount.isEmpty()) {
+            sql += " AND COALESCE(B.discount, 0) >= " + discount;
+        }
+
+        // Order by price
+        if (order != null && !order.isEmpty()) {
+            sql += " ORDER BY B.price " + order;
+        }
 
         try {
-            conn = new DBConnect().connection;
-            ps = conn.prepareStatement(queryBuilder.toString());
-            for (int i = 0; i < categoryIds.size(); i++) {
-                ps.setInt(i + 1, categoryIds.get(i));
-            }
-            rs = ps.executeQuery();
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                list.add(new Book(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getInt(11),
-                        rs.getInt(12)));
+                Author author = new Author(
+                        rs.getInt("author_id"),
+                        rs.getString("author_name")
+                );
+                Category category = new Category(
+                        rs.getInt("category_id"),
+                        rs.getString("category_name")
+                );
+                Book p = new Book(
+                        rs.getString("name"),
+                        rs.getInt("book_id"),
+                        rs.getInt("quantity"),
+                        rs.getInt("price"),
+                        rs.getString("author_id"),
+                        rs.getString("image"),
+                        rs.getString("language"),
+                        rs.getString("category_name"),
+                        rs.getString("publisher"),
+                        rs.getString("description"),
+                        rs.getInt("number_of_pages"),
+                        rs.getInt("discount"),
+                        author,
+                        category
+                );
+                list.add(p);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+            System.out.println(e);
+        }
+
+        return list;
+    }
+
+    public Vector<Book> getBookByName(String name) {
+        String sql = "Select * from Book B\n"
+                + "join Category C on C.category_id = B.category_id\n"
+                + "join Author A on A.author_id = B.author_id WHERE B.name like N'%" + name + "%'";
+        Vector<Book> list = new Vector<>();
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Author author = new Author(
+                        rs.getInt("author_id"),
+                        rs.getString("author_name")
+                );
+                Category category = new Category(
+                        rs.getInt("category_id"),
+                        rs.getString("category_name")
+                );
+                Book p = new Book(
+                        rs.getString("name"),
+                        rs.getInt("book_id"),
+                        rs.getInt("quantity"),
+                        rs.getInt("price"),
+                        rs.getString("author_id"),
+                        rs.getString("image"),
+                        rs.getString("language"),
+                        rs.getString("category_name"),
+                        rs.getString("publisher"),
+                        rs.getString("description"),
+                        rs.getInt("number_of_pages"),
+                        rs.getInt("discount"),
+                        author,
+                        category
+                );
+                list.add(p);
             }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
         return list;
     }
 
-    public List<Book> getBooksByCategoryAndAuthor(List<Integer> categoryIds, List<Integer> authorIds) {
-        List<Book> list = new ArrayList<>();
-        StringBuilder queryBuilder = new StringBuilder("SELECT b.name, b.book_id, b.quantity, b.price, a.author_name, b.image, b.language, c.category_name, b.publisher, b.description, b.number_of_pages, b.discount "
-                + "FROM Book b, Category c, Author a "
-                + "WHERE c.category_id = b.category_id AND a.author_id = b.author_id");
-
-        if (!categoryIds.isEmpty() || !authorIds.isEmpty()) {
-            queryBuilder.append(" AND (");
-
-            if (!categoryIds.isEmpty()) {
-                queryBuilder.append("b.category_id IN (");
-                for (int i = 0; i < categoryIds.size(); i++) {
-                    queryBuilder.append("?");
-                    if (i < categoryIds.size() - 1) {
-                        queryBuilder.append(", ");
-                    }
-                }
-                queryBuilder.append(")");
-            }
-
-            if (!authorIds.isEmpty()) {
-                if (!categoryIds.isEmpty()) {
-                    queryBuilder.append(" OR ");
-                }
-                queryBuilder.append("b.author_id IN (");
-                for (int i = 0; i < authorIds.size(); i++) {
-                    queryBuilder.append("?");
-                    if (i < authorIds.size() - 1) {
-                        queryBuilder.append(", ");
-                    }
-                }
-                queryBuilder.append(")");
-            }
-
-            queryBuilder.append(")");
+    public Vector<Book> getAllProduct(String orderType) {
+        String sql = "Select * from Book B\n"
+                + " join Category C on C.category_id = B.category_id\n"
+                + " join Author A on A.author_id = B.author_id";
+        if (orderType != null && !orderType.equals("")) {
+            sql += " order by B.price " + orderType;
         }
-
+        Vector<Book> list = new Vector<>();
         try {
-            conn = new DBConnect().connection;
-            ps = conn.prepareStatement(queryBuilder.toString());
-
-            int index = 1;
-            for (int categoryId : categoryIds) {
-                ps.setInt(index++, categoryId);
-            }
-            for (int authorId : authorIds) {
-                ps.setInt(index++, authorId);
-            }
-
-            rs = ps.executeQuery();
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                list.add(new Book(rs.getString(1),
-                        rs.getInt(2),
-                        rs.getInt(3),
-                        rs.getInt(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10),
-                        rs.getInt(11),
-                        rs.getInt(12)));
+                Author author = new Author(
+                        rs.getInt("author_id"),
+                        rs.getString("author_name")
+                );
+                Category category = new Category(
+                        rs.getInt("category_id"),
+                        rs.getString("category_name")
+                );
+                Book p = new Book(
+                        rs.getString("name"),
+                        rs.getInt("book_id"),
+                        rs.getInt("quantity"),
+                        rs.getInt("price"),
+                        rs.getString("author_id"),
+                        rs.getString("image"),
+                        rs.getString("language"),
+                        rs.getString("category_name"),
+                        rs.getString("publisher"),
+                        rs.getString("description"),
+                        rs.getInt("number_of_pages"),
+                        rs.getInt("discount"),
+                        author,
+                        category
+                );
+                list.add(p);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            System.out.println(e);
         }
+
         return list;
     }
 }

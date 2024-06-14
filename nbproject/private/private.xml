@@ -17,10 +17,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/style.css</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/Profile.jsp</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/OrderManager.jsp</file>
-            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/OrderDetail.jsp</file>
+            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/src/java/controller/BookServlet.java</file>
+            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/src/java/dal/DAOBook.java</file>
+            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/Header.jsp</file>
+            <file>file:/C:/Users/nguye/OneDrive/Desktop/SWP391/web/BookList.jsp</file>
         </group>
     </open-files>
 </project-private>

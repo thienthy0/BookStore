@@ -7,8 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class DAOAuthor extends DBConnect {
+
     private Connection conn = null;
     private PreparedStatement ps = null;
     private ResultSet rs = null;
@@ -41,5 +43,24 @@ public class DAOAuthor extends DBConnect {
             }
         }
         return authors;
+    }
+
+    public Vector<Author> getAllAuthor() {
+        Vector<Author> list = new Vector<>();
+        String sql = "Select * From Author";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Author author = new Author(
+                        rs.getInt("author_id"),
+                        rs.getString("author_name")
+                );
+                list.add(author);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
     }
 }

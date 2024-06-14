@@ -158,7 +158,7 @@
             <div class="container text-center">
                 <div class="row">
                     <div class="col-6 col-md-3">
-                        <a href="BookURL?category_id=1" class="logo-link">
+                        <a href="BookURL?Service=filter&category=Adventure" class="logo-link">
                             <figure>
                                 <img src="./images/AdventureLogo.png" alt="Logo 1" class="img-fluid logo-image">
                                 <figcaption>Adventure</figcaption>
@@ -166,7 +166,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="BookURL?category_id=2" class="logo-link">
+                        <a href="BookURL?Service=filter&category=Novel" class="logo-link">
                             <figure>
                                 <img src="./images/ComicLogo.jpg" alt="Logo 2" class="img-fluid logo-image">
                                 <figcaption>Comic</figcaption>
@@ -174,7 +174,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="BookURL?category_id=2" class="logo-link">
+                        <a href="BookURL?Service=filter&category=Novel" class="logo-link">
                             <figure>
                                 <img src="./images/NovelLogo.jpg" alt="Logo 3" class="img-fluid logo-image">
                                 <figcaption>Novel</figcaption>
@@ -182,7 +182,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="BookURL?category_id=7" class="logo-link">
+                        <a href="BookURL?Service=filter&category=Detective" class="logo-link">
                             <figure>
                                 <img src="./images/DetectiveLogo.png" alt="Logo 4" class="img-fluid logo-image">
                                 <figcaption>Detective</figcaption>
@@ -190,7 +190,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="BookURL?category_id=10" class="logo-link">
+                        <a href="BookURL?Service=filter&category=History" class="logo-link">
                             <figure>
                                 <img src="./images/HistoryLogo.jpg" alt="Logo 5" class="img-fluid logo-image">
                                 <figcaption>History</figcaption>
@@ -198,7 +198,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="BookURL?category_id=6" class="logo-link">
+                        <a href="BookURL?Service=filter&category=Romance" class="logo-link">
                             <figure>
                                 <img src="./images/RomanceLogo.png" alt="Logo 6" class="img-fluid logo-image">
                                 <figcaption>Romance</figcaption>
@@ -206,7 +206,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="BookURL?category_id=5" class="logo-link">
+                        <a href="BookURL?Service=filter&category=Science%20Fiction" class="logo-link">
                             <figure>
                                 <img src="./images/ScienceLogo.jpg" alt="Logo 7" class="img-fluid logo-image">
                                 <figcaption>Science</figcaption>
@@ -214,7 +214,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-3">
-                        <a href="BookURL?category_id=3" class="logo-link">
+                        <a href="BookURL?Service=filter&category=Horror" class="logo-link">
                             <figure>
                                 <img src="./images/HorrorLogo.jpg" alt="Logo 8" class="img-fluid logo-image">
                                 <figcaption>Horror</figcaption>
