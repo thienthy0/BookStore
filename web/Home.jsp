@@ -224,9 +224,51 @@
                 </div>
             </div>
         </section>
+        <!-- Blog section -->
+        <section id="blog-section" class="mt-5 py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div>
+                            <a href="#" class="Blog-link">
+                                <h2 class="fs-40 fw-bold">LEARN MORE ABOUT BOOKS FROM THE BLOG.</h2>
+                                <p class="fs-20">Explore our blog to find your next favorite reads.</p>
+                            </a>
 
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="#" class="image-container">
+                            <img src="./images/BLOGHOME.jpg" alt="Custom Image" class="img-fluid">
+                            <span class="overlay-text">View All</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
+        <!-- wish list section -->
+        <section id="wishlist-section" class="mt-5 py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="#" class="image-container">
+                            <img src="./images/Wishlist1.jpg" alt="Custom Image" class="img-fluid">
+                            <span class="overlay-text">View All</span>
+                        </a>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-center">
+                        <div>
+                            <a href="#" class="custom-link">
+                                <h2 class="fs-40 fw-bold">GET BOOKS FOR YOUR WISHLIST.</h2>
+                                <p class="fs-20">View all Book to find ur wishlist book.</p>
+                            </a>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
         <%@include file="./Footer.jsp" %>
@@ -278,78 +320,6 @@
                 },
             });
         </script>
-        <script>
-
-            function actionHover() {
-                let ProductList = document.querySelectorAll('.product-item')
-                ProductList.forEach((product) => {
-                    product.addEventListener('mouseover', () => {
-                        product.querySelector('.button-products').classList.add('activeHover')
-                    })
-                    product.addEventListener('mouseout', () => {
-                        product.querySelector('.button-products').classList.remove('activeHover')
-                    })
-                })
-            }
-            actionHover()
-
-            function filterProduct(param) {
-                let url = "";
-                const listBrand = document.getElementsByName("brand");
-                const listCategory = document.getElementsByName("category");
-                const dicount = document.getElementsByName("discount");
-
-                const orderOption = document.getElementById("orderOption");
-                const minPrice = document.getElementById("minPrice");
-                const maxPrice = document.getElementById("maxPrice");
-
-                for (let i = 0; i < listBrand.length; i++) {
-                    if (listBrand[i].checked == true) {
-                        url += "&brand=" + listBrand[i].value;
-                    }
-                }
-
-                for (let i = 0; i < listCategory.length; i++) {
-                    if (listCategory[i].checked == true) {
-                        url += "&category=" + listCategory[i].value;
-                    }
-                }
-                for (let i = 0; i < dicount.length; i++) {
-                    if (dicount[i].checked == true) {
-                        url += "&discount=" + dicount[i].value;
-                    }
-                }
-                url = "?Service=filter" + url;
-
-                if (param == 'price') {
-                    let separator = url.indexOf("?") !== -1 ? "&" : "?";
-                    if (minPrice.value != '' && maxPrice.value != '') {
-                        if (minPrice.value * 1 > maxPrice.value * 1) {
-                            alert('The price unvalid')
-                            url += separator + "minPrice=" + minPrice.value + "&maxPrice=" + minPrice.value * 2;
-                        } else {
-                            url += separator + "minPrice=" + minPrice.value + "&maxPrice=" + maxPrice.value;
-                        }
-                    } else if (minPrice.value == '' && maxPrice.value == '') {
-                        //make not load                        
-                    } else if (minPrice.value == '') {
-                        url += separator + "&maxPrice=" + maxPrice.value;
-                    } else if (maxPrice.value == '') {
-                        url += separator + "&minPrice=" + minPrice.value;
-                    }
-                }
-
-                if (param == 'order') {
-                    // Kiểm tra xem URL đã chứa tham số "?" chưa
-                    let separator = url.indexOf("?") !== -1 ? "&" : "?";
-                    // Cập nhật URL với tham số "order"
-                    url += separator + "orderBy=" + orderOption.value;
-                }
-                window.location = url
-            }
-
-        </script>
-        <!--        <script src="./js/app.js"></script>-->
     </body>
 </html>
 <!--<script src="./js/app.js"></script>-->
@@ -411,6 +381,45 @@
         font-weight: 700;
     }
 
+    .custom-link {
+        text-decoration: none; /* Bỏ gạch chân */
+        color: #ff00a6; /* Màu chữ mặc định */
+        transition: color 0.3s; /* Hiệu ứng chuyển đổi màu chữ */
+    }
 
+    .custom-link:hover {
+        color: red; /* Màu chữ khi hover */
+    }
+    .Blog-link {
+        text-decoration: none; /* Bỏ gạch chân */
+        color: #4CAF50; /* Màu chữ mặc định (màu xanh lá cây) */
+        transition: color 0.3s; /* Hiệu ứng chuyển đổi màu chữ */
+    }
 
+    .Blog-link:hover {
+        color: #388E3C; /* Màu chữ khi hover (màu xanh lá cây đậm hơn) */
+    }
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .overlay-text {
+        position: absolute;
+        top: 250px;
+        left: 150px;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        transition: transform 0.3s ease; /* Hiệu ứng phóng to */
+        transform-origin: center; /* Điểm gốc của transform */
+    }
+
+    .image-container:hover .overlay-text {
+        transform: scale(1.2) translate(-50%, -50%); /* Phóng to và giữ nguyên vị trí */
+    }
 </style>

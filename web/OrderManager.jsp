@@ -62,7 +62,7 @@
                         <li class="py-4 ps-3 mb-3">
                             <a href="" class="fs-2 text-white d-flex align-items-center text-decoration-none">
                                 <i class='bx bx-purchase-tag-alt me-3'></i>
-                                <span>Offer</span>
+                                <span>Blog</span>
                             </a>
                         </li>
                      </ul>
@@ -137,7 +137,7 @@
                             <div class="col d-flex align-items-center">
                                 <div class="rounded-fill me-3">
                                     <c:if test="${order.getAccount_image() != null}">
-                                        <img src="./images/${order.getAccount_image()}" alt="" 
+                                        <img src="${order.getAccount_image()}" alt="" 
                                          style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover" %>
                                     </c:if>
                                     <c:if test="${order.getAccount_image() == null}">

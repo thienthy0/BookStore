@@ -58,10 +58,12 @@ public class DAOOrderDetail extends DBConnect {
         }
         return list;
     }
-public static void main(String[] args) {
+
+    public static void main(String[] args) {
         DAOOrderDetail Dao = new DAOOrderDetail();
-        System.out.println(Dao.getOrderDetail(1));
+        System.out.println(Dao.getAllOrderItem());
     }
+
     public Vector<OrderDetail> getAllOrderDetail() {
         String sql = "SELECT * FROM Order_details O JOIN Book B ON B.book_id = O.book_id";
         Vector<OrderDetail> list = new Vector<>();
@@ -99,7 +101,7 @@ public static void main(String[] args) {
         }
         return list;
     }
-    
+
     public Vector<OrderDetail> getOrderItemByOrderId(int OrderId) {
         String sql = "Select * from Order_details where o_id = ?";
         Vector<OrderDetail> list = new Vector<>();

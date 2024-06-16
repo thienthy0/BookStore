@@ -46,28 +46,31 @@ public class BookServlet extends HttpServlet {
             if (service == null) {
                 service = "getAll";
             }
-            String order = request.getParameter("orderBy");
-            if(order != null) {
-             request.setAttribute("order", order);
+
+            // Get the order parameter
+            String order = request.getParameter("order");
+            if (order != null) {
+                request.setAttribute("order", order);
+            } else {
+                order = "asc"; // Set default order if not provided
+                request.setAttribute("order", order);
+
             }
-            
-            //default will getAll
+
+            // Default will getAll
             if (service.equals("getAll")) {
-                Vector<Book> list = new Vector<>();
-                
-                list = d.getAllProduct(order);
-                
+                Vector<Book> list = d.getAllProduct(order);
                 request.setAttribute("listBook", list);
                 setCommonAttributes(request, d);
                 request.getRequestDispatcher("BookList.jsp").forward(request, response);
             }
-            
-            //filter product
+
+            // Filter product
             if (service.equals("filter")) {
                 Vector<Book> list = new Vector<>();
                 String[] category_name = request.getParameterValues("category");
                 String[] author_name = request.getParameterValues("author");
-                
+
                 String min_price = request.getParameter("minPrice");
                 String max_price = request.getParameter("maxPrice");
                 String discount = request.getParameter("discount");
@@ -76,33 +79,31 @@ public class BookServlet extends HttpServlet {
                 request.setAttribute("author_select", author_name);
                 request.setAttribute("min_price", min_price);
                 request.setAttribute("max_price", max_price);
-                request.setAttribute("listBook", discount);
-                
+                request.setAttribute("discount", discount);
+
                 list = d.search(category_name, author_name, min_price, max_price, discount, order);
-                    
+
                 setCommonAttributes(request, d);
                 request.setAttribute("listBook", list);
-//                request.setAttribute("linkProduct", d.link(category_name, author_name, min_price,
-//                                max_price, discount, order));
                 request.getRequestDispatcher("BookList.jsp").forward(request, response);
             }
 
-            //dieu huong den trang product detail
-            if(service.equals("BookDetail")) {
-             String pid_raw = request.getParameter("Pid");
-             int pid = Integer.parseInt(pid_raw);
-             Book currentP = d.getProductById(pid);
-             request.setAttribute("currentProduct", currentP);
-             request.getRequestDispatcher("BookDetail.jsp").forward(request, response);
+            // Navigate to product detail
+            if (service.equals("BookDetail")) {
+                String pid_raw = request.getParameter("Pid");
+                int pid = Integer.parseInt(pid_raw);
+                Book currentP = d.getProductById(pid);
+                request.setAttribute("currentProduct", currentP);
+                request.getRequestDispatcher("BookDetail.jsp").forward(request, response);
             }
-            
-            //tra ve danh sach product co like name
+
+            // Return list of products that match the search name
             if (service.equals("search")) {
-              String nameTxt = request.getParameter("keyword");
-              Vector<Book> list = d.getBookByName(nameTxt);
-              request.setAttribute("listBook", list);
-              setCommonAttributes(request, d);
-              request.getRequestDispatcher("BookList.jsp").forward(request, response);
+                String nameTxt = request.getParameter("keyword");
+                Vector<Book> list = d.getBookByName(nameTxt);
+                request.setAttribute("listBook", list);
+                setCommonAttributes(request, d);
+                request.getRequestDispatcher("BookList.jsp").forward(request, response);
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -119,6 +120,7 @@ public class BookServlet extends HttpServlet {
         request.setAttribute("listCategory", list_category);
         request.setAttribute("ListDiscount", Listdiscount);
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -156,11 +158,10 @@ public class BookServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-//        Vector<Brand> list_brand = dbrand.getAllBrand();
+    }
 
     public static void main(String[] args) throws SQLException {
-       DAOBook d = new DAOBook();
-       System.out.println(d.getProductById(4));
+        DAOBook d = new DAOBook();
+        System.out.println(d.getProductById(4));
     }
 }

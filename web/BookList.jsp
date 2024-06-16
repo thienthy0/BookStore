@@ -117,13 +117,17 @@
                             <div class="sort-box">
                                 <c:set value="${requestScope.order}" var="order"/>
                                 <select class="form-select" onchange="filterProduct('order')" id="orderOption">
-                                    <option value="asc" class="py-5" ${order.equals("asc")?"selected":""}>Price: Low To High</option>
-                                    <option value="desc" class="py-5" ${order.equals("desc")?"selected":""}>Price: High To Low</option>
-                                </select>
+    <option value="default" class="py-5" ${order.equals("default")?"selected":""}>Price: Default</option>
+    <option value="asc" class="py-5" ${order.equals("asc")?"selected":""}>Price: Low To High</option>
+    <option value="desc" class="py-5" ${order.equals("desc")?"selected":""}>Price: High To Low</option>
+</select>
+
                                 <span class="select-title">Sort by: </span>
                             </div>
                         </div>
+
                         <div class="row g-5" id="list-book">
+
                             <c:choose>
                                 <c:when test="${empty requestScope.listBook}">
                                     <div class="col-12 text-center mt-5">
@@ -218,48 +222,52 @@
                                     actionHover();
 
                                     function filterProduct() {
-                                        let url = "?Service=filter"; // Bắt đầu với URL cơ sở
-                                        const listAuthor = document.getElementsByName("author");
-                                        const listCategory = document.getElementsByName("category");
-                                        const discount = document.getElementsByName("discount");
+    let url = "?Service=filter"; // Base URL
+    const listAuthor = document.getElementsByName("author");
+    const listCategory = document.getElementsByName("category");
+    const discount = document.getElementsByName("discount");
+    const minPrice = document.getElementById("minPrice").value;
+    const maxPrice = document.getElementById("maxPrice").value;
+    const orderOption = document.getElementById("orderOption").value;
 
-                                        // Lặp qua các checkbox tác giả và thêm vào URL nếu được chọn
-                                        for (let i = 0; i < listAuthor.length; i++) {
-                                            if (listAuthor[i].checked) {
-                                                url += "&author=" + encodeURIComponent(listAuthor[i].value);
-                                            }
-                                        }
+    // Add authors to URL
+    for (let i = 0; i < listAuthor.length; i++) {
+        if (listAuthor[i].checked) {
+            url += "&author=" + encodeURIComponent(listAuthor[i].value);
+        }
+    }
 
-                                        // Lặp qua các checkbox loại sản phẩm và thêm vào URL nếu được chọn
-                                        for (let i = 0; i < listCategory.length; i++) {
-                                            if (listCategory[i].checked) {
-                                                url += "&category=" + encodeURIComponent(listCategory[i].value);
-                                            }
-                                        }
+    // Add categories to URL
+    for (let i = 0; i < listCategory.length; i++) {
+        if (listCategory[i].checked) {
+            url += "&category=" + encodeURIComponent(listCategory[i].value);
+        }
+    }
 
-                                        // Lặp qua các radio button giảm giá và thêm vào URL nếu được chọn
-                                        for (let i = 0; i < discount.length; i++) {
-                                            if (discount[i].checked) {
-                                                url += "&discount=" + encodeURIComponent(discount[i].value);
-                                            }
-                                        }
+    // Add discounts to URL
+    for (let i = 0; i < discount.length; i++) {
+        if (discount[i].checked) {
+            url += "&discount=" + encodeURIComponent(discount[i].value);
+        }
+    }
 
-                                        // Lấy giá trị của minPrice và maxPrice
-                                        const minPrice = document.getElementById("minPrice").value;
-                                        const maxPrice = document.getElementById("maxPrice").value;
+    // Add price range to URL
+    if (minPrice) {
+        url += "&minPrice=" + encodeURIComponent(minPrice);
+    }
+    if (maxPrice) {
+        url += "&maxPrice=" + encodeURIComponent(maxPrice);
+    }
 
-                                        // Thêm minPrice và maxPrice vào URL nếu có giá trị
-                                        if (minPrice && maxPrice) {
-                                            url += "&minPrice=" + encodeURIComponent(minPrice) + "&maxPrice=" + encodeURIComponent(maxPrice);
-                                        } else if (minPrice) {
-                                            url += "&minPrice=" + encodeURIComponent(minPrice);
-                                        } else if (maxPrice) {
-                                            url += "&maxPrice=" + encodeURIComponent(maxPrice);
-                                        }
+    // Add order to URL
+    if (orderOption) {
+        url += "&order=" + encodeURIComponent(orderOption);
+    }
 
-                                        // Chuyển hướng tới URL đã tạo
-                                        window.location.href = url;
-                                    }
+    // Redirect to the new URL
+    window.location.href = url;
+}
+
 
                                     function handleSearch() {
                                         const headerInput = document.getElementById("header-search");
@@ -300,11 +308,12 @@
                                         window.location.href = newUrl;
                                     }
         </script>
-        <style>
-            .no-books-found {
-                font-size: 20rem; /* Kích thước chữ lớn hơn */
-                color: pink; /* Màu chữ hồng */
-            }
-        </style>
     </body>
 </html>
+<style>
+    .no-books-found {
+        font-size: 20rem; /* Kích thước chữ lớn hơn */
+        color: pink; /* Màu chữ hồng */
+    }
+</style>
+

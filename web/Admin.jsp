@@ -63,7 +63,7 @@
                             <li class="py-4 ps-3 mb-3">
                                 <a href="" class="fs-2 text-white d-flex align-items-center text-decoration-none">
                                     <i class='bx bx-purchase-tag-alt me-3'></i>
-                                    <span>Offer</span>
+                                    <span>Blog</span>
                                 </a>
                             </li>
                         </ul>

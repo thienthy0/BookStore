@@ -61,7 +61,7 @@ public class DAOOrder extends DBConnect {
     }
 
     public Vector<Order> getAllOrders() {
-        String sql = "select * from Orders O";
+        String sql = "select * from Orders ";
         Vector<Order> list = new Vector<>();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -126,7 +126,7 @@ public class DAOOrder extends DBConnect {
         String sql = "SELECT * FROM Orders O JOIN Account A ON A.account_id = O.account_id WHERE O.status LIKE ?";
 
         Vector<Order> list = new Vector<>();
-        Vector<OrderDetail> listItem = new Vector<>();
+        Vector<OrderDetail> listOrder = new Vector<>();
         DAOOrderDetail d = new DAOOrderDetail();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -241,10 +241,7 @@ public class DAOOrder extends DBConnect {
         }
         return n > 0;
     }
-        public static void main(String[] args) {
-        DAOOrder Dao = new DAOOrder();
-        System.out.println(Dao.getOrderByStatus("done"));
-    }
+        
 
     //checkount
     public void checkcount(Account acc, Vector<Book> listItem) {
