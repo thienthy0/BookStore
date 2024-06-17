@@ -44,6 +44,8 @@ public class OrderManagerServlet extends HttpServlet {
         
         if(service.equals("getAll")) {
           Vector<Order> listOrder = o.getAllOrder();
+//          PrintWriter out= response.getWriter();
+//        out.print(listOrder);
           request.setAttribute("listOrder", listOrder);
           request.getRequestDispatcher("OrderManager.jsp").forward(request, response);
         }
@@ -91,6 +93,7 @@ public class OrderManagerServlet extends HttpServlet {
             }
             response.sendRedirect("OrderManager");
         }
+        
         
         if(service.equals("detailOrder")) {
          String orderId_raw = request.getParameter("OId");

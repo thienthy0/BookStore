@@ -230,7 +230,7 @@
                 <div class="row">
                     <div class="col-md-6 d-flex align-items-center">
                         <div>
-                            <a href="#" class="Blog-link">
+                            <a href="listBlog" class="Blog-link">
                                 <h2 class="fs-40 fw-bold">LEARN MORE ABOUT BOOKS FROM THE BLOG.</h2>
                                 <p class="fs-20">Explore our blog to find your next favorite reads.</p>
                             </a>
@@ -238,7 +238,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <a href="#" class="image-container">
+                        <a href="blog" class="image-container">
                             <img src="./images/BLOGHOME.jpg" alt="Custom Image" class="img-fluid">
                             <span class="overlay-text">View All</span>
                         </a>
