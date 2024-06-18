@@ -37,7 +37,7 @@
                                 </a>
                             </li>
                             <li class="py-4 ps-3 mb-3 active">
-                                <a href="orderManager"  class="fs-3 text-white text-decoration-none">
+                                <a href="OrderManager"  class="fs-3 text-white text-decoration-none">
                                     <i class='bx bx-cart me-3'></i>
                                     <span>Order</span>
                                 </a>
@@ -105,7 +105,6 @@
                 </div>
 
         </section>
-        <%--<%@include file="./Footer.jsp" %>--%>
         <script src="../js/app.js"></script>
     </body>
 </html>

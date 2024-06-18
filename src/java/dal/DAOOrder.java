@@ -121,7 +121,10 @@ public class DAOOrder extends DBConnect {
         }
         return list;
     }
-
+    public static void main(String[] args) {
+        DAOOrder Dao = new DAOOrder();
+        System.out.println(Dao.getAllOrder());
+    }
     public Vector<Order> getOrderByStatus(String status) {
         String sql = "SELECT * FROM Orders O JOIN Account A ON A.account_id = O.account_id WHERE O.status LIKE ?";
 

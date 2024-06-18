@@ -32,7 +32,7 @@ public class AddBlogServlet extends HttpServlet {
         request.setAttribute("title", title);
         request.setAttribute("content", content);
         request.setAttribute("author_id", authorIdStr);
-        request.getRequestDispatcher("addBlog.jsp").forward(request, response);
+        request.getRequestDispatcher("AddBlog.jsp").forward(request, response);
         return;
     }
 
@@ -45,7 +45,7 @@ public class AddBlogServlet extends HttpServlet {
                 request.setAttribute("title", title);
                 request.setAttribute("content", content);
                 request.setAttribute("author_id", authorIdStr);
-                request.getRequestDispatcher("addBlog.jsp").forward(request, response);
+                request.getRequestDispatcher("AddBlog.jsp").forward(request, response);
                 return;
             }
         }
@@ -58,7 +58,7 @@ public class AddBlogServlet extends HttpServlet {
             request.setAttribute("title", title);
             request.setAttribute("content", content);
             request.setAttribute("author_id", authorIdStr);
-            request.getRequestDispatcher("addBlog.jsp").forward(request, response);
+            request.getRequestDispatcher("AddBlog.jsp").forward(request, response);
             return;
         }
 
@@ -78,12 +78,12 @@ public class AddBlogServlet extends HttpServlet {
         }
 
         request.setAttribute("blog", blog);
-        request.getRequestDispatcher("addBlog.jsp").forward(request, response);
+        request.getRequestDispatcher("AddBlog.jsp").forward(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("addBlog.jsp").forward(request, response);
+        request.getRequestDispatcher("AddBlog.jsp").forward(request, response);
     }
 
     @Override

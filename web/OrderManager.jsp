@@ -136,11 +136,11 @@
                             <div class="col fw-bold">#${order.getO_id()}</div>
                             <div class="col d-flex align-items-center">
                                 <div class="rounded-fill me-3">
-                                    <c:if test="${order.getAccount_image() != null}">
-                                        <img src="${order.getAccount_image()}" alt="" 
+                                    <c:if test="${order.getAccountImg() != null}">
+                                        <img src="./images/${order.getAccountImg()}" alt="" 
                                          style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover" %>
                                     </c:if>
-                                    <c:if test="${order.getAccount_image() == null}">
+                                    <c:if test="${order.getAccountImg() == null}">
                                         <img src="./images/AccountImage.png" alt="" 
                                          style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover" %>
                                     </c:if>
@@ -191,7 +191,6 @@
             </div>
                 
         </section>
-        <%--<%@include file="./Footer.jsp" %>--%>
         <script src="../js/app.js"></script>
         <script>
            const changeStatus = (param) => {

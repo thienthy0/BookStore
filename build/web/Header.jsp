@@ -163,7 +163,7 @@
                                         <hr>
                                         <ul class="page-access-link">
                                             <li><a href="OrderManager">Manage Order</a></li>
-                                            <li><a href="#">Coupons</a></li>
+                                            <li><a href="blog">Mange Blog</a></li>
                                             <li><a href="#">Saved Cards</a></li>
                                             <li><a href="#">Saved VPA</a></li>
                                             <li><a href="#">Saved Addresses</a></li>
