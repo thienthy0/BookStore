@@ -117,10 +117,10 @@
                             <div class="sort-box">
                                 <c:set value="${requestScope.order}" var="order"/>
                                 <select class="form-select" onchange="filterProduct('order')" id="orderOption">
-    <option value="default" class="py-5" ${order.equals("default")?"selected":""}>Price: Default</option>
-    <option value="asc" class="py-5" ${order.equals("asc")?"selected":""}>Price: Low To High</option>
-    <option value="desc" class="py-5" ${order.equals("desc")?"selected":""}>Price: High To Low</option>
-</select>
+                                    <option value="default" class="py-5" ${order.equals("default")?"selected":""}>Price: Default</option>
+                                    <option value="asc" class="py-5" ${order.equals("asc")?"selected":""}>Price: Low To High</option>
+                                    <option value="desc" class="py-5" ${order.equals("desc")?"selected":""}>Price: High To Low</option>
+                                </select>
 
                                 <span class="select-title">Sort by: </span>
                             </div>
@@ -222,51 +222,51 @@
                                     actionHover();
 
                                     function filterProduct() {
-    let url = "?Service=filter"; // Base URL
-    const listAuthor = document.getElementsByName("author");
-    const listCategory = document.getElementsByName("category");
-    const discount = document.getElementsByName("discount");
-    const minPrice = document.getElementById("minPrice").value;
-    const maxPrice = document.getElementById("maxPrice").value;
-    const orderOption = document.getElementById("orderOption").value;
+                                        let url = "?Service=filter"; // Base URL
+                                        const listAuthor = document.getElementsByName("author");
+                                        const listCategory = document.getElementsByName("category");
+                                        const discount = document.getElementsByName("discount");
+                                        const minPrice = document.getElementById("minPrice").value;
+                                        const maxPrice = document.getElementById("maxPrice").value;
+                                        const orderOption = document.getElementById("orderOption").value;
 
-    // Add authors to URL
-    for (let i = 0; i < listAuthor.length; i++) {
-        if (listAuthor[i].checked) {
-            url += "&author=" + encodeURIComponent(listAuthor[i].value);
-        }
-    }
+                                        // Add authors to URL
+                                        for (let i = 0; i < listAuthor.length; i++) {
+                                            if (listAuthor[i].checked) {
+                                                url += "&author=" + encodeURIComponent(listAuthor[i].value);
+                                            }
+                                        }
 
-    // Add categories to URL
-    for (let i = 0; i < listCategory.length; i++) {
-        if (listCategory[i].checked) {
-            url += "&category=" + encodeURIComponent(listCategory[i].value);
-        }
-    }
+                                        // Add categories to URL
+                                        for (let i = 0; i < listCategory.length; i++) {
+                                            if (listCategory[i].checked) {
+                                                url += "&category=" + encodeURIComponent(listCategory[i].value);
+                                            }
+                                        }
 
-    // Add discounts to URL
-    for (let i = 0; i < discount.length; i++) {
-        if (discount[i].checked) {
-            url += "&discount=" + encodeURIComponent(discount[i].value);
-        }
-    }
+                                        // Add discounts to URL
+                                        for (let i = 0; i < discount.length; i++) {
+                                            if (discount[i].checked) {
+                                                url += "&discount=" + encodeURIComponent(discount[i].value);
+                                            }
+                                        }
 
-    // Add price range to URL
-    if (minPrice) {
-        url += "&minPrice=" + encodeURIComponent(minPrice);
-    }
-    if (maxPrice) {
-        url += "&maxPrice=" + encodeURIComponent(maxPrice);
-    }
+                                        // Add price range to URL
+                                        if (minPrice) {
+                                            url += "&minPrice=" + encodeURIComponent(minPrice);
+                                        }
+                                        if (maxPrice) {
+                                            url += "&maxPrice=" + encodeURIComponent(maxPrice);
+                                        }
 
-    // Add order to URL
-    if (orderOption) {
-        url += "&order=" + encodeURIComponent(orderOption);
-    }
+                                        // Add order to URL
+                                        if (orderOption) {
+                                            url += "&order=" + encodeURIComponent(orderOption);
+                                        }
 
-    // Redirect to the new URL
-    window.location.href = url;
-}
+                                        // Redirect to the new URL
+                                        window.location.href = url;
+                                    }
 
 
                                     function handleSearch() {

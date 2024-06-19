@@ -198,7 +198,7 @@
                     </c:if>
 
                     <!--My Order-->
-
+                    
                     <c:if test="${requestScope.current.equals('My order')}">
                         <c:forEach var="order" items="${myOrder}">
                             <div class="box-shadow1 py-2 px-3 rounded-sm mt-5 d-flex justify-content-between align-items-center">
@@ -211,6 +211,9 @@
                                         </c:when>
                                         <c:when test="${order.status eq 'done'}">
                                         <div><span class="fs-3 fw-bold">Status: </span> <span class="text-success fs-4">${order.status}</span></div>
+                                        </c:when>
+                                        <c:when test="${order.status eq 'cancel'}">
+                                        <div><span class="fs-3 fw-bold">Status: </span> <span class="text-cancel fs-4">${order.status}</span></div>
                                         </c:when>
                                         <c:otherwise>
                                         <div><span class="fs-3">Status: ${order.status}</span></div>
@@ -251,8 +254,6 @@
                                                         </div>
                                                         <div class="d-flex align-items-center">
 
-
-
                                                             <label class="quantity-label d-block">Quantity: </label>
                                                             <div class="box-input">
                                                                 <button class="border-0 bg-white" onclick="decreaseValue()" style="display: none;">
@@ -263,11 +264,6 @@
                                                                     <a class="p-3 text-black"><i class="fa-solid fa-plus fs-5"></i></a>
                                                                 </button>
                                                             </div>
-
-
-
-
-
 
                                                         </div>
                                                         <div class="fs-4">
