@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.sql.Date;
+
 /**
  *
  * @author laptop368
@@ -18,6 +20,8 @@ public class OrderDetail {
     private int discount;
     private Order order;
     private Book book;
+    private Date order_date;
+    private Date receive_date;
 
     public OrderDetail() {
     }
@@ -46,6 +50,35 @@ public class OrderDetail {
         this.price = price;
         this.quantity = quantity;
         this.book = book;
+    }
+
+    public OrderDetail(int detail_id, int book_id, int o_id, int price, int quantity, int discount, Order order, Book book, Date order_date, Date receive_date) {
+        this.detail_id = detail_id;
+        this.book_id = book_id;
+        this.o_id = o_id;
+        this.price = price;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.order = order;
+        this.book = book;
+        this.order_date = order_date;
+        this.receive_date = receive_date;
+    }
+
+    public Date getOrder_date() {
+        return order_date;
+    }
+
+    public void setOrder_date(Date order_date) {
+        this.order_date = order_date;
+    }
+
+    public Date getReceive_date() {
+        return receive_date;
+    }
+
+    public void setReceive_date(Date receive_date) {
+        this.receive_date = receive_date;
     }
 
     public Book getBook() {
@@ -112,6 +145,7 @@ public class OrderDetail {
         this.order = order;
     }
 
+    
     public Double orderItemPrice() {
         return price * (1 - (discount * 0.01)) * quantity;
     }
@@ -124,7 +158,9 @@ public class OrderDetail {
 
     @Override
     public String toString() {
-        return "OrderDetail{" + "detailId=" + detail_id + ", bookId=" + book_id + ", o_id=" + o_id + ", price=" + price + ", quantity=" + quantity + ", discount=" + discount + '}';
+        return "OrderDetail{" + "detail_id=" + detail_id + ", book_id=" + book_id + ", o_id=" + o_id + ", price=" + price + ", quantity=" + quantity + ", discount=" + discount + ", order=" + order + ", book=" + book + ", order_date=" + order_date + ", receive_date=" + receive_date + '}';
     }
+
+
 
 }

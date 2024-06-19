@@ -27,7 +27,7 @@ public class ProfileServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String[] listService = {"Account info", "My order", "Change password"};
         request.setAttribute("listService", listService);
-        
+        DAOOrder o = new DAOOrder();
         Account acc = (Account)session.getAttribute("account");
         String service = request.getParameter("Service");
         
@@ -49,7 +49,8 @@ public class ProfileServlet extends HttpServlet {
             request.getRequestDispatcher("Profile.jsp").forward(request, response);
             return;
         } else {
-         response.sendRedirect("login");
+            response.sendRedirect("login");
+            return;
         }
     }
 
@@ -62,15 +63,18 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOAccount d = new DAOAccount();
         String service = request.getParameter("Service");
         HttpSession session = request.getSession();
         Account acc = (Account) session.getAttribute("account");
 
         if ("updateInfo".equals(service)) {
+            DAOAccount d = new DAOAccount();
             updateInfo(request, response, d, session, acc);
         } else if ("updatePassword".equals(service)) {
+            DAOAccount d = new DAOAccount();
             updatePassword(request, response, d, acc);
+        } else if ("updateStatus".equals(service)) {
+            updateStatus(request, response);
         }
     }
 
@@ -146,7 +150,23 @@ public class ProfileServlet extends HttpServlet {
         request.getRequestDispatcher("Profile.jsp").forward(request, response);
     }
 
-    // Password has at least 8 characters including numbers and letters
+    private void updateStatus(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String oId_raw = request.getParameter("oId");
+        int oId = Integer.parseInt(oId_raw);
+        String status = request.getParameter("status");
+
+        DAOOrder o = new DAOOrder();
+        boolean n = o.updateStatusOrder(status, oId);
+        String mess = n ? "Update success" : "Update unsuccess";
+
+        request.setAttribute("mess", mess);
+        request.setAttribute("isSuccess", n);
+        setCommonAttributes(request);
+        request.setAttribute("current", "My order");
+        processRequest(request, response);
+    }
+
     private boolean isValidPassword(String password) {
         if (password.length() < 8) {
             return false;
@@ -167,14 +187,12 @@ public class ProfileServlet extends HttpServlet {
     }
 
     private boolean isValidName(String name) {
-        // Check if name does not start with a space, does not contain more than two consecutive spaces,
-        // and contains only letters and spaces
         String regex = "^(?! )[a-zA-ZÀ-ÿ\\s]*(?! {3,})$";
         return Pattern.matches(regex, name);
     }
 
     private void setCommonAttributes(HttpServletRequest request) {
-        String[] listService = {"Account info", "My oder", "Change password"};
+        String[] listService = {"Account info", "My order", "Change password"};
         request.setAttribute("listService", listService);
     }
 

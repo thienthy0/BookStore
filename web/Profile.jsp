@@ -198,26 +198,42 @@
                     </c:if>
 
                     <!--My Order-->
-                    
+
                     <c:if test="${requestScope.current.equals('My order')}">
                         <c:forEach var="order" items="${myOrder}">
                             <div class="box-shadow1 py-2 px-3 rounded-sm mt-5 d-flex justify-content-between align-items-center">
                                 <c:choose>
                                     <c:when test="${order.status eq 'wait'}">
-                                        <div><span class="fs-3 fw-bold">Status: </span> <span class="text-danger fs-4">${order.status}</span></div>
-                                        </c:when>
-                                        <c:when test="${order.status eq 'process'}">
-                                        <div><span class="fs-3 fw-bold">Status: </span> <span class="text-warning  fs-4">${order.status}</span></div>
-                                        </c:when>
-                                        <c:when test="${order.status eq 'done'}">
-                                        <div><span class="fs-3 fw-bold">Status: </span> <span class="text-success fs-4">${order.status}</span></div>
-                                        </c:when>
-                                        <c:when test="${order.status eq 'cancel'}">
-                                        <div><span class="fs-3 fw-bold">Status: </span> <span class="text-cancel fs-4">${order.status}</span></div>
-                                        </c:when>
-                                        <c:otherwise>
-                                        <div><span class="fs-3">Status: ${order.status}</span></div>
-                                    </c:otherwise>
+                                        <div>
+                                            <span class="fs-3 fw-bold">Status: </span> 
+                                            <span class="text-danger fs-4">${order.status}</span>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${order.status eq 'process'}">
+                                        <div>
+                                            <span class="fs-3 fw-bold">Status: </span> 
+                                            <span class="text-warning fs-4">${order.status}</span>
+                                        </div>
+                                        <!-- Add button to cancel order -->
+                                        <form action="profile" method="post" style="margin-left: 10px;">
+                                            <input type="hidden" name="Service" value="updateStatus">
+                                            <input type="hidden" name="oId" value="${order.o_id}">
+                                            <input type="hidden" name="status" value="cancel">
+                                            <button type="submit" class="btn btn-danger">Cancel Order</button>
+                                        </form>
+                                    </c:when>
+                                    <c:when test="${order.status eq 'done'}">
+                                        <div>
+                                            <span class="fs-3 fw-bold">Status: </span> 
+                                            <span class="text-success fs-4">${order.status}</span>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${order.status eq 'cancel'}">
+                                        <div>
+                                            <span class="fs-3 fw-bold">Status: </span> 
+                                            <span class="text-secondary fs-4">${order.status}</span>
+                                        </div>
+                                    </c:when>
                                 </c:choose>
                                 <span class="ms-auto fs-4 fw-medium text-black">${order.order_date}</span>
                             </div>
@@ -229,7 +245,6 @@
                                             <div class="row order-item pb-5">
                                                 <div class="col-2">
                                                     <a href="BookDetail?Pid=${orderItem.getBook().id}" class="d-block h-100">
-
                                                         <img src="${orderItem.getBook().image}" alt="" class="rounded-lg object-fit-cover">
                                                     </a>
                                                 </div>
@@ -253,7 +268,6 @@
                                                             <span class="fs-4">$ ${orderItem.price}</span>
                                                         </div>
                                                         <div class="d-flex align-items-center">
-
                                                             <label class="quantity-label d-block">Quantity: </label>
                                                             <div class="box-input">
                                                                 <button class="border-0 bg-white" onclick="decreaseValue()" style="display: none;">
@@ -264,7 +278,6 @@
                                                                     <a class="p-3 text-black"><i class="fa-solid fa-plus fs-5"></i></a>
                                                                 </button>
                                                             </div>
-
                                                         </div>
                                                         <div class="fs-4">
                                                             <span class="text-danger">$ ${orderItem.orderItemPrice()}</span>
@@ -290,11 +303,39 @@
         <%@include file="./Footer.jsp" %>
     </body>
 </html>
-
+<!--<CSS>-->
 <style>
     .quantity-label {
         font-weight: bold;
         color: #ff00a6;
         font-size: 15px;
     }
+    .text-cancel {
+        color: gray; /* Hoặc #808080 để có màu xám */
+    }
 </style>
+<style>
+        .btn {
+            font-size: 16px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-danger:active {
+            background-color: #bd2130;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>

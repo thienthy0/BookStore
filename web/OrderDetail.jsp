@@ -79,9 +79,10 @@
                                 <div class="col-1">Image</div>
                                 <div class="col-3">Name</div>
                                 <div class="col-1">Discount</div>                           
-                                <div class="col-2">List price</div>
+                                <div class="col-2">Price</div>
                                 <div class="col-2">Quantity</div>
                                 <div class="col-2">Subtotal</div>
+                                
                             </div>
                         </div>
 
@@ -97,6 +98,7 @@
                                     <div class="col-2">${orderItem.getPrice()}</div>
                                     <div class="col-2">${orderItem.getQuantity()}</div>
                                     <div class="col-2">${orderItem.orderItemPrice()}</div>
+                                    
                                 </div>
                             </div>
                         </c:forEach>  
@@ -108,4 +110,5 @@
         <script src="../js/app.js"></script>
     </body>
 </html>
+
 

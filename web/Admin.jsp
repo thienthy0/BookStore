@@ -27,7 +27,7 @@
         <h3 class="text-danger">${requestScope.mess?requestScope.mess:""}</h3>
         <section>
             <div class="row h-100">
-                <div class="col-md-2 h-100 p-0">
+                <div class="col-md-2 h-100 left-nav-admin p-0">
                     <div class="p-5 pe-0 vh-100">
                         <ul>
                             <li class="py-4 ps-3 mb-3">
@@ -60,7 +60,7 @@
                                     <span>Stock</span>
                                 </a>
                             </li>
-                            <li class="py-4 ps-3 mb-3 active">
+                            <li class="py-4 ps-3 mb-3 ">
                                 <a href="" class="fs-2 text-white d-flex align-items-center text-decoration-none">
                                     <i class='bx bx-purchase-tag-alt me-3'></i>
                                     <span>Blog</span>

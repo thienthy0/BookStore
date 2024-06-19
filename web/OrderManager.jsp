@@ -93,14 +93,14 @@
                                         All order
                                     </a>
                                 </li>
-                                <li class="px-4 py-2 rounded-xl border fs-4 me-3 display-order ${statusSearch.equals('process')?"choose":""}">
-                                    <a href="OrderManager?Service=searchByStatus&status=process" class="text-black-weak text-decoration-none">
-                                        Process
-                                    </a>
-                                </li>
                                 <li class="px-4 py-2 rounded-xl border fs-4 me-3 display-order ${statusSearch.equals('wait')?"choose":""}">
                                     <a href="OrderManager?Service=searchByStatus&status=wait" class="text-black-weak text-decoration-none">
                                         Wait
+                                    </a>
+                                </li>
+                                <li class="px-4 py-2 rounded-xl border fs-4 me-3 display-order ${statusSearch.equals('process')?"choose":""}">
+                                    <a href="OrderManager?Service=searchByStatus&status=process" class="text-black-weak text-decoration-none">
+                                        Process
                                     </a>
                                 </li>
                                 <li class="px-4 py-2 rounded-xl border fs-4 me-3 display-order ${statusSearch.equals('done')?"choose":""}">
@@ -129,7 +129,8 @@
                             <div class="row fs-4 fw-bold py-4 px-5 d-flex align-items-center justify-content-between">
                                 <div class="col">Bill ID</div>
                                 <div class="col">Customer Name</div>
-                                <div class="col">Date</div>
+                                <div class="col">Order Date</div>
+                                <div class="col">Receive Date</div>
                                 <div class="col">Total</div>
                                 <div class="col">Status</div>
                                 <div class="col">View</div>
@@ -153,6 +154,7 @@
                                         <span class="fs-4">${order.getAccountFullName()}</span>
                                     </div>
                                     <div class="col">${order.getOrder_date()}</div>
+                                    <div class="col">${order.getReceive_date()}</div>
                                     <div class="col">${order.getOrderTotal()} <span class="text-success">$</span></div>
                                     <c:if test="${order.getStatus().equals('done')}">
                                         <div class="col text-success">${order.getStatus()}</div>
