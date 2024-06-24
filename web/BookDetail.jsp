@@ -44,7 +44,7 @@
                                     <span class="text-green fs-3 fw-bold">${product.price}₫</span>
                                 </div>
                                 <c:if test="${product.discount>0}">
-                                    <span class="text-white p-2 mx-2 fs-5 fw-bold bg-danger tag-sale">Giảm ${product.discount}%</span>
+                                    <span class="text-white p-2 mx-2 fs-5 fw-bold bg-danger tag-sale">Sale ${product.discount}%</span>
                                 </c:if>
                                 <div class="border-line border-l"></div>
                                 <div class="d-flex align-items-center px- ">
@@ -75,6 +75,12 @@
                                 <h3 class="fw-semibold">Publisher :</h3>
                                 <div class="d-flex flex-wrap gap-4 fs-4">
                                     ${product.publisher}
+                                </div>
+                            </div>
+                            <div class="mt-5">
+                                <h3 class="fw-semibold">Description: </h3>
+                                <div class="input-group mb-3">
+                                    <textarea name="account_description" id="account_description" cols="30" rows="10" class="w-100" style="font-size: 16px;">${product.description}</textarea>
                                 </div>
                             </div>
 

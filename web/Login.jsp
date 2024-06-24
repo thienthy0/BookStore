@@ -7,17 +7,6 @@
         <title>Login</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="./style.css">
-        <style>
-            .error-message {
-                color: red;
-                font-size: 1.25rem;
-                font-weight: bold; /* Makes the font bold */
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-        </style>
     </head>
     <body>
         <section id="header" class="header-login">
@@ -56,8 +45,30 @@
                         <div class="error-message">${mess != null ? mess : ""}</div>
                     </div>
                     <button type="submit" class="d-flex align-items-center justify-content-center mt-5 fw-bold py-2 fs-4 px-5 btn bg-danger text-white mx-auto">Submit</button>
+                    <div class="text-center mt-3">
+                        <a href="forgetPassword" class="forget-password-link">Forget password?</a>
+                    </div>
                 </div>
             </form>
         </section>
     </body>
 </html>
+<style>
+    .error-message {
+        color: red;
+        font-size: 1.25rem;
+        font-weight: bold; /* Makes the font bold */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .forget-password-link {
+        color: #0dcaf0; /* màu xanh dương */
+        text-decoration: none; /* không gạch chân */
+        font-size: 1rem; /* cỡ chữ */
+        font-weight: bold; /* chữ đậm */
+    }
+    .forget-password-link:hover {
+        text-decoration: underline; /* gạch chân khi hover */
+    }
+</style>

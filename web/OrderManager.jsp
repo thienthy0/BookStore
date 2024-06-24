@@ -20,6 +20,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+        <link rel="stylesheet" type="text/css" href="path/to/style.css">
     </head>
     <body>
         <%@include file="./Header.jsp" %>
@@ -60,7 +61,7 @@
                                 </a>
                             </li>
                             <li class="py-4 ps-3 mb-3">
-                                <a href="" class="fs-2 text-white d-flex align-items-center text-decoration-none">
+                                <a href="blog" class="fs-2 text-white d-flex align-items-center text-decoration-none">
                                     <i class='bx bx-purchase-tag-alt me-3'></i>
                                     <span>Blog</span>
                                 </a>
@@ -115,13 +116,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-md-6">
-                            <select class="form-select w-50 ms-auto fs-3" aria-label="Default select example">
-                                <option value="1">Order list by: Id</option>
-                                <option value="2">Order list by: Date</option>
-                                <option value="3">Order list by: Total</option>
-                            </select>
-                        </div>
+
                     </div>
                     <div class="">
                         <h3 class="text-success">${mess}</h3>
@@ -166,31 +161,29 @@
                                         <div class="col text-warning">${order.getStatus()}</div>
                                     </c:if>
                                     <c:if test="${order.getStatus().equals('cancel')}">
-                                        <div class="col text-warning">${order.getStatus()}</div>
+                                        <div class="col text-cancel">${order.getStatus()}</div>
                                     </c:if>
                                     <div class="col">
                                         <div class="d-flex align-items-center position-relative box-detail">
                                             <div class="">
                                                 <span class="me-3">
-                                                    <a class="text-decoration-none text-black" href="OrderManager?Service=detailOrder&OId=${order.getO_id()}">Detail</a>
+                                                    <a class="detail-link" href="OrderManager?Service=detailOrder&OId=${order.getO_id()}">Detail</a>
                                                 </span>
                                             </div>
+
 
                                             <div class="">
                                                 <c:if test="${order.getStatus().equals('wait')}">
                                                     <select onchange="changeStatus([this, ${order.getO_id()}])">
-                                                        <option value="process" ${order.getStatus().equals('process')?"selected":""}>process</option>
-                                                        <option value="done" ${order.getStatus().equals('done')?"selected":""}>done</option>
-                                                        <option value="wait" ${order.getStatus().equals('wait')?"selected":""}>wait</option>
-                                                        <option value="cancel" ${order.getStatus().equals('cancel')?"selected":""}>cancel</option>
+                                                        <option value="wait" ${order.getStatus().equals('wait')?"selected":""}>Wait</option>
+                                                        <option value="process" ${order.getStatus().equals('process')?"selected":""}>Process</option>
+                                                        <option value="cancel" ${order.getStatus().equals('cancel')?"selected":""}>Cancel</option>
                                                     </select>
                                                 </c:if>
                                                 <c:if test="${order.getStatus().equals('process')}">
                                                     <select onchange="changeStatus([this, ${order.getO_id()}])">
-                                                        <option value="wait"  ${order.getStatus().equals('wait')?"selected":""}>wait</option>
-                                                        <option value="done" ${order.getStatus().equals('done')?"selected":""}>done</option>
-                                                        <option value="process" ${order.getStatus().equals('process')?"selected":""}>process</option>
-                                                        <option value="cancel" ${order.getStatus().equals('cancel')?"selected":""}>cancel</option>
+                                                        <option value="done" ${order.getStatus().equals('done')?"selected":""}>Done</option>
+                                                        <option value="cancel" ${order.getStatus().equals('cancel')?"selected":""}>Cancel</option>
                                                     </select>
                                                 </c:if>
                                             </div>
@@ -206,10 +199,20 @@
         <script src="../js/app.js"></script>
         <script>
                                                         const changeStatus = (param) => {
-                                                            let url = 'OrderManager?Service=updateStatus&oId=' + param[1] + "&status=" + param[0].value
+                                                            let url = 'OrderManager?Service=updateStatus&oId=' + param[1] + "&status=" + param[0].value;
 //               console.log(url);
                                                             window.location = url
                                                         }
         </script>
+        <style>
+            .detail-link {
+                text-decoration: none;
+                color: black;
+            }
+
+            .detail-link:hover {
+                color: red;
+            }
+        </style>
     </body>
 </html>

@@ -33,7 +33,7 @@ public class SigupServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -78,45 +78,45 @@ public class SigupServlet extends HttpServlet {
         String last_name = request.getParameter("last_name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
-        String DateOfBirth= request.getParameter("dateofbirth");
+        String DateOfBirth = request.getParameter("dateofbirth");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
-        
+
 // Check input data
         if (first_name.isEmpty() || last_name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
             String mess = "Please fill in all fields.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-        
+
 // Check format of names
         if (!isValidName(first_name) || !isValidName(last_name)) {
             String mess = "Names cannot contain numbers or special characters.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-        
+
 // Check format of email
         if (!isValidEmail(email)) {
             String mess = "Invalid email format.";
             setCommonValues(request, response, mess, first_name, last_name, "", phone);
             return;
         }
-        
+
 // Check format of password
         if (!isValidPassword(password)) {
             String mess = "Password must be at least 8 characters long and contain a combination of letters and numbers.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-        
+
 // Check if password matches confirm password
         if (!password.equals(confirmPassword)) {
             String mess = "Password and confirm password do not match.";
             setCommonValues(request, response, mess, first_name, last_name, email, phone);
             return;
         }
-        
+
 // Check for duplicate email
         Account haveExistEmail = d.getAccountByEmail(email);
         if (haveExistEmail != null) {
@@ -132,7 +132,7 @@ public class SigupServlet extends HttpServlet {
         HttpSession session = request.getSession();
         if (haveAdd) {
             session.setAttribute("account", acc);
-            response.sendRedirect("Home.jsp");
+            response.sendRedirect("Login.jsp");
         } else {
             String mess = "An error occurred. Please try again.";
             request.setAttribute("message", mess);
@@ -151,13 +151,13 @@ public class SigupServlet extends HttpServlet {
     }
 
     private boolean isValidName(String name) {
-        // Check if the name contains only letters (both uppercase and lowercase)
-        return name.matches("[A-Za-z]+");
+        // Check if the name contains only letters (both uppercase and lowercase) and accents
+        return name.matches("[\\p{L} -']+"); // Matches letters, spaces, dashes, and apostrophes
     }
 
     private boolean isValidEmail(String email) {
         // Check email format
-        return email.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
+        return email.matches("[A-Za-z][A-Za-z0-9._%+-]*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}");
     }
 
     private boolean isValidPassword(String password) {
@@ -175,5 +175,4 @@ public class SigupServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-  
 }

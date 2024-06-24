@@ -46,7 +46,6 @@ public class BookServlet extends HttpServlet {
             if (service == null) {
                 service = "getAll";
             }
-
             // Get the order parameter
             String order = request.getParameter("order");
             if (order != null) {

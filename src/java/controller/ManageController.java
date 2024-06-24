@@ -259,10 +259,10 @@ public class ManageController extends HttpServlet {
 
             if (roleId == 1) { // Admin
                 processRequest(request, response);
-            } else if (roleId == 2) { // Manage
+            } else if (roleId == 2) { // Manager
                 processRequest(request, response);
             } else {
-                response.sendRedirect("BookURL"); // Redirect to ProductURL for other roles
+                response.sendRedirect("ManageProduct"); // Redirect to ProductURL for other roles
             }
         } else {
             response.sendRedirect("login"); // Redirect to login if the user is not logged in

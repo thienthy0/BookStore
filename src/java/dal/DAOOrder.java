@@ -121,10 +121,12 @@ public class DAOOrder extends DBConnect {
         }
         return list;
     }
+
     public static void main(String[] args) {
         DAOOrder Dao = new DAOOrder();
         System.out.println(Dao.getAllOrder());
     }
+
     public Vector<Order> getOrderByStatus(String status) {
         String sql = "SELECT * FROM Orders O JOIN Account A ON A.account_id = O.account_id WHERE O.status LIKE ?";
 
@@ -165,8 +167,6 @@ public class DAOOrder extends DBConnect {
         return list;
     }
 
-
-    
     public Vector<Order> getAllOrderByAccount(int accId) {
         String sql = "SELECT * FROM Orders O JOIN Account A ON A.account_id = O.account_id WHERE A.account_id = ? ORDER BY order_date DESC";
 
@@ -244,7 +244,6 @@ public class DAOOrder extends DBConnect {
         }
         return n > 0;
     }
-        
 
     //checkount
     public void checkcount(Account acc, Vector<Book> listItem) {
@@ -266,24 +265,24 @@ public class DAOOrder extends DBConnect {
             st.setString(4, "wait");
             st.executeUpdate();
             //insert into order item
-            String sql2 = "SELECT TOP 1 order_id FROM [orders] ORDER BY order_id DESC";
+            String sql2 = "SELECT TOP 1 order_id FROM [Orders] ORDER BY o_id DESC";
             PreparedStatement st2 = connection.prepareStatement(sql2);
             ResultSet rs = st2.executeQuery();
             while (rs.next()) {
-                int orderId = rs.getInt("order_id");
+                int orderId = rs.getInt("o_id");
                 DAOOrderDetail Dod = new DAOOrderDetail();
                 //get last order Item
                 int newOrderItemId = Dod.getAllOrderItem().get(Dod.getAllOrderItem().size() - 1).getDetail_id() + 1;
                 //add all order in cart to database
                 for (Book item : listItem) {
                     String sql3 = "INSERT INTO [dbo].[Order_details]\n"
-                            + "           ([item_id]\n"
-                            + "           ,[order_id]\n"
-                            + "           ,[product_id]\n"
+                            + "           ([detail_id]\n"
+                            + "           ,[o_id]\n"
+                            + "           ,[book_id]\n"
                             + "           ,[quantity]\n"
-                            + "           ,[list_price]\n"
+                            + "           ,[price]\n"
                             + "           ,[discount])\n"
-                            + "     VALUES(?, ?, ?, ?, ?, ?)";
+                            + "     VALUES(?, ?, ?, ?, ?,?)";
                     PreparedStatement st3 = connection.prepareStatement(sql3);
                     st3.setInt(1, newOrderItemId);
                     st3.setInt(2, orderId);
@@ -300,5 +299,4 @@ public class DAOOrder extends DBConnect {
         }
     }
 
-    
 }

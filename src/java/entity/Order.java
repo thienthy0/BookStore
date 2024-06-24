@@ -18,6 +18,7 @@ public class Order {
     private Date order_date, receive_date;
     private Vector<OrderDetail> listOrder;
     private Account acc;
+    
 
     
 

@@ -71,18 +71,23 @@
                 </div>
                 <div class="col-md-10 h-100">
                     <h1 class="fw-bold my-4">Detail Order #${O_Id}</h1>
+                    <div class="mt-4 text-end fs-4 fw-bold" style="border: 2px solid black; padding: 10px; display: inline-block;">
+                        Customer: <span style="color: #0dcaf0;">${order.getAccountFullName()}</span>
+                    </div>
+
+
                     <div class="">
                         <h3 class="text-success">${mess}</h3>
                         <div class="mt-5 table-header bg-weak rounded-xl ">
                             <div class="row fs-4 fw-bold py-4 px-5 d-flex align-items-center justify-content-between">
                                 <div class="col-1">Item id</div>
-                                <div class="col-1">Image</div>
+                                <div class="col-1">Image Book</div>
                                 <div class="col-3">Name</div>
                                 <div class="col-1">Discount</div>                           
                                 <div class="col-2">Price</div>
                                 <div class="col-2">Quantity</div>
                                 <div class="col-2">Subtotal</div>
-                                
+
                             </div>
                         </div>
 
@@ -95,10 +100,10 @@
                                     </div>
                                     <div class="col-3">${orderItem.getBook().getName()}</div>
                                     <div class="col-1">${orderItem.getDiscount()}%</div>
-                                    <div class="col-2">${orderItem.getPrice()}</div>
+                                    <div class="col-2">${orderItem.getPrice()}<span class="green-dollar">$</span></div>
                                     <div class="col-2">${orderItem.getQuantity()}</div>
-                                    <div class="col-2">${orderItem.orderItemPrice()}</div>
-                                    
+                                    <div class="col-2" style="color: red;">${orderItem.orderItemPrice()}$</div>
+
                                 </div>
                             </div>
                         </c:forEach>  
@@ -111,4 +116,12 @@
     </body>
 </html>
 
+<style>
+    .green-dollar {
+        color: green;
+    }
+    .redText {
+        color: red;
+    }
+</style>
 

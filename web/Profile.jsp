@@ -8,7 +8,7 @@
 <html lang="en">
     <%@page contentType="text/html" pageEncoding="UTF-8"%>
     <%@page import="java.text.Normalizer" %>
-    <%@page import="java.util.regex.Pattern" %>
+    <%@page import="java.util.regex.Pattern"%>
     <%@page import="DAL.*" %>
     <%@page import="Models.*" %>
     <%@page import="java.util.*" %>
@@ -16,6 +16,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Admin</title>
         <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" type="text/css" href="path/to/style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
@@ -143,10 +144,9 @@
                                             <div class="mt-5">
                                                 <h3>About you</h3>
                                                 <div class="input-group mb-3">
-                                                    <textarea name="account_description" id="account_description" cols="30" rows="10" class="w-100">${account.description}</textarea>
+                                                    <textarea name="account_description" id="account_description" cols="30" rows="10" class="w-100" style="font-size: 16px;">${account.description}</textarea>
                                                 </div>
-                                            </div>    
-
+                                            </div>
                                         </div>
                                         <div class="mt-5">
                                             <button type="submit" class="border-0 px-5 py-4 fs-4 bg-dark text-white rounded-xl fw-bold">Update information</button>
@@ -201,18 +201,24 @@
 
                     <c:if test="${requestScope.current.equals('My order')}">
                         <c:forEach var="order" items="${myOrder}">
-                            <div class="box-shadow1 py-2 px-3 rounded-sm mt-5 d-flex justify-content-between align-items-center">
+                            <div class="box-shadow1 py-2 px-3 rounded-sm mt-5 d-flex flex-column">
                                 <c:choose>
-                                    <c:when test="${order.status eq 'wait'}">
-                                        <div>
-                                            <span class="fs-3 fw-bold">Status: </span> 
-                                            <span class="text-danger fs-4">${order.status}</span>
+                                    <c:when test="${order.status eq 'process'}">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="fs-3 fw-bold">Status: </span> 
+                                                <span class="text-warning fs-4">${order.status}</span>
+                                            </div>
+                                            <span class="ms-auto fs-4 fw-medium text-black">Order date: ${order.order_date}</span>
                                         </div>
                                     </c:when>
-                                    <c:when test="${order.status eq 'process'}">
-                                        <div>
-                                            <span class="fs-3 fw-bold">Status: </span> 
-                                            <span class="text-warning fs-4">${order.status}</span>
+                                    <c:when test="${order.status eq 'wait'}">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="fs-3 fw-bold">Status: </span> 
+                                                <span class="text-danger fs-4">${order.status}</span>
+                                            </div>
+                                            <span class="ms-auto fs-4 fw-medium text-black">Order date: ${order.order_date}</span>
                                         </div>
                                         <!-- Add button to cancel order -->
                                         <form action="profile" method="post" style="margin-left: 10px;">
@@ -223,20 +229,31 @@
                                         </form>
                                     </c:when>
                                     <c:when test="${order.status eq 'done'}">
-                                        <div>
-                                            <span class="fs-3 fw-bold">Status: </span> 
-                                            <span class="text-success fs-4">${order.status}</span>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="fs-3 fw-bold">Status: </span> 
+                                                <span class="text-success fs-4">${order.status}</span>
+                                            </div>
+                                            <span class="ms-auto fs-4 fw-medium text-black">Order date: ${order.order_date}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-2">
+                                            <span class="fs-4 fw-medium text-black">Receive date: ${order.receive_date}</span>
                                         </div>
                                     </c:when>
                                     <c:when test="${order.status eq 'cancel'}">
-                                        <div>
-                                            <span class="fs-3 fw-bold">Status: </span> 
-                                            <span class="text-secondary fs-4">${order.status}</span>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="fs-3 fw-bold">Status: </span> 
+                                                <span class="text-secondary fs-4">${order.status}</span>
+                                            </div>
+                                            <span class="ms-auto fs-4 fw-medium text-black">Order date: ${order.order_date}</span>
                                         </div>
                                     </c:when>
                                 </c:choose>
-                                <span class="ms-auto fs-4 fw-medium text-black">${order.order_date}</span>
                             </div>
+
+                            <!-- Khởi tạo biến để tính tổng giá trị đơn hàng -->
+                            <c:set var="totalOrderPrice" value="0" scope="page"/>
 
                             <c:forEach var="orderItem" items="${myOrderItem}">
                                 <c:if test="${order.o_id == orderItem.o_id}">
@@ -268,7 +285,7 @@
                                                             <span class="fs-4">$ ${orderItem.price}</span>
                                                         </div>
                                                         <div class="d-flex align-items-center">
-                                                            <label class="quantity-label d-block">Quantity: </label>
+                                                            <label class="quantity-label d-block">Quantity:</label>
                                                             <div class="box-input">
                                                                 <button class="border-0 bg-white" onclick="decreaseValue()" style="display: none;">
                                                                     <a class="p-3 text-black"><i class="fa-solid fa-minus fs-5"></i></a>
@@ -280,7 +297,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="fs-4">
-                                                            <span class="text-danger">$ ${orderItem.orderItemPrice()}</span>
+                                                            <span class="text-danger">Total: $ ${orderItem.orderItemPrice()}</span>
                                                         </div>
                                                     </div>
                                                     <div class="h-50 d-flex align-items-center justify-content-between">
@@ -292,8 +309,16 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Cộng dồn giá trị của từng sản phẩm vào tổng giá trị đơn hàng -->
+                                    <c:set var="totalOrderPrice" value="${totalOrderPrice + orderItem.orderItemPrice()}" scope="page"/>
                                 </c:if>
                             </c:forEach>
+
+                            <!-- Hiển thị tổng giá trị đơn hàng với viền đen -->
+                            <div class="mt-4 text-end fs-4 fw-bold" style="border: 2px solid black; padding: 10px; display: inline-block;">
+                                Total Order Price: $ ${totalOrderPrice}
+                            </div>
                         </c:forEach>
                     </c:if>
 
@@ -304,38 +329,39 @@
     </body>
 </html>
 <!--<CSS>-->
+
 <style>
+    .btn {
+        font-size: 16px;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-danger:active {
+        background-color: #bd2130;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
     .quantity-label {
         font-weight: bold;
         color: #ff00a6;
-        font-size: 15px;
+        font-size: 15px; /* Thay đổi cỡ chữ theo ý muốn */
     }
-    .text-cancel {
-        color: gray; /* Hoặc #808080 để có màu xám */
+    .total-order-price {
+        border: 2px solid black; /* Đóng khung viền đen */
+        padding: 10px; /* Thêm khoảng cách bên trong khung viền */
+        display: inline-block; /* Hiển thị dưới dạng khối inline để phù hợp với nội dung */
     }
 </style>
-<style>
-        .btn {
-            font-size: 16px;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s, box-shadow 0.3s;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn-danger:active {
-            background-color: #bd2130;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-    </style>

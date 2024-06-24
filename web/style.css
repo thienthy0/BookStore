@@ -405,10 +405,10 @@ input {
 }
 
 .input-box {
-    /*    display: flex;
+        display: flex;
         align-items: center;
         align-items: center;
-        overflow: hidden;*/
+        overflow: hidden;
 }
 
 .input-box .search-icon,
@@ -1513,3 +1513,9 @@ input {
     color: gray;
 }
 
+.text-cancel{
+    color: gray
+}
+quantity-label {
+    color: #ff00a6
+}

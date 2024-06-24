@@ -38,9 +38,9 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect("Home.jsp");
             } else if (roleId == 2) { // Quản lý
                 response.sendRedirect("ManageProduct"); // Điều chỉnh điều này đến trang quản lý
-            } else if (roleId == 3) { // Sale
+            } else if (roleId == 4) { // Sale
                 response.sendRedirect("OrderManager");
-            } else if (roleId == 4) { // Marketing
+            } else if (roleId == 3) { // Marketing
                 response.sendRedirect("blog");
             } else if (roleId == 5) { // Người dùng
                 response.sendRedirect("BookURL");

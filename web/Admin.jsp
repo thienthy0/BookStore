@@ -61,7 +61,7 @@
                                 </a>
                             </li>
                             <li class="py-4 ps-3 mb-3 ">
-                                <a href="" class="fs-2 text-white d-flex align-items-center text-decoration-none">
+                                <a href="blog" class="fs-2 text-white d-flex align-items-center text-decoration-none">
                                     <i class='bx bx-purchase-tag-alt me-3'></i>
                                     <span>Blog</span>
                                 </a>
@@ -107,8 +107,6 @@
                             <div class="col">publisher</div>
                             <div class="col">number_of_pages</div>
                             <div class="col">action</div>
-
-
                         </div>
                         <div class="">
                             <h3 class="text-danger my-3">${mess}</h3>
